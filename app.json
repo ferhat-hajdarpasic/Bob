@@ -1,4 +1,10 @@
 {
   "name": "Bob",
-  "displayName": "Bob"
+  "displayName": "Bob",
+  "expo": {
+    "slug": "Bob",
+    "name": "Bob",
+    "sdkVersion": "23.0.0",
+    "entryPoint": "/home/ferhat/Bob/.vscode/exponentIndex.js"
+  }
 }
