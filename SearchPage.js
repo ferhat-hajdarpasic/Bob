@@ -11,14 +11,16 @@ import {
   Image,
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
+
 function urlForQueryAndPage(key, value, pageNumber) {
   const data = {
-      country: 'uk',
-      pretty: '1',
-      encoding: 'json',
-      listing_type: 'buy',
-      action: 'search_listings',
-      page: pageNumber,
+    country: 'uk',
+    pretty: '1',
+    encoding: 'json',
+    listing_type: 'buy',
+    action: 'search_listings',
+    page: pageNumber,
   };
   data[key] = value;
 
@@ -31,9 +33,9 @@ function urlForQueryAndPage(key, value, pageNumber) {
 
 export default class SearchPage extends Component<{}> {
   static navigationOptions = {
-    title: 'Property Finder',
+    title: 'Property Search',
   };
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -54,19 +56,19 @@ export default class SearchPage extends Component<{}> {
       .then(response => response.json())
       .then(json => this._handleResponse(json.response))
       .catch(error =>
-         this.setState({
-           isLoading: false,
-           message: 'Something bad happened ' + error
-      }));
+        this.setState({
+          isLoading: false,
+          message: 'Something bad happened ' + error
+        }));
   };
 
   _handleResponse = (response) => {
-    this.setState({ isLoading: false , message: '' });
+    this.setState({ isLoading: false, message: '' });
     if (response.application_response_code.substr(0, 1) === '1') {
       this.props.navigation.navigate(
-        'Results', {listings: response.listings});
+        'Results', { listings: response.listings });
     } else {
-      this.setState({ message: 'Location not recognized; please try again.'});
+      this.setState({ message: 'Location not recognized; please try again.' });
     }
   };
 
@@ -77,9 +79,10 @@ export default class SearchPage extends Component<{}> {
 
   render() {
     const spinner = this.state.isLoading ?
-      <ActivityIndicator size='large'/> : null;
+      <ActivityIndicator size='large' /> : null;
 
     return (
+
       <View style={styles.container}>
         <Text style={styles.description}>
           Search for houses to buy!
@@ -89,18 +92,18 @@ export default class SearchPage extends Component<{}> {
         </Text>
         <View style={styles.flowRight}>
           <TextInput
-           underlineColorAndroid={'transparent'}
-           style={styles.searchInput}
-           value={this.state.searchString}
-           onChange={this._onSearchTextChanged}
-           placeholder='Search via name or postcode'/>
+            underlineColorAndroid={'transparent'}
+            style={styles.searchInput}
+            value={this.state.searchString}
+            onChange={this._onSearchTextChanged}
+            placeholder='Search via name or postcode' />
           <Button
             onPress={this._onSearchPressed}
             color='#48BBEC'
             title='Go'
           />
         </View>
-        <Image source={require('./Resources/house.png')} style={styles.image}/>
+        <Image source={require('./Resources/house.png')} style={styles.image} />
         {spinner}
         <Text style={styles.description}>{this.state.message}</Text>
       </View>
