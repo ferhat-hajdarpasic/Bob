@@ -5,90 +5,13 @@ import { StyleSheet, View, TextInput, Image, ImageBackground } from 'react-nativ
 import LinearGradient from 'react-native-linear-gradient';
 import SpotifyWebApi from 'react-native-spotify-web-api';
 
-class Greeting extends Component {
-  
-  render() {
-    return (
-      <View style={{flex: 1}}>
-        <View style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-        }}>
-          <LinearGradient
-            start={{ x: 0.5, y: 0.0 }} end={{ x: 0.5, y: 0.2 }}
-            locations={[0.0, 1.0]}
-            colors={['red', 'blue']} style={styles.LinearGradientStyle} >
-            <ImageBackground source={require('./Resources/house.png')} style={styles.image} >
-              
-            </ImageBackground>
-          </LinearGradient>
-        </View>
-        <View style={{
-          flex: 1,
-          backgroundColor: 'transparent',
-          justifyContent: 'center',
-        }}>
-          {this.props.children}
-        </View>
-    </View>
-    );
-  }
-}
+import BobBackground from './BobBackground';
+
 export default class MainActivity extends Component {
   render() {
     return (
-      <Greeting>
-        <View style={styles.ChildViewStyle}>
-          <TextInput placeholder="Enter Your Text Here" underlineColorAndroid='transparent' style={styles.TextInputStyleClass}/>
-        </View>
-      </Greeting>
+  <BobBackground>
+      </BobBackground>
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-  MainContainer: {
-
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff'
-
-  },
-
-  LinearGradientStyle: {
-    borderRadius: 0,
-    height: '100%',
-    width: '100%'
-  },
-
-  ChildViewStyle: {
-
-    borderWidth: 0,
-    borderColor: '#028b53',
-    width: '100%',
-    height: 50,
-    borderRadius: 10,
-
-  },
-
-  TextInputStyleClass: {
-
-    textAlign: 'center',
-    height: 50,
-    width: '90%'
-
-  },
-  image: {
-    width: 217,
-    height: 138,
-    position: 'relative',
-    top: 350,
-    left: 100,
-  }
-
-});
