@@ -21,7 +21,8 @@ class Background extends Component {
             start={{ x: 0.5, y: 0.0 }} end={{ x: 0.5, y: 0.2 }}
             locations={[0.0, 1.0]}
             colors={['red', 'blue']} style={styles.LinearGradientStyle} >
-            <ImageBackground source={require('./Resources/house.png')} style={styles.image} >
+            <ImageBackground source={require('./Resources/BOB_LOGOS/BOB_LOGO_K50.png')} 
+            style={styles.image}>
               
             </ImageBackground>
           </LinearGradient>
@@ -89,6 +90,8 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: 350,
     left: 100,
+    borderColor:'black',
+    borderWidth:1
   }
 
 });
