@@ -85,11 +85,11 @@ const styles = StyleSheet.create({
 
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: 220,
+    height: (214/241)*220,
     position: 'absolute',
-    bottom: '0%',
-    left: '0%',
+    bottom: '15%',
+    left: '55%',
     borderColor:'black',
     borderWidth:1
   }
