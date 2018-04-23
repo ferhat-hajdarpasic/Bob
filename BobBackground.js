@@ -20,7 +20,7 @@ class Background extends Component {
           <LinearGradient
             start={{ x: 0.5, y: 0.0 }} end={{ x: 0.5, y: 0.2 }}
             locations={[0.0, 1.0]}
-            colors={['red', 'blue']} style={styles.LinearGradientStyle} >
+            colors={['#656263', '#393536']} style={styles.LinearGradientStyle} >
             <ImageBackground source={require('./Resources/BOB_LOGOS/BOB_LOGO_K50.png')} 
             style={styles.image}>
               
@@ -85,11 +85,11 @@ const styles = StyleSheet.create({
 
   },
   image: {
-    width: 217,
-    height: 138,
-    position: 'relative',
-    top: 350,
-    left: 100,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    bottom: '0%',
+    left: '0%',
     borderColor:'black',
     borderWidth:1
   }
