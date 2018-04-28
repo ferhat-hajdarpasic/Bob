@@ -1,50 +1,35 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, TextInput, Image, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Image, ImageBackground } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
-import SpotifyWebApi from 'react-native-spotify-web-api';
 
 class Background extends Component {
-  
   render() {
     return (
-      <View style={{flex: 1}}>
-        <View style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-        }}>
+      <View style={{ flex: 1 }}>
+        <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', }}>
           <LinearGradient
             start={{ x: 0.5, y: 0.0 }} end={{ x: 0.5, y: 0.2 }}
             locations={[0.0, 1.0]}
             colors={['#656263', '#393536']} style={styles.LinearGradientStyle} >
-            <ImageBackground source={require('./Resources/BOB_LOGOS/BOB_LOGO_K50.png')} 
-            style={styles.image}>
-              
-            </ImageBackground>
+            <Text style={{ fontFamily: 'Bauhaus 93' }}>Custom Font</Text>
+            <ImageBackground source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
+            <ImageBackground source={require('./Resources/BOB_LOGOS/BOB_LOGO_K50.png')} style={styles.image} />
           </LinearGradient>
         </View>
-        <View style={{
-          flex: 1,
-          backgroundColor: 'transparent',
-          justifyContent: 'center',
-        }}>
+        <View style={{flex: 1,backgroundColor: 'transparent',justifyContent: 'center'}}>
           {this.props.children}
         </View>
-    </View>
+      </View>
     );
   }
 }
 export default class BobBackground extends Component {
   render() {
     return (
-      <Background>
-        <View style={styles.ChildViewStyle}>
-          <TextInput placeholder="FRED Enter Your Text Here" underlineColorAndroid='transparent' style={styles.TextInputStyleClass}/>
-        </View>
+      <Background title='Fred Hajdarpasic'>
+
       </Background>
     );
   }
@@ -86,12 +71,19 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 220,
-    height: (214/241)*220,
+    height: (214 / 241) * 220,
     position: 'absolute',
     bottom: '15%',
     left: '55%',
-    borderColor:'black',
-    borderWidth:1
+    //borderColor:'black',
+    //borderWidth:1
+  },
+  titleImage: {
+    width: 50,
+    height: (214 / 241) * 50,
+    position: 'absolute',
+    top: '5%',
+    left: '10%'
   }
 
 });
