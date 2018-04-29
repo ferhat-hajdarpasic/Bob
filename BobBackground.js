@@ -13,7 +13,7 @@ class Background extends Component {
             start={{ x: 0.5, y: 0.0 }} end={{ x: 0.5, y: 0.2 }}
             locations={[0.0, 1.0]}
             colors={['#656263', '#393536']} style={styles.LinearGradientStyle} >
-            <Text style={{ fontFamily: 'Bauhaus 93' }}>Custom Font</Text>
+            <Text style={styles.titleText}>{this.props.title}</Text>
             <ImageBackground source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
             <ImageBackground source={require('./Resources/BOB_LOGOS/BOB_LOGO_K50.png')} style={styles.image} />
           </LinearGradient>
@@ -28,8 +28,8 @@ class Background extends Component {
 export default class BobBackground extends Component {
   render() {
     return (
-      <Background title='Fred Hajdarpasic'>
-
+      <Background title={this.props.title}>
+        {this.props.children}
       </Background>
     );
   }
@@ -84,6 +84,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '5%',
     left: '10%'
+  },
+  titleText: {
+    color: 'white',
+    fontFamily: 'Bauhaus 93',
+    fontSize:20,
+    position: 'absolute',
+    top: '7%',
+    left: '26%'
   }
+  
 
 });
