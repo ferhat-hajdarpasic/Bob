@@ -30,7 +30,7 @@ export default class BobLogin extends Component {
             <Image source={require('./Resources/3RD_PARTY_LOGOS/GOOGLE.png')} style={styles.google} />
             <Image source={require('./Resources/3RD_PARTY_LOGOS/FB.png')} style={styles.facebook} />
           </View>
-          <Text style={styles.login}>login</Text>
+          <Text style={styles.login} onPress={() => this.props.navigation.navigate('LoginToSpotify', { name: 'Jane' })}>login</Text>
           <Text style={styles.joinBob}>join bob</Text>
         </View>
       </BKD>
