@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform} from 'react-native';
-import BKD  from './BobBackground'
+import BobLogin  from './BobLogin'
 import accounting from 'accounting';
  
 export default class MainActivity extends Component {
@@ -12,7 +12,7 @@ export default class MainActivity extends Component {
         let redirect_url = 'about:blank';
         let client_id='6a878d3c8b854a1387d2bcbe4c665cea';        
         return (     
-            <BKD></BKD>
+            <BobLogin></BobLogin>
         );
       }
     }
