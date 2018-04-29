@@ -1,32 +1,51 @@
 import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Easing,
+  Animated,
+  // Button,
+  ScrollView
+} from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import BobLogin from './BobLogin'
+import LoginToSpotify from './LoginToSpotify'
 
-import { View, TextInput, Image, ImageBackground } from 'react-native';
+export default StackNavigator(
+  {
+    Main: { screen: BobLogin },
+    LoginToSpotify: {screen: LoginToSpotify }
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+    navigationOptions: {
+      gesturesEnabled: false,
+    },
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 300,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
 
-import { StyleSheet, WebView, Platform} from 'react-native';
-import BobLogin  from './BobLogin'
-import accounting from 'accounting';
- 
-export default class MainActivity extends Component {
-      render() {
-        console.log('FRED=' + accounting.formatMoney(455678.678));
-        let redirect_url = 'about:blank';
-        let client_id='6a878d3c8b854a1387d2bcbe4c665cea';        
-        return (     
-            <BobLogin></BobLogin>
-        );
-      }
-    }
-    
- 
- 
-const styles = StyleSheet.create(
-{
- 
- WebViewStyle:
- {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex:1,
-    marginTop: (Platform.OS) === 'ios' ? 20 : 0
- }
-});
+        const height = layout.initHeight;
+        const translateY = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height, 0, 0],
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1],
+        });
+
+        return { opacity, transform: [{ translateY }] };
+      },
+    }),
+  }
+);
