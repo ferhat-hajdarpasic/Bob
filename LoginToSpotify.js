@@ -4,7 +4,7 @@ import { View, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform} from 'react-native';
  
-export default class MainActivity extends Component {
+export default class LoginToSpotify extends Component {
  
       render() {
         let redirect_url = 'about:blank';
