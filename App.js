@@ -11,11 +11,13 @@ import {
 import { StackNavigator } from 'react-navigation';
 import BobLogin from './BobLogin'
 import LoginToSpotify from './LoginToSpotify'
+import ImportFromSpotify from './ImportFromSpotify'
 
 export default StackNavigator(
   {
     Main: { screen: BobLogin },
-    LoginToSpotify: {screen: LoginToSpotify }
+    LoginToSpotify: {screen: LoginToSpotify },
+    ImportFromSpotify: {screen: ImportFromSpotify}
   },
   {
     headerMode: 'none',

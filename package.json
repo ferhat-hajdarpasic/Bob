@@ -8,6 +8,7 @@
 	},
 	"dependencies": {
 		"accounting": "^0.4.1",
+		"buffer": "^5.1.0",
 		"react": "16.0.0",
 		"react-native": "0.50.3",
 		"react-native-linear-gradient": "^2.4.0",
