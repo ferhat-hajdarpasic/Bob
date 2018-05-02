@@ -15,7 +15,7 @@ export default class LoginToSpotify extends Component {
     return (     
       <WebView 
         style={styles.WebViewStyle} 
-        source={{uri: `https://accounts.spotify.com/authorize/?client_id=${client_id}&response_type=code&redirect_uri=${redirect_url}&scope=user-read-private user-read-email&state=34fFs29kd09`}} 
+        source={{uri: `https://accounts.spotify.com/authorize/?client_id=${client_id}&response_type=code&redirect_uri=${redirect_url}&scope=user-read-private user-read-email playlist-read-private user-library-read user-read-recently-played streaming&state=34fFs29kd09`}} 
         javaScriptEnabled={true}
         domStorageEnabled={true}  
         onNavigationStateChange={(state) => {
