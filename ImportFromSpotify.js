@@ -43,7 +43,7 @@ export default class ImportFromSpotify extends Component {
     const { params } = this.props.navigation.state;
     const code = params ? params.code : null;
     console.log('CODE=' + code);
-    let r = api.me(code);
+    let r = api.playlists(code);
     console.log(JSON.stringify(r));
   }
 }
