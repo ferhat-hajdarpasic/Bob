@@ -8,7 +8,7 @@ let client_secret = '7da30991cb4d4e8aa5382ab28f20fd97'
 async function handleResponse(response) {
     if(response.ok) {
         let responseJson = await response.json();
-        console.log('responseJson=' + JSON.stringify(responseJson));
+        //console.log('responseJson=' + JSON.stringify(responseJson));
         return responseJson;
     } else {
         console.log('response.ok=' + response.ok);
@@ -56,16 +56,13 @@ export default class SpotifyApi {
     }
 
     async recentlyPlayed(code, limit) {
-        console.log(`recentlyPlayed(code=${code}, limit=${limit})`);
         var access_token = await getAccessToken(code);
-        console.log('recentlyPlayed:access_token='+access_token);
         let recentlyPlayedResponse = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + access_token
             }
         });
-        console.log('recentlyPlayedResponse='+JSON.stringify(recentlyPlayedResponse));
         return await handleResponse(recentlyPlayedResponse);
     }
 
@@ -79,4 +76,16 @@ export default class SpotifyApi {
         });
         return await handleResponse(meResponse);
     }
+
+    async albums(code) {
+        var access_token = await getAccessToken(code);
+        let albumsResponse = await fetch('https://api.spotify.com/v1/me/albums', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            }
+        });
+        return await handleResponse(albumsResponse);
+    }
+    
 }

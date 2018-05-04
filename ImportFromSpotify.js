@@ -4,21 +4,18 @@ import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform } from 'react-native';
 import BKD from './BobBackground'
-import SpotifyApi from './SpotifyApi'
-import FlatListDemo from './FlatListDemo'
-
-let api = new SpotifyApi();
+import ImportFlatList from './ImportFlatList'
 
 export default class ImportFromSpotify extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: '', password: '' };
+    this.state = { code: '' };
   }
   render() {
-    let redirect_url = 'about:blank';
-    let client_id = '6a878d3c8b854a1387d2bcbe4c665cea';
+    const { params } = this.props.navigation.state;
+    this.state.code = params.code;
     return (
-      <BKD title='spotify import'>
+        <BKD title='spotify import'>
         <View style={{
           flex: 1,
           flexDirection: 'column',
@@ -29,7 +26,7 @@ export default class ImportFromSpotify extends Component {
             <Image source={require('./Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
-            <FlatListDemo />
+            <ImportFlatList code={this.state.code}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
@@ -40,11 +37,6 @@ export default class ImportFromSpotify extends Component {
     );
   }
   componentDidMount() {
-    const { params } = this.props.navigation.state;
-    const code = params ? params.code : null;
-    console.log('CODE=' + code);
-    let r = api.playlists(code);
-    console.log(JSON.stringify(r));
   }
 }
 
