@@ -12,12 +12,18 @@ import { StackNavigator } from 'react-navigation';
 import BobLogin from './BobLogin'
 import LoginToSpotify from './LoginToSpotify'
 import ImportFromSpotify from './ImportFromSpotify'
+import Playlists from './Playlists'
+import RecentlyPlayed from './RecentlyPlayed'
+import Albums from './Albums'
 
 export default StackNavigator(
   {
     Main: { screen: BobLogin },
     LoginToSpotify: {screen: LoginToSpotify },
-    ImportFromSpotify: {screen: ImportFromSpotify}
+    ImportFromSpotify: {screen: ImportFromSpotify},
+    Playlists: {screen: Playlists},
+    RecentlyPlayed: {screen: RecentlyPlayed},
+    Albums: {screen: Albums}
   },
   {
     headerMode: 'none',

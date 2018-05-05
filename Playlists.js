@@ -4,30 +4,26 @@ import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform } from 'react-native';
 import BKD from './BobBackground'
-import ImportFlatList from './ImportFlatList'
+import PlaylistsFlatList from './PlaylistsFlatList'
 
-export default class ImportFromSpotify extends Component {
+export default class Playlists extends Component {
   constructor(props) {
     super(props);
     this.state = { code: '' };
   }
   render() {
-    console.log('nsvigstion='+this.props.navigation);
     const { params } = this.props.navigation.state;
     this.state.code = params.code;
     return (
-        <BKD title='spotify import'>
+        <BKD title='spotify playlists'>
         <View style={{
           flex: 1,
           flexDirection: 'column',
         }}>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5 }}>
           </View>
-          <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, alignItems: 'center' }}>
-            <Image source={require('./Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
-          </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
-            <ImportFlatList code={this.state.code} navigation={this.props.navigation}/>
+            <PlaylistsFlatList code={this.state.code} playlists={this.state.playlists}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />

@@ -68,7 +68,7 @@ export default class BobFlatList extends Component {
   };
 
   render() {
-    console.log('RENDER!!!!' + JSON.stringify(this.state));
+    //console.log('RENDER!!!!' + JSON.stringify(this.state));
     return (
       <FlatList
         data={this.state.data}
