@@ -1,23 +1,14 @@
 import React, { Component } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
+
+import BobFlatList from './BobFlatList'
 import SpotifyApi from './SpotifyApi'
 let api = new SpotifyApi();
 
-class ImportFlatList extends Component {
+export default class ImportFlatList extends BobFlatList {
   constructor(props) {
     super(props);
-
-    this.state = {
-      loading: false,
-      data: [],
-      error: null,
-      refreshing: false
-    };
-  }
-
-  componentDidMount() {
-    this.makeRemoteRequest();
   }
 
   makeRemoteRequest = async () => {
@@ -27,14 +18,12 @@ class ImportFlatList extends Component {
     this.setState({ loading: true });
 
     let playlists = await api.playlists(code);
-    console.log('playlists');
-
     let recentlyPlayed = await api.recentlyPlayed(code);
-    console.log('recentlyPlayed');
-
     let albums = await api.albums(code);
-    console.log('albums = ' + JSON.stringify(albums));
 
+    //console.log('playlists' + playlists.items[0].images[0].url);
+    //console.log('recentlyPlayed' + recentlyPlayed.items[0].track.album.images[0].url);
+    //console.log('albums = ' + albums.items[0].album.images[0].url);
 
     this.setState({
       data: [
@@ -56,83 +45,25 @@ class ImportFlatList extends Component {
     });
   };
 
-  handleRefresh = () => {
-    this.setState(
-      {
-        refreshing: true
-      },
-      () => {
-        this.makeRemoteRequest();
-      }
-    );
-  };
-
-  handleLoadMore = () => {
-    this.setState(
-      {
-      },
-      () => {
-        this.makeRemoteRequest();
-      }
-    );
-  };
-
   renderSeparator = () => {
     return (
       <View
-        style={{
-          height: 15,
-          width: "86%",
-          backgroundColor: "transparent",
-          marginLeft: "14%"
-        }}
+        style={styles.separatorStyle}
       />
     );
   };
 
-  renderHeader = () => {
-    return <SearchBar placeholder="Type Here..." lightTheme round />;
-  };
-
-  renderFooter = () => {
-    if (!this.state.loading) return null;
-
+  renderItem = ( {item, index} ) => {
     return (
-      <View
-        style={{
-          paddingVertical: 20,
-
-        }}
-      >
-        <ActivityIndicator animating size="large" />
+      <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
+        <Image source={{uri: item.url}} style={{width:100, height:100}}/>
+        <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:15}}>
+          <Text style={styles.titleText}>{item.name} </Text>
+          <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
+        </View>
       </View>
     );
-  };
-
-  render() {
-    return (
-      <FlatList
-        data={this.state.data}
-        renderItem={({ item }) => (
-            <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
-              <Image source={{uri: item.url}} style={{width:100, height:100}}/>
-              <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:15}}>
-                <Text style={styles.titleText}>{item.name} </Text>
-                <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
-              </View>
-            </View>
-        )}
-        keyExtractor={item => item.email}
-        ItemSeparatorComponent={this.renderSeparator}
-        //ListHeaderComponent={this.renderHeader}
-        ListFooterComponent={this.renderFooter}
-        onRefresh={this.handleRefresh}
-        refreshing={this.state.refreshing}
-        onEndReached={this.handleLoadMore}
-        onEndReachedThreshold={50}
-      />
-    );
-  }
+    }
 }
 
 const styles = StyleSheet.create({
@@ -145,7 +76,11 @@ const styles = StyleSheet.create({
     fontFamily: 'MyriadPro-Bold',
     
     fontSize: 16
+  },
+  separatorStyle: {
+    height: 15,
+    width: "86%",
+    backgroundColor: "transparent",
+    marginLeft: "14%"
   }
 });
-
-export default ImportFlatList;
