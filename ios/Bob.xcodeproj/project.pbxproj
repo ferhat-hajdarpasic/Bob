@@ -53,6 +53,12 @@
 		9809AFA4308644C4BB904DE7 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 767A3808D7084F7BBD1095D8 /* Octicons.ttf */; };
 		B82E94B77B384645AE811510 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AE92D0C9B52408693B70EB0 /* SimpleLineIcons.ttf */; };
 		66F761A50A2D431BB8E6C133 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA5A94B69A5A4AA5BB226094 /* Zocial.ttf */; };
+		B617EF58DD0040B3977E0A63 /* Bauhaus 93 in Resources */ = {isa = PBXBuildFile; fileRef = 443C2467AE1242839773378E /* Bauhaus 93 */; };
+		0733B93D2E3B45F88166610E /* Myriad Pro Bold in Resources */ = {isa = PBXBuildFile; fileRef = 117E72B18EDA4E70BCB1E39A /* Myriad Pro Bold */; };
+		50E8240ECBC04CC19CD1E571 /* Myriad Pro Regular in Resources */ = {isa = PBXBuildFile; fileRef = 7DFA1F8FA809469390968983 /* Myriad Pro Regular */; };
+		66515028A40848838449FA1C /* Bauhaus 93.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3011E84A0B10408E896B6797 /* Bauhaus 93.ttf */; };
+		14E8CF1BFD484A6D8E568421 /* Myriad Pro Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4E83C3CC62B4FB0A9DC279D /* Myriad Pro Bold.ttf */; };
+		70428EDE5BD34D1F9D0C79C6 /* Myriad Pro Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A7B7E2A091242B68401A21B /* Myriad Pro Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -377,6 +383,12 @@
 		767A3808D7084F7BBD1095D8 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		6AE92D0C9B52408693B70EB0 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		CA5A94B69A5A4AA5BB226094 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		443C2467AE1242839773378E /* Bauhaus 93 */ = {isa = PBXFileReference; name = "Bauhaus 93"; path = "../Resources/FONTS/Bauhaus 93"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		117E72B18EDA4E70BCB1E39A /* Myriad Pro Bold */ = {isa = PBXFileReference; name = "Myriad Pro Bold"; path = "../Resources/FONTS/Myriad Pro Bold"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7DFA1F8FA809469390968983 /* Myriad Pro Regular */ = {isa = PBXFileReference; name = "Myriad Pro Regular"; path = "../Resources/FONTS/Myriad Pro Regular"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3011E84A0B10408E896B6797 /* Bauhaus 93.ttf */ = {isa = PBXFileReference; name = "Bauhaus 93.ttf"; path = "../Resources/FONTS/Bauhaus 93.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B4E83C3CC62B4FB0A9DC279D /* Myriad Pro Bold.ttf */ = {isa = PBXFileReference; name = "Myriad Pro Bold.ttf"; path = "../Resources/FONTS/Myriad Pro Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8A7B7E2A091242B68401A21B /* Myriad Pro Regular.ttf */ = {isa = PBXFileReference; name = "Myriad Pro Regular.ttf"; path = "../Resources/FONTS/Myriad Pro Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -677,6 +689,12 @@
 				767A3808D7084F7BBD1095D8 /* Octicons.ttf */,
 				6AE92D0C9B52408693B70EB0 /* SimpleLineIcons.ttf */,
 				CA5A94B69A5A4AA5BB226094 /* Zocial.ttf */,
+				443C2467AE1242839773378E /* Bauhaus 93 */,
+				117E72B18EDA4E70BCB1E39A /* Myriad Pro Bold */,
+				7DFA1F8FA809469390968983 /* Myriad Pro Regular */,
+				3011E84A0B10408E896B6797 /* Bauhaus 93.ttf */,
+				B4E83C3CC62B4FB0A9DC279D /* Myriad Pro Bold.ttf */,
+				8A7B7E2A091242B68401A21B /* Myriad Pro Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1152,6 +1170,12 @@
 				9809AFA4308644C4BB904DE7 /* Octicons.ttf in Resources */,
 				B82E94B77B384645AE811510 /* SimpleLineIcons.ttf in Resources */,
 				66F761A50A2D431BB8E6C133 /* Zocial.ttf in Resources */,
+				B617EF58DD0040B3977E0A63 /* Bauhaus 93 in Resources */,
+				0733B93D2E3B45F88166610E /* Myriad Pro Bold in Resources */,
+				50E8240ECBC04CC19CD1E571 /* Myriad Pro Regular in Resources */,
+				66515028A40848838449FA1C /* Bauhaus 93.ttf in Resources */,
+				14E8CF1BFD484A6D8E568421 /* Myriad Pro Bold.ttf in Resources */,
+				70428EDE5BD34D1F9D0C79C6 /* Myriad Pro Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

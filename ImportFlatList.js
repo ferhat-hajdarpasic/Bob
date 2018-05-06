@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     color: 'white',
-    fontFamily: 'MyriadPro-Bold',
+    fontFamily: 'Myriad Pro Bold',
     
     fontSize: 16
   },

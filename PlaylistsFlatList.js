@@ -74,12 +74,12 @@ export default class PlaylistsFlatList extends BobFlatList {
     },
     artistText: {
       color: 'white',
-      fontFamily: 'MyriadPro-Regular',
+      fontFamily: 'Myriad Pro Regular',
       fontSize: 12
     },
     albumText: {
       color: 'white',
-      fontFamily: 'MyriadPro-Bold',
+      fontFamily: 'Myriad Pro Bold',
       fontSize: 12
     },
     separatorStyle: {

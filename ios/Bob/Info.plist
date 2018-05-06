@@ -52,9 +52,6 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>BAUHS93.TTF</string>
-		<string>MyriadPro-Bold.otf</string>
-		<string>MyriadPro-Regular.otf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
 		<string>Feather.ttf</string>
@@ -66,6 +63,12 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Bauhaus 93</string>
+		<string>Myriad Pro Bold</string>
+		<string>Myriad Pro Regular</string>
+		<string>Bauhaus 93.ttf</string>
+		<string>Myriad Pro Bold.ttf</string>
+		<string>Myriad Pro Regular.ttf</string>
 	</array>
 </dict>
 </plist>
