@@ -12,7 +12,7 @@ export default class ImportFromSpotify extends Component {
     this.state = { code: '' };
   }
   render() {
-    console.log('nsvigstion='+this.props.navigation);
+    console.log('navigation='+this.props.navigation);
     const { params } = this.props.navigation.state;
     this.state.code = params.code;
     return (

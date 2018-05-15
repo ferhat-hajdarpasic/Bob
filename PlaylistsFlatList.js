@@ -23,7 +23,7 @@ export default class PlaylistsFlatList extends BobFlatList {
 
     for(let i = 0; i < playlists.items.length; i++) {
       let item = playlists.items[i];
-      console.log('FRED ITEM='+JSON.stringify(item.images));
+      console.log('FRED playlist='+JSON.stringify(item));
 
       data.push({
         name: item.name,

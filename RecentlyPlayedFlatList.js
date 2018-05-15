@@ -12,6 +12,12 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
     
   }
 
+  async componentDidMount() {
+    super.componentDidMount();
+    AppState.addEventListener('change', this._handleStateChange);
+    console.log('setAccessToken() called !!!!');
+}
+
   makeRemoteRequest = async () => {
     const code = this.props.code;
 
@@ -23,6 +29,7 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
 
     for(let i = 0; i < recentlyPlayed.items.length; i++) {
       let item = recentlyPlayed.items[i];
+      console.log('RESENTLYPLAYED='+JSON.stringify(item))
       let artists = [];
 
       for(let j = 0; j < item.track.artists.length; j++) {
@@ -66,8 +73,13 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
     );
     }
 
-    play = (name: string) => {
-      const code = this.props.code;
+    play = async (name: string) => {
+      // if(Spotify.isLoggedIn()) {
+      //   Spotify.playUri('spotify:track:3MRQn2RYo2VLYMoStnLRxu');
+      // } else {
+      //   console.log('Not logged in!');
+      // }
+      console.log('HABA');
     };
 }
 
