@@ -59,6 +59,9 @@
 		66515028A40848838449FA1C /* Bauhaus 93.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3011E84A0B10408E896B6797 /* Bauhaus 93.ttf */; };
 		14E8CF1BFD484A6D8E568421 /* Myriad Pro Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4E83C3CC62B4FB0A9DC279D /* Myriad Pro Bold.ttf */; };
 		70428EDE5BD34D1F9D0C79C6 /* Myriad Pro Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A7B7E2A091242B68401A21B /* Myriad Pro Regular.ttf */; };
+		437DB6E07B2349AB8D1B01CE /* libRNTrackPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF449AB95954935ACD3320F /* libRNTrackPlayer.a */; };
+		499C49650D4041529FB21094 /* libRNSdkSpotify.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30921513632042BF849BA945 /* libRNSdkSpotify.a */; };
+		EB66A1EF9D9C4CBAA8A490A8 /* libRNSpotify.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 098C9F3BC45646708F97FF6F /* libRNSpotify.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -389,6 +392,12 @@
 		3011E84A0B10408E896B6797 /* Bauhaus 93.ttf */ = {isa = PBXFileReference; name = "Bauhaus 93.ttf"; path = "../Resources/FONTS/Bauhaus 93.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B4E83C3CC62B4FB0A9DC279D /* Myriad Pro Bold.ttf */ = {isa = PBXFileReference; name = "Myriad Pro Bold.ttf"; path = "../Resources/FONTS/Myriad Pro Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		8A7B7E2A091242B68401A21B /* Myriad Pro Regular.ttf */ = {isa = PBXFileReference; name = "Myriad Pro Regular.ttf"; path = "../Resources/FONTS/Myriad Pro Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		53EC7990467744198789AAFF /* RNTrackPlayer.xcodeproj */ = {isa = PBXFileReference; name = "RNTrackPlayer.xcodeproj"; path = "../node_modules/react-native-track-player/ios/RNTrackPlayer.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		DCF449AB95954935ACD3320F /* libRNTrackPlayer.a */ = {isa = PBXFileReference; name = "libRNTrackPlayer.a"; path = "libRNTrackPlayer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		B27A59E900E4433C89E87C3D /* RNSdkSpotify.xcodeproj */ = {isa = PBXFileReference; name = "RNSdkSpotify.xcodeproj"; path = "../node_modules/react-native-spotify-sdk/ios/RNSdkSpotify.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		30921513632042BF849BA945 /* libRNSdkSpotify.a */ = {isa = PBXFileReference; name = "libRNSdkSpotify.a"; path = "libRNSdkSpotify.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		8C353FB4439249A39E45D9B6 /* RNSpotify.xcodeproj */ = {isa = PBXFileReference; name = "RNSpotify.xcodeproj"; path = "../node_modules/rn-spotify-sdk/ios/RNSpotify.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		098C9F3BC45646708F97FF6F /* libRNSpotify.a */ = {isa = PBXFileReference; name = "libRNSpotify.a"; path = "libRNSpotify.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,6 +428,9 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				3FE33B9E0E5C45A8A272A646 /* libBVLinearGradient.a in Frameworks */,
 				1B2BCA6265D041B390E635A8 /* libRNVectorIcons.a in Frameworks */,
+				437DB6E07B2349AB8D1B01CE /* libRNTrackPlayer.a in Frameworks */,
+				499C49650D4041529FB21094 /* libRNSdkSpotify.a in Frameworks */,
+				EB66A1EF9D9C4CBAA8A490A8 /* libRNSpotify.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,6 +634,9 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				E98E4228EBB74EB081C470B1 /* BVLinearGradient.xcodeproj */,
 				44CE267144D84F3AB03C9A2E /* RNVectorIcons.xcodeproj */,
+				53EC7990467744198789AAFF /* RNTrackPlayer.xcodeproj */,
+				B27A59E900E4433C89E87C3D /* RNSdkSpotify.xcodeproj */,
+				8C353FB4439249A39E45D9B6 /* RNSpotify.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1302,12 +1317,18 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
+					"$(SRCROOT)/../node_modules/react-native-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 				);
 				INFOPLIST_FILE = BobTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1330,12 +1351,18 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
+					"$(SRCROOT)/../node_modules/react-native-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 				);
 				INFOPLIST_FILE = BobTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1359,6 +1386,9 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
+					"$(SRCROOT)/../node_modules/react-native-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 				);
 				INFOPLIST_FILE = Bob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1383,6 +1413,9 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
+					"$(SRCROOT)/../node_modules/react-native-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 				);
 				INFOPLIST_FILE = Bob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1416,11 +1449,17 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
+					"$(SRCROOT)/../node_modules/react-native-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 				);
 				INFOPLIST_FILE = "Bob-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1456,11 +1495,17 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
+					"$(SRCROOT)/../node_modules/react-native-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 				);
 				INFOPLIST_FILE = "Bob-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1493,11 +1538,17 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
+					"$(SRCROOT)/../node_modules/react-native-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 				);
 				INFOPLIST_FILE = "Bob-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1529,11 +1580,17 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
+					"$(SRCROOT)/../node_modules/react-native-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 				);
 				INFOPLIST_FILE = "Bob-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
