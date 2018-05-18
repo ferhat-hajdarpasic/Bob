@@ -5,12 +5,83 @@ import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 import { StyleSheet, WebView, Platform } from 'react-native';
 import BKD from './BobBackground'
 import accounting from 'accounting';
+import { NavigationActions } from 'react-navigation';
+import Spotify from 'rn-spotify-sdk';
 
 export default class BobLogin extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: '', password: '' };
+    this.state = { username: '', password: '', spotifyInitialized: false };
+    this.spotifyLoginButtonWasPressed = this.spotifyLoginButtonWasPressed.bind(this);
   }
+  goToPlayer()
+	{
+		this.props.navigation.navigate('ImportFromSpotify', { });
+		// const navAction = NavigationActions.reset({
+		// 	index: 0,
+		// 	actions: [
+		// 	  NavigationActions.navigate({ routeName: 'player'})
+		// 	]
+		// });
+		// this.props.navigation.dispatch(navAction);
+  }
+  componentDidMount()
+	{
+		// initialize Spotify if it hasn't been initialized yet
+		if(!Spotify.isInitialized())
+		{
+			// initialize spotify
+			var spotifyOptions = {
+				"clientID":"6a878d3c8b854a1387d2bcbe4c665cea",
+				"sessionUserDefaultsKey":"SpotifySession",
+				"redirectURL":"testschema://callback",
+				"scopes":["user-read-private", "user-read-email", "playlist-read-private", "user-library-read", "user-read-recently-played", "streaming"],
+			};
+			Spotify.initialize(spotifyOptions).then((loggedIn) => {
+				// update UI state
+				this.setState({spotifyInitialized: true});
+				// handle initialization
+				if(loggedIn)
+				{
+					this.goToPlayer();
+				}
+			}).catch((error) => {
+				console.log("Error", error);
+			});
+		}
+		else
+		{
+			// update UI state
+			this.setState((state) => {
+				state.spotifyInitialized = true;
+				return state;
+			});
+			// handle logged in
+			if(Spotify.isLoggedIn())
+			{
+        this.goToPlayer();
+			}
+		}
+  }
+  spotifyLoginButtonWasPressed()
+	{
+		// log into Spotify
+		Spotify.login().then((loggedIn) => {
+			if(loggedIn)
+			{
+				// logged in
+				this.goToPlayer();
+			}
+			else
+			{
+				// cancelled
+			}
+		}).catch((error) => {
+			// error
+			console.log("Error", error);
+		});
+	}
+
   render() {
     console.log('FRED=' + accounting.formatMoney(455678.678));
     let redirect_url = 'about:blank';
@@ -30,7 +101,7 @@ export default class BobLogin extends Component {
             <Image source={require('./Resources/3RD_PARTY_LOGOS/GOOGLE.png')} style={styles.google} />
             <Image source={require('./Resources/3RD_PARTY_LOGOS/FB.png')} style={styles.facebook} />
           </View>
-          <Text style={styles.login} onPress={() => this.props.navigation.navigate('InitialScreen', { name: 'Jane' })}>login</Text>
+          <Text style={styles.login} onPress={this.spotifyLoginButtonWasPressed}>login</Text>
           <Text style={styles.joinBob}>join bob</Text>
         </View>
       </BKD>

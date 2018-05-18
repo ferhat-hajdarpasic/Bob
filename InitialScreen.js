@@ -30,7 +30,7 @@ export default class InitialScreen extends Component
 		const navAction = NavigationActions.reset({
 			index: 0,
 			actions: [
-			  NavigationActions.navigate({ routeName: 'player'})
+			  NavigationActions.navigate({ routeName: 'ImportFromSpotify'})
 			]
 		});
 		this.props.navigation.dispatch(navAction);

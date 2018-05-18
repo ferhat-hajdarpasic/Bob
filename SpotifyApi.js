@@ -1,5 +1,6 @@
 
 import Buffer from 'buffer';
+import Spotify from 'rn-spotify-sdk';
 
 let redirect_uri = 'https://example.com/callback';
 let client_id = '6a878d3c8b854a1387d2bcbe4c665cea';
@@ -8,11 +9,8 @@ let client_secret = '7da30991cb4d4e8aa5382ab28f20fd97'
 async function handleResponse(response) {
     if(response.ok) {
         let responseJson = await response.json();
-        //console.log('responseJson=' + JSON.stringify(responseJson));
         return responseJson;
     } else {
-        console.log('response.ok=' + response.ok);
-        console.log('response.status=' + response.status);
         throw new Error('Call api failed.' + response.status);
     }
 }
@@ -44,8 +42,9 @@ async function getAccessToken(code) {
 }
 
 export default class SpotifyApi {
-    async me(code) {
-        var access_token = await getAccessToken(code);
+    async me(access_token) {
+        console.log('me:'+ access_token);
+        //var access_token = await getAccessToken(code);
         let meResponse = await fetch('https://api.spotify.com/v1/me', {
             method: 'GET',
             headers: {
@@ -55,8 +54,9 @@ export default class SpotifyApi {
         return await handleResponse(meResponse);
     }
 
-    async recentlyPlayed(code, limit) {
-        var access_token = await getAccessToken(code);
+    async recentlyPlayed(access_token, limit) {
+        console.log('recentlyPlayed:'+ access_token);
+        //var access_token = await getAccessToken(access_token);
         let recentlyPlayedResponse = await fetch('https://api.spotify.com/v1/me/player/recently-played', {
             method: 'GET',
             headers: {
@@ -66,8 +66,9 @@ export default class SpotifyApi {
         return await handleResponse(recentlyPlayedResponse);
     }
 
-    async playlists(code) {
-        var access_token = await getAccessToken(code);
+    async playlists(access_token) {
+        console.log('playlists:'+ access_token);
+        //var access_token = await getAccessToken(access_token);
         let meResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
             method: 'GET',
             headers: {
@@ -77,8 +78,9 @@ export default class SpotifyApi {
         return await handleResponse(meResponse);
     }
 
-    async albums(code) {
-        var access_token = await getAccessToken(code);
+    async albums(access_token) {
+        console.log('albums:'+ access_token);
+        //var access_token = await getAccessToken(code);
         let albumsResponse = await fetch('https://api.spotify.com/v1/me/albums', {
             method: 'GET',
             headers: {

@@ -9,12 +9,14 @@ import RecentlyPlayedFlatList from './RecentlyPlayedFlatList'
 export default class RecentlyPlayed extends Component {
   constructor(props) {
     super(props);
-    this.state = { code: '' };
+    this.state = { accessToken: '' };
   }
   render() {
+    console.log('props:'+JSON.stringify(this.props));
     const { params } = this.props.navigation.state;
-    this.state.code = params.code;
+    console.log('params.accessToken:'+params.accessToken);
     this.state.recentlyPlayed = params.recentlyPlayed;
+    this.state.accessToken = params.accessToken;
     return (
         <BKD title='recently played'>
         <View style={{
@@ -24,7 +26,7 @@ export default class RecentlyPlayed extends Component {
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5 }}>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
-            <RecentlyPlayedFlatList code={this.state.code} recentlyPlayed={this.state.recentlyPlayed}/>
+            <RecentlyPlayedFlatList accessToken={this.state.accessToken} recentlyPlayed={this.state.recentlyPlayed}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />

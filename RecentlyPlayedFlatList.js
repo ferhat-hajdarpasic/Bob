@@ -4,6 +4,8 @@ import { List, ListItem, SearchBar } from "react-native-elements";
 
 import BobFlatList from './BobFlatList'
 import SpotifyApi from './SpotifyApi'
+import Spotify from 'rn-spotify-sdk';
+
 let api = new SpotifyApi();
 
 export default class RecentlyPlayedFlatList extends BobFlatList {
@@ -19,14 +21,17 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
 }
 
   makeRemoteRequest = async () => {
-    const code = this.props.code;
+    console.log('this.props' + this.props);
+    const accessToken = this.props.accessToken;
+    console.log('****' + accessToken);
 
     this.setState({ loading: true });
 
-    let recentlyPlayed = await api.recentlyPlayed(code);
+    let recentlyPlayed = await api.recentlyPlayed(accessToken);
 
     let data = []
 
+    let trackNames = [];
     for(let i = 0; i < recentlyPlayed.items.length; i++) {
       let item = recentlyPlayed.items[i];
       console.log('RESENTLYPLAYED='+JSON.stringify(item))
@@ -36,11 +41,15 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
         artists.push(item.track.artists[j].name);
       }
       let name = artists.join(' and ');
-      data.push({
-        name: name,
-        url: item.track.album.images[0].url,
-        album: item.track.album.name
-      });
+      if(!trackNames.includes(name)) {
+        data.push({
+          name: name,
+          image_url: item.track.album.images[0].url,
+          album: item.track.album.name,
+          uri: item.track.uri
+        });
+        trackNames.push(name);
+      }
     }
 
     this.setState({
@@ -60,7 +69,7 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
 
   renderItem = ( {item, index} ) => {
     return (
-      <TouchableHighlight onPress={() => this.play(item.name)}>
+      <TouchableHighlight onPress={() => this.play(item)}>
       <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
         <Image source={{uri: item.url}} style={{width:50, height:50}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
@@ -73,13 +82,15 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
     );
     }
 
-    play = async (name: string) => {
+    play = async (item) => {
+      console.log('item:' + JSON.stringify(item));
       // if(Spotify.isLoggedIn()) {
       //   Spotify.playUri('spotify:track:3MRQn2RYo2VLYMoStnLRxu');
       // } else {
       //   console.log('Not logged in!');
       // }
       console.log('HABA');
+      Spotify.playURI(item.uri, 0, 0);
     };
 }
 

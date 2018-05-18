@@ -30,6 +30,15 @@ export default class PlayerScreen extends Component
 		// send api request to get user info
 		Spotify.getMe().then((result) => {
 			// update state with user info
+			console.log("GETTING freaking *****result=" + JSON.stringify(result));
+			try {
+			let auth = Spotify.getAuth();
+			let access_code = JSON.stringify(auth)
+			console.log("FREDDY : access_token=" + access_code);
+		} catch(e) {
+
+			}
+	
 			this.setState({ spotifyUserName: result.display_name });
 			// play song
 			return Spotify.playURI("spotify:track:3MRQn2RYo2VLYMoStnLRxu", 0, 0);

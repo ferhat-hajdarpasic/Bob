@@ -15,10 +15,14 @@ export default class BobFlatList extends Component {
   }
 
   async componentDidMount() {
+    console.log('componentDidMount');
+    await super.componentDidMount();
+    console.log('componentDidMount - 2');
     await this.makeRemoteRequest();
   }
 
   handleRefresh = () => {
+    console.log('handleRefresh');
     this.setState(
       {
         refreshing: true
@@ -30,6 +34,7 @@ export default class BobFlatList extends Component {
   };
 
   handleLoadMore = () => {
+    console.log('handleLoadMore');
     this.setState(
       {
       },
