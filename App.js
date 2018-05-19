@@ -9,26 +9,29 @@ import {
   ScrollView
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import BobLogin from './BobLogin'
-import LoginToSpotify from './LoginToSpotify'
-import InitialScreen from './InitialScreen'
+// import BobLogin from './BobLogin'
+// import LoginToSpotify from './LoginToSpotify'
+// import InitialScreen from './InitialScreen'
 
-import ImportFromSpotify from './ImportFromSpotify'
-import Playlists from './Playlists'
-import RecentlyPlayed from './RecentlyPlayed'
-import Albums from './Albums'
-import PlayerScreen from "./PlayerScreen.js"
+// import ImportFromSpotify from './ImportFromSpotify'
+// import Playlists from './Playlists'
+// import RecentlyPlayed from './RecentlyPlayed'
+// import Albums from './Albums'
+// import PlayerScreen from "./PlayerScreen.js"
+import AlbumBackground from "./AlbumBackground.js"
 
 export default StackNavigator(
   {
-    Main: { screen: BobLogin },
-    LoginToSpotify: {screen: LoginToSpotify },
-    InitialScreen: {screen: InitialScreen},        
-    ImportFromSpotify: {screen: ImportFromSpotify},
-    Playlists: {screen: Playlists},
-    RecentlyPlayed: {screen: RecentlyPlayed},
-    Albums: {screen: Albums},
-  	player: { screen:PlayerScreen }
+    Main: { screen: AlbumBackground }
+    // ,
+    // BobLogin: { screen: BobLogin },
+    // LoginToSpotify: {screen: LoginToSpotify },
+    // InitialScreen: {screen: InitialScreen},        
+    // ImportFromSpotify: {screen: ImportFromSpotify},
+    // Playlists: {screen: Playlists},
+    // RecentlyPlayed: {screen: RecentlyPlayed},
+    // Albums: {screen: Albums},
+  	// player: { screen:PlayerScreen }
 },
   {
     headerMode: 'none',
