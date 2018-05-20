@@ -18,11 +18,11 @@ import { StackNavigator } from 'react-navigation';
 // import RecentlyPlayed from './RecentlyPlayed'
 // import Albums from './Albums'
 // import PlayerScreen from "./PlayerScreen.js"
-import AlbumBackground from "./AlbumBackground.js"
+import Album from "./Album.js"
 
 export default StackNavigator(
   {
-    Main: { screen: AlbumBackground }
+    Main: { screen: Album }
     // ,
     // BobLogin: { screen: BobLogin },
     // LoginToSpotify: {screen: LoginToSpotify },

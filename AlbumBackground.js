@@ -6,45 +6,63 @@ import LinearGradient from 'react-native-linear-gradient';
 import { ImageColorPicker } from 'react-native-image-color-picker';
 
 //40":0,"_65":2,"_55
+/*
+rgba(136,112,56,1)
+rgba(176,176,144,1)
+rgba(200,176,104,1)
+rgba(232,208,152,1)
+rgba(160,144,88,1)
+rgba(216,200,136,1)
+rgba(248,232,192,1)
+rgba(104,88,48,1)
+rgba(128,136,136,1)
+rgba(64,48,8,1)
+rgba(80,80,48,1)
+rgba(48,56,40,1)
+rgba(120,120,112,1)
+rgba(112,128,136,1)
+*/
 class AlbumBackground_ extends Component {
   state = {
     palettes: [],
-    loadingPalettes: true
+    loadingPalettes: true,
+    dominantColor: 'blue'
   };
   pickerCallback = message => {
-    console.log('FRED='+message);
+    console.log('FRED=' + message);
     if (message && (message.nativeEvent && message.nativeEvent.data || message.promise)) {
       let messageData = JSON.parse(message.nativeEvent && message.nativeEvent.data || message.promise);
       if (messageData.message === 'imageColorPicker' && messageData.payload) {
         const palettes = messageData.payload;
-        this.setState({ palettes, loadingPalettes: false });
+        this.setState({ palettes, loadingPalettes: false, dominantColor: `rgba(${Object.values(palettes[4])})`});
         palettes.map(palette => {
-              console.log(`backgroundColor: rgba(${Object.values(palette).join(',')})`);
-        });
+          console.log(`backgroundColor: rgba(${Object.values(palette).join(',')})`);
+        });        
       }
     }
   }
-  
+
 
   render() {
-  return (
+    return (
       <View style={{ flex: 1 }}>
         <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', }}>
-          <LinearGradient
-            start={{ x: 0.5, y: 0.0 }} end={{ x: 0.5, y: 0.2 }}
-            locations={[0.0, 1.0]}
-            colors={['#656263', '#393536']} style={styles.LinearGradientStyle} >
-            <ImageBackground source={{uri:'https://i.scdn.co/image/d0b1088e6172acbe186bd7cdb47b099d252261ff'}} style={styles.titleImage} />
-          </LinearGradient>
+        <ImageBackground source={{ uri: 'https://i.scdn.co/image/4862a7168866cfd07a288e110f034381a2258035' }} style={styles.titleImage} />
+          <ImageColorPicker
+            imageUrl="https://i.scdn.co/image/4862a7168866cfd07a288e110f034381a2258035"
+            imageWidth="25"
+            imageHeight="25"
+            pickerCallback={this.pickerCallback}
+          />
         </View>
-        
-        <View style={{flex: 1,backgroundColor: 'transparent',justifyContent: 'center'}}>
-        <ImageColorPicker
-          imageUrl="https://i.scdn.co/image/d0b1088e6172acbe186bd7cdb47b099d252261ff"
-          imageWidth="25"
-          imageHeight="25"
-          pickerCallback={this.pickerCallback}
-        />
+
+        <View style={{ flex: 1, backgroundColor: 'transparent', justifyContent: 'center' }}>
+        <LinearGradient
+            start={{ x: 0.5, y: 0.0 }} end={{ x: 0.5, y: 0.5 }}
+            locations={[0.0, 1.0]}
+            colors={['transparent', this.state.dominantColor]} style={styles.LinearGradientStyle} >
+             {this.props.children}
+          </LinearGradient>
         </View>
       </View>
     );
@@ -74,7 +92,8 @@ const styles = StyleSheet.create({
   LinearGradientStyle: {
     borderRadius: 0,
     height: '100%',
-    width: '100%'
+    width: '100%',
+    opacity:0.99
   },
 
   ChildViewStyle: {
@@ -113,11 +132,11 @@ const styles = StyleSheet.create({
   titleText: {
     color: 'white',
     fontFamily: 'Bauhaus 93',
-    fontSize:20,
+    fontSize: 20,
     position: 'absolute',
     top: '7%',
     left: '26%'
   }
-  
+
 
 });
