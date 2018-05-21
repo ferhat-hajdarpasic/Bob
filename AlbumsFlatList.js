@@ -4,6 +4,7 @@ import { List, ListItem, SearchBar } from "react-native-elements";
 
 import BobFlatList from './BobFlatList'
 import SpotifyApi from './SpotifyApi'
+import Spotify from 'rn-spotify-sdk';
 let api = new SpotifyApi();
 
 export default class AlbumsFlatList extends BobFlatList {
@@ -13,11 +14,12 @@ export default class AlbumsFlatList extends BobFlatList {
   }
 
   makeRemoteRequest = async () => {
-    const code = this.props.code;
+    let auth = Spotify.getAuth();
 
     this.setState({ loading: true });
 
-    let albums = await api.albums(code);
+    let albums = await api.albums(auth.accessToken);
+    console.log('albums=' + JSON.stringify(albums));
 
     let data = []
 
@@ -30,11 +32,14 @@ export default class AlbumsFlatList extends BobFlatList {
       }
       let name = artists.join(' and ');
       data.push({
-        name: name,
+        album: item.album,
+        artistName: name,
         url: item.album.images[0].url,
-        album: item.album.name
+        albumName: item.album.name,
+        albumId: item.album.id
       });
     }
+    console.log('data=' + JSON.stringify(data));
 
     this.setState({
       data: data,
@@ -53,22 +58,18 @@ export default class AlbumsFlatList extends BobFlatList {
 
   renderItem = ( {item, index} ) => {
     return (
-      <TouchableHighlight onPress={() => this.play(item.name)}>
+      <TouchableHighlight onPress={() =>  this.props.navigation.navigate('Album', { album: item.album })}>
       <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
         <Image source={{uri: item.url}} style={{width:50, height:50}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
-          <Text style={styles.albumText}>{item.album} </Text>
-          <Text style={styles.artistText}>{item.name} </Text>
+          <Text style={styles.albumText}>{item.albumName} </Text>
+          <Text style={styles.artistText}>{item.artistName} </Text>
         </View>
         <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
       </View>
       </TouchableHighlight>
     );
-    }
-
-    play = (name: string) => {
-      const code = this.props.code;
-    };
+  }
 }
 
 const styles = StyleSheet.create({

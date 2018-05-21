@@ -24,7 +24,7 @@ export default class Albums extends Component {
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5 }}>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
-            <AlbumsFlatList code={this.state.code} recentlyPlayed={this.state.recentlyPlayed}/>
+            <AlbumsFlatList code={this.state.code} recentlyPlayed={this.state.recentlyPlayed} navigation={this.props.navigation}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />

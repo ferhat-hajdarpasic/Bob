@@ -47,9 +47,9 @@ class AlbumBackground_ extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', }}>
-        <ImageBackground source={{ uri: 'https://i.scdn.co/image/4862a7168866cfd07a288e110f034381a2258035' }} style={styles.titleImage} />
+        <ImageBackground source={{ uri: this.props.album.images[0].url }} style={styles.titleImage} />
           <ImageColorPicker
-            imageUrl="https://i.scdn.co/image/4862a7168866cfd07a288e110f034381a2258035"
+            imageUrl={this.props.album.images[0].url}
             imageWidth="25"
             imageHeight="25"
             pickerCallback={this.pickerCallback}
@@ -71,7 +71,7 @@ class AlbumBackground_ extends Component {
 export default class BobBackgAlbumBackground extends Component {
   render() {
     return (
-      <AlbumBackground_ title={this.props.title}>
+      <AlbumBackground_ album={this.props.album}>
         {this.props.children}
       </AlbumBackground_>
     );

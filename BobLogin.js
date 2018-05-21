@@ -14,23 +14,11 @@ export default class BobLogin extends Component {
     this.state = { username: '', password: '', spotifyInitialized: false };
     this.spotifyLoginButtonWasPressed = this.spotifyLoginButtonWasPressed.bind(this);
   }
-  goToPlayer()
-	{
-		this.props.navigation.navigate('ImportFromSpotify', { });
-		// const navAction = NavigationActions.reset({
-		// 	index: 0,
-		// 	actions: [
-		// 	  NavigationActions.navigate({ routeName: 'player'})
-		// 	]
-		// });
-		// this.props.navigation.dispatch(navAction);
-  }
   componentDidMount()
 	{
 		// initialize Spotify if it hasn't been initialized yet
 		if(!Spotify.isInitialized())
 		{
-			// initialize spotify
 			var spotifyOptions = {
 				"clientID":"6a878d3c8b854a1387d2bcbe4c665cea",
 				"sessionUserDefaultsKey":"SpotifySession",
@@ -38,12 +26,9 @@ export default class BobLogin extends Component {
 				"scopes":["user-read-private", "user-read-email", "playlist-read-private", "user-library-read", "user-read-recently-played", "streaming"],
 			};
 			Spotify.initialize(spotifyOptions).then((loggedIn) => {
-				// update UI state
 				this.setState({spotifyInitialized: true});
-				// handle initialization
-				if(loggedIn)
-				{
-					this.goToPlayer();
+				if(loggedIn) {
+					console.log("Spotify logged in.");
 				}
 			}).catch((error) => {
 				console.log("Error", error);
@@ -56,25 +41,18 @@ export default class BobLogin extends Component {
 				state.spotifyInitialized = true;
 				return state;
 			});
-			// handle logged in
-			if(Spotify.isLoggedIn())
-			{
-        this.goToPlayer();
-			}
 		}
   }
   spotifyLoginButtonWasPressed()
 	{
-		// log into Spotify
 		Spotify.login().then((loggedIn) => {
 			if(loggedIn)
 			{
-				// logged in
-				this.goToPlayer();
+				this.props.navigation.navigate('ImportFromSpotify', { });
 			}
 			else
 			{
-				// cancelled
+				console.log("Spotify not logged in.");
 			}
 		}).catch((error) => {
 			// error

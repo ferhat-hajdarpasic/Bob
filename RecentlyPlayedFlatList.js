@@ -21,13 +21,10 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
 }
 
   makeRemoteRequest = async () => {
-    console.log('this.props' + this.props);
-    const accessToken = this.props.accessToken;
-    console.log('****' + accessToken);
-
     this.setState({ loading: true });
 
-    let recentlyPlayed = await api.recentlyPlayed(accessToken);
+    let auth = Spotify.getAuth();
+    let recentlyPlayed = await api.recentlyPlayed(auth.accessToken);
 
     let data = []
 
@@ -71,7 +68,7 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
     return (
       <TouchableHighlight onPress={() => this.play(item)}>
       <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
-        <Image source={{uri: item.url}} style={{width:50, height:50}}/>
+        <Image source={{uri: item.image_url}} style={{width:50, height:50}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
           <Text style={styles.albumText}>{item.album} </Text>
           <Text style={styles.artistText}>{item.name} </Text>

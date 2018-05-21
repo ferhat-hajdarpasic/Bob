@@ -89,5 +89,17 @@ export default class SpotifyApi {
         });
         return await handleResponse(albumsResponse);
     }
+
+    async album(access_token, albumId) {
+        console.log('albums:'+ access_token);
+        //var access_token = await getAccessToken(code);
+        let albumResponse = await fetch('https://api.spotify.com/v1/albums/' + albumId, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            }
+        });
+        return await handleResponse(albumResponse);
+    }
     
 }

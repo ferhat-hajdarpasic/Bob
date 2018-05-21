@@ -16,13 +16,13 @@ export default class ImportFlatList extends BobFlatList {
   async componentDidMount() {
   }
   makeRemoteRequest = async () => {
-    let result = await Spotify.getMe();
-    console.log("GETTING freaking *****result=" + JSON.stringify(result));
+    //let result = await Spotify.getMe();
+    //console.log("GETTING freaking *****result=" + JSON.stringify(result));
     let auth = Spotify.getAuth();
 
     console.log("FREDDY : auth=" + JSON.stringify(auth));
     console.log("FREDDY : auth.accessToken=" + auth.accessToken);
-    this.setState({ spotifyUserName: result.display_name });
+    //this.setState({ spotifyUserName: result.display_name });
 
     this.setState({ loading: true });
 

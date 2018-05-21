@@ -4,6 +4,8 @@ import { List, ListItem, SearchBar } from "react-native-elements";
 
 import BobFlatList from './BobFlatList'
 import SpotifyApi from './SpotifyApi'
+import Spotify from 'rn-spotify-sdk';
+
 let api = new SpotifyApi();
 
 export default class PlaylistsFlatList extends BobFlatList {
@@ -13,11 +15,10 @@ export default class PlaylistsFlatList extends BobFlatList {
   }
 
   makeRemoteRequest = async () => {
-    const code = this.props.code;
-
     this.setState({ loading: true });
 
-    let playlists = await api.playlists(code);
+    let auth = Spotify.getAuth();
+    let playlists = await api.playlists(auth.accessToken);
 
     let data = []
 
