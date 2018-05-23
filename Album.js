@@ -34,7 +34,7 @@ export default class Album extends Component {
             <Text style={styles.artistName}>{album.artists[0].name}</Text>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 2.5, marginLeft:'10%' }}>
-            <AlbumFlatList album={album}/>
+            <AlbumFlatList album={album} navigation={this.props.navigation}/>
           </View>
         </View>
       </AlbumBackground>

@@ -41,9 +41,7 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
       if(!trackNames.includes(name)) {
         data.push({
           name: name,
-          image_url: item.track.album.images[0].url,
-          album: item.track.album.name,
-          uri: item.track.uri
+          track: item.track
         });
         trackNames.push(name);
       }
@@ -66,11 +64,11 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
 
   renderItem = ( {item, index} ) => {
     return (
-      <TouchableHighlight onPress={() => this.play(item)}>
+      <TouchableHighlight onPress={() => this.play(item.track)}>
       <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
-        <Image source={{uri: item.image_url}} style={{width:50, height:50}}/>
+        <Image source={{uri: item.track.album.images[0].url}} style={{width:50, height:50}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
-          <Text style={styles.albumText}>{item.album} </Text>
+          <Text style={styles.albumText}>{item.track.album.name} </Text>
           <Text style={styles.artistText}>{item.name} </Text>
         </View>
         <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
@@ -79,15 +77,9 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
     );
     }
 
-    play = async (item) => {
-      console.log('item:' + JSON.stringify(item));
-      // if(Spotify.isLoggedIn()) {
-      //   Spotify.playUri('spotify:track:3MRQn2RYo2VLYMoStnLRxu');
-      // } else {
-      //   console.log('Not logged in!');
-      // }
-      console.log('HABA');
-      Spotify.playURI(item.uri, 0, 0);
+    play = async (track) => {
+      console.log('track:' + JSON.stringify(track));
+      this.props.navigation.navigate('player', { track: track });
     };
 }
 

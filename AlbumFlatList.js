@@ -25,8 +25,7 @@ export default class AlbumFlatList extends BobFlatList {
       let artistName = artists.join(' and ');
       tracks.push({
         artist: artistName,
-        name: track.name,
-        uri: track.uri
+        track: track
       });
     }
 
@@ -47,11 +46,11 @@ export default class AlbumFlatList extends BobFlatList {
 
   renderItem = ( {item, index} ) => {
     return (
-      <TouchableHighlight onPress={() => this.play(item.uri)}>
+      <TouchableHighlight onPress={() => this.play(item.track)}>
       <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
-        <Image source={{uri: item.url}} style={{width:50, height:50}}/>
+        <Image source={{uri: item.track.uri}} style={{width:50, height:50}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
-          <Text style={styles.albumText}>{item.name} </Text>
+          <Text style={styles.albumText}>{item.track.name} </Text>
           <Text style={styles.artistText}>{item.artist} </Text>
         </View>
         <Image source={require('./Resources/ICONS/PLAY.png')} style={styles.titleImage} />
@@ -60,8 +59,9 @@ export default class AlbumFlatList extends BobFlatList {
     );
     }
 
-    play = (name: string) => {
-      const code = this.props.code;
+    play = (track) => {
+      console.log('AlbumFlatList=>track:' + JSON.stringify(track));
+      this.props.navigation.navigate('player', { track: track });
     };
 }
 
