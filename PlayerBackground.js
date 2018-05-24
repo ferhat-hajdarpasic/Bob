@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { StyleSheet, View, Text, TextInput, Image, ImageBackground } from 'react-native';
+import { BlurView } from 'react-native-blur';
 
 class PlayerBackground_ extends Component {
   render() {
