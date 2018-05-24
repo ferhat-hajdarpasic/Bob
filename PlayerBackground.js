@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, Text, TextInput, Image, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Image, ImageBackground, Dimensions } from 'react-native';
 import { BlurView } from 'react-native-blur';
 
 class PlayerBackground_ extends Component {
@@ -8,11 +8,11 @@ class PlayerBackground_ extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', }}>
-            <ImageBackground source={{ uri: this.props.track.album.images[0].url }} style={styles.titleImage} />
+          <ImageBackground source={{ uri: this.props.track.album.images[0].url }} style={styles.imageTop} />
+          <ImageBackground source={{ uri: this.props.track.album.images[0].url }} style={styles.imageBottom} blurRadius={3}/>
         </View>
-
-        <View style={{ flex: 1, backgroundColor: 'transparent', justifyContent: 'center' }}>
-           {this.props.children}
+        <View style={{flex: 1,backgroundColor: 'transparent',justifyContent: 'center'}}>
+          {this.props.children}
         </View>
       </View>
     );
@@ -72,12 +72,23 @@ const styles = StyleSheet.create({
     //borderColor:'black',
     //borderWidth:1
   },
-  titleImage: {
+  imageTop: {
+    width: '100%',
+    height: '50%'
+  },
+  imageBottom: {
     width: '100%',
     height: '50%',
-    //position: 'absolute',
-    //top: '5%',
-    //left: '10%'
+    maxHeight: '50%',
+    //overflow: 'hidden',
+    //crop: {left: 10, top: 50, width: 20, height: 40},
+    transform: [
+    //  { perspective: 850 },
+      //{ translateY: 1.5*(Dimensions.get('window').height/2) - Dimensions.get('window').height/2 },
+      { rotateX: '180deg'},
+      { scaleX: 1.5},
+      { scaleY: 1.5}
+    ]
   },
   titleText: {
     color: 'white',
@@ -87,6 +98,4 @@ const styles = StyleSheet.create({
     top: '7%',
     left: '26%'
   }
-
-
 });
