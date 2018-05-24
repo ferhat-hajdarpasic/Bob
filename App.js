@@ -22,7 +22,8 @@ import Album from "./Album.js"
 
 export default StackNavigator(
   {
-    Main: { screen: BobLogin },
+    Main: { screen: PlayerScreen },
+    //Main: { screen: BobLogin },
     LoginToSpotify: {screen: LoginToSpotify },
     InitialScreen: {screen: InitialScreen},        
     ImportFromSpotify: {screen: ImportFromSpotify},
