@@ -9,7 +9,9 @@ class PlayerBackground_ extends Component {
       <View style={{ flex: 1 }}>
         <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', }}>
           <ImageBackground source={{ uri: this.props.track.album.images[0].url }} style={styles.imageTop} />
-          <ImageBackground source={{ uri: this.props.track.album.images[0].url }} style={styles.imageBottom} blurRadius={3}/>
+          <View style={{ height: '50%', overflow:'hidden', borderColor:'transparent', borderWidth:0}}>
+            <ImageBackground source={{ uri: this.props.track.album.images[0].url }} style={styles.imageBottom} blurRadius={3}/>
+          </View>
         </View>
         <View style={{flex: 1,backgroundColor: 'transparent',justifyContent: 'center'}}>
           {this.props.children}
@@ -78,9 +80,7 @@ const styles = StyleSheet.create({
   },
   imageBottom: {
     width: '100%',
-    height: '50%',
-    maxHeight: '50%',
-    //overflow: 'hidden',
+    height: '100%',
     //crop: {left: 10, top: 50, width: 20, height: 40},
     transform: [
     //  { perspective: 850 },

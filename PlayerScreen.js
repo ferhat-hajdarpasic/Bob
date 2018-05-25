@@ -6,7 +6,8 @@ import {
 	Text,
 	TouchableHighlight,
 	View,
-	Image
+	Image,
+	Slider
 } from 'react-native';
 
 import PlayerBackground from './PlayerBackground'
@@ -22,7 +23,7 @@ export default class PlayerScreen extends Component {
 	constructor() {
 		super();
 
-		this.state = { spotifyUserName: null };
+		this.state = { spotifyUserName: null, value: 50 };
 
 		this.spotifyLogoutButtonWasPressed = this.spotifyLogoutButtonWasPressed.bind(this);
 	}
@@ -50,6 +51,13 @@ export default class PlayerScreen extends Component {
 		// 	console.log("Error", error.message);
 		// });
 	}
+	change(value) {
+		this.setState(() => {
+			return {
+				value: parseFloat(value),
+			};
+		});
+	}
 
 	goToInitialScreen() {
 		const navAction = NavigationActions.reset({
@@ -73,25 +81,40 @@ export default class PlayerScreen extends Component {
 
 		return (
 			<PlayerBackground track={track}>
-			<View style={{
-			  flex: 1,
-			  flexDirection: 'column',
-			}}>
-			  <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5 }}>
-			  </View>
-			  <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center', justifyContent: 'space-between' }}>
-				<Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_WHITE.png')} style={styles.titleImage} />
-				<Image source={require('./Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
-			  </View>
-			  <View style={{ flexDirection: 'column', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
-				<Text style={styles.albumName}>{track.name}</Text>
-				<Text style={styles.artistName}>{track.artists[0].name}</Text>
-			  </View>
-			  <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 2.5, marginLeft:'10%' }}>
-
-			  </View>
-			</View>
-		  </PlayerBackground>
+				<View style={{ flex: 1, flexDirection: 'column' }}>
+					<View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
+						<Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_WHITE.png')} style={styles.homeImage} />
+					</View>
+					<Slider step={1} maximumValue={100} onValueChange={this.change.bind(this)} value={30} style={{ width: '100%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white'/>
+					<View style={{ flex: 1 }}>
+						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft:'10%', marginRight:'10%'}}>
+							<Image source={require('./Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
+							<View style={{ flexDirection: 'column', flex: 1, alignItems: 'center' }}>
+								<Text style={styles.trackName}>{track.name}</Text>
+								<Text style={styles.artistName}>{track.artists[0].name}</Text>
+							</View>
+							<Image source={require('./Resources/ICONS/ACTION_MENU.png')} style={{ width: 20, height: (209 / 783) * 20 }} />
+						</View>
+						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft:'5%', marginRight:'5%' }}>
+							<Image source={require('./Resources/ICONS/SHUFFLE_UNSELECTED.png')} style={{ width: 30, height: (565 / 719) * 30 }} />
+							<Image source={require('./Resources/ICONS/BACK.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							<Image source={require('./Resources/ICONS/PAUSE.png')} style={{ width: 20, height: (643 / 546) * 20 }} />
+							<Image source={require('./Resources/ICONS/FORWARD.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							<Image source={require('./Resources/ICONS/REPEAT_UNSELECTED.png')} style={{ width: 30, height: (686 / 638) * 30 }} />
+						</View>
+						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft:'15%', marginRight:'15%' }}>
+							<Image source={require('./Resources/ICONS/VOLUME_DOWN.png')} style={{ width: 20, height: (1560 / 1058) * 20 }} />
+							<Slider step={1} maximumValue={100} onValueChange={this.change.bind(this)} value={30} style={{ width: '80%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white'/>
+							<Image source={require('./Resources/ICONS/VOLUME_UP.png')} style={{ width: 20, height: (1550 / 1560) * 20 }} />
+						</View>
+						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft:'25%', marginRight:'25%', height: '10%' }}>
+							<Image source={require('./Resources/ICONS/DOWNLOAD_AVAILABLE.png')} style={{ width: 30, height: (561 / 842) * 30 }} />
+							<Image source={require('./Resources/ICONS/FAVOURITE_UNSELECTED.png')} style={{ width: 30, height: (687 / 649) * 30 }} />
+							<Image source={require('./Resources/ICONS/QUEUE.png')} style={{ width: 30, height: (652 / 908) * 30 }} />
+						</View>
+					</View>
+				</View>
+			</PlayerBackground>
 		);
 
 		// return (
@@ -114,6 +137,14 @@ export default class PlayerScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+	spotify: { width: 40, height: 40 * (1065 / 1045) },
+	homeImage: {
+		width: 50,
+		height: (214 / 241) * 50,
+		position: 'absolute',
+		top: '5%',
+		left: '10%'
+	},
 	container: {
 		flex: 1,
 		justifyContent: 'center',
@@ -125,4 +156,17 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		margin: 10,
 	},
+	artistName: {
+		color: 'white',
+		fontFamily: 'Myriad Pro Regular',
+		fontSize: 20,
+		padding:5
+	},
+	trackName: {
+		color: 'white',
+		fontFamily: 'Myriad Pro Bold',
+		fontSize: 20,
+		padding:5
+	}
+	  
 });
