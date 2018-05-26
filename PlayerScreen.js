@@ -50,12 +50,18 @@ export default class PlayerScreen extends Component {
 					console.log("Strange Spotify not logged in. Not trying to play");
 				} else {
 					console.log("Playing: " + this.state.track.uri);
-					Spotify.playURI(this.state.track.uri, 0, 0);
+					await Spotify.playURI(this.state.track.uri, 0, 0);
 				}
 			} catch(error) {
 				console.log("Error in loggin in", error);
 			}
 		}
+
+		
+		let playbackState = Spotify.getPlaybackState();
+		console.log('playbackState=' + JSON.stringify(playbackState));
+		let playbackMetadata = Spotify.getPlaybackMetadata();
+		console.log('playbackMetadata=' + JSON.stringify(playbackMetadata));
 		// const { params } = this.props.navigation.state;
 		// let track = params.track;
 
