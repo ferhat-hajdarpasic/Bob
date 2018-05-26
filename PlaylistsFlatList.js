@@ -24,11 +24,11 @@ export default class PlaylistsFlatList extends BobFlatList {
 
     for(let i = 0; i < playlists.items.length; i++) {
       let item = playlists.items[i];
-      console.log('FRED playlist='+JSON.stringify(item));
 
       data.push({
         name: item.name,
-        url: item.images.length > 0 ? item.images[0].url : ''
+        imageUrl: item.images.length > 0 ? item.images[0].url : '',
+        playlistHref: item.href
       });
     }
 
@@ -49,9 +49,9 @@ export default class PlaylistsFlatList extends BobFlatList {
 
   renderItem = ( {item, index} ) => {
       return (
-        <TouchableHighlight onPress={() => this.play(item.name)}>
+        <TouchableHighlight onPress={() => this.play(item)}>
         <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
-          <Image source={{uri: item.url}} style={{width:100, height:100}}/>
+          <Image source={{uri: item.imageUrl}} style={{width:100, height:100}}/>
           <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:20}}>
             <Text style={styles.albumText}>{item.name} </Text>
             <Text style={styles.artistText}>spotify</Text>
@@ -62,8 +62,9 @@ export default class PlaylistsFlatList extends BobFlatList {
       );
       }
   
-      play = (name: string) => {
-        const code = this.props.code;
+      play = (item) => {
+        console.log('item=' + JSON.stringify(item));
+        this.props.navigation.navigate('Playlist', { href: item.playlistHref, name: item.name });
       };
   }
   

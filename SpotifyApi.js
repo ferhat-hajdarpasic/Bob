@@ -106,6 +106,17 @@ export default class SpotifyApi {
         return await handleResponse(meResponse);
     }
 
+    async playlist(access_token, playlist_href) {
+        console.log(playlist_href);
+        let playlistResponse = await fetch(playlist_href, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            }
+        });
+        return await handleResponse(playlistResponse);
+    }
+
     async albums(access_token) {
         console.log('albums:'+ access_token);
         //var access_token = await getAccessToken(code);
