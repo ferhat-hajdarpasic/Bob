@@ -12,6 +12,7 @@ export default class AlbumFlatList extends BobFlatList {
     
   }
 
+  makeRemoteRequest() {}
   componentDidMount() {
     let tracks = []
 
@@ -25,7 +26,8 @@ export default class AlbumFlatList extends BobFlatList {
       let artistName = artists.join(' and ');
       tracks.push({
         artist: artistName,
-        track: track
+        track: track,
+        album: this.props.album
       });
     }
 
@@ -46,7 +48,7 @@ export default class AlbumFlatList extends BobFlatList {
 
   renderItem = ( {item, index} ) => {
     return (
-      <TouchableHighlight onPress={() => this.play(item.track)}>
+      <TouchableHighlight onPress={() => this.play(item.track, item.album)}>
       <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
         <Image source={{uri: item.track.uri}} style={{width:50, height:50}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
@@ -59,9 +61,8 @@ export default class AlbumFlatList extends BobFlatList {
     );
     }
 
-    play = (track) => {
-      console.log('AlbumFlatList=>track:' + JSON.stringify(track));
-      this.props.navigation.navigate('player', { track: track });
+    play = (track, album) => {
+      this.props.navigation.navigate('player', { track: track, album: album });
     };
 }
 
