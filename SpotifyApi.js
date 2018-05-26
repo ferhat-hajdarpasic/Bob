@@ -42,6 +42,34 @@ async function getAccessToken(code) {
 }
 
 export default class SpotifyApi {
+    async login() {
+		try {
+			if (!Spotify.isInitialized()) {
+				var spotifyOptions = {
+					"clientID": "6a878d3c8b854a1387d2bcbe4c665cea",
+					"sessionUserDefaultsKey": "SpotifySession",
+					"redirectURL": "testschema://callback",
+					"scopes": ["user-read-private", "user-read-email", "playlist-read-private", "user-library-read", "user-read-recently-played", "streaming"],
+				};
+				await Spotify.initialize(spotifyOptions);
+			}
+		} catch (error) {
+			console.log("Error in initialising", error);
+        }
+        console.log('********************');
+        let loggedIn = Spotify.isLoggedIn();
+        console.log('********************');
+		if (!loggedIn) {
+			try {
+				console.log("Spotify not logged in - logging in");
+				loggedIn = await Spotify.login();
+			} catch (error) {
+				console.log("Error in logging in", error);
+			}
+		}
+		return loggedIn;
+	}
+
     async me(access_token) {
         console.log('me:'+ access_token);
         //var access_token = await getAccessToken(code);

@@ -15,9 +15,7 @@ export default class BobFlatList extends Component {
   }
 
   async componentDidMount() {
-    console.log('componentDidMount');
-    await super.componentDidMount();
-    console.log('componentDidMount - 2');
+    //await super.componentDidMount();
     await this.makeRemoteRequest();
   }
 

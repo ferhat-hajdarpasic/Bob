@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
+import { View, Text, TextInput, Image, ImageBackground, TouchableHighlight } from 'react-native';
 
 import { StyleSheet, WebView, Platform } from 'react-native';
 import BKD from './BobBackground'
@@ -79,8 +79,12 @@ export default class BobLogin extends Component {
             <Image source={require('./Resources/3RD_PARTY_LOGOS/GOOGLE.png')} style={styles.google} />
             <Image source={require('./Resources/3RD_PARTY_LOGOS/FB.png')} style={styles.facebook} />
           </View>
-          <Text style={styles.login} onPress={this.spotifyLoginButtonWasPressed}>login</Text>
-          <Text style={styles.joinBob}>join bob</Text>
+					<TouchableHighlight onPress={this.spotifyLoginButtonWasPressed}>
+          	<Text style={styles.login}>login</Text>
+					</TouchableHighlight>
+					<TouchableHighlight>
+	          <Text style={styles.joinBob}>join bob</Text>
+					</TouchableHighlight>
         </View>
       </BKD>
     );

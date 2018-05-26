@@ -20,8 +20,8 @@ export default class ImportFlatList extends BobFlatList {
     //console.log("GETTING freaking *****result=" + JSON.stringify(result));
     let auth = Spotify.getAuth();
 
-    console.log("FREDDY : auth=" + JSON.stringify(auth));
-    console.log("FREDDY : auth.accessToken=" + auth.accessToken);
+    //console.log("FREDDY : auth=" + JSON.stringify(auth));
+    //console.log("FREDDY : auth.accessToken=" + auth.accessToken);
     //this.setState({ spotifyUserName: result.display_name });
 
     this.setState({ loading: true });

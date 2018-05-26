@@ -14,12 +14,6 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
     
   }
 
-  async componentDidMount() {
-    super.componentDidMount();
-    AppState.addEventListener('change', this._handleStateChange);
-    console.log('setAccessToken() called !!!!');
-}
-
   makeRemoteRequest = async () => {
     this.setState({ loading: true });
 
@@ -31,7 +25,7 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
     let trackNames = [];
     for(let i = 0; i < recentlyPlayed.items.length; i++) {
       let item = recentlyPlayed.items[i];
-      console.log('RESENTLYPLAYED='+JSON.stringify(item))
+      //console.log('RESENTLYPLAYED='+JSON.stringify(item))
       let artists = [];
 
       for(let j = 0; j < item.track.artists.length; j++) {
@@ -78,7 +72,7 @@ export default class RecentlyPlayedFlatList extends BobFlatList {
     }
 
     play = async (track) => {
-      console.log('track:' + JSON.stringify(track));
+      //console.log('track:' + JSON.stringify(track));
       this.props.navigation.navigate('player', { track: track });
     };
 }
