@@ -154,6 +154,7 @@ android {
 }
 
 dependencies {
+    compile project(':nodejs-mobile-react-native')
     compile project(':react-native-blur')
     compile project(':rn-spotify-sdk')
     compile project(':react-native-vector-icons')

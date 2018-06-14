@@ -3,6 +3,7 @@ package com.bob;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.janeasystems.rn_nodejs_mobile.RNNodeJsMobilePackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.lufinkey.react.spotify.RNSpotifyPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNNodeJsMobilePackage(),
             new BlurViewPackage(),
             new RNSpotifyPackage(),
             new VectorIconsPackage(),
