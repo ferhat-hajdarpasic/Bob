@@ -65,6 +65,11 @@
 		6977BA533DFA409B8FCE9CC1 /* libRNPixelColor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13DA7AEB275A4040936FF1F8 /* libRNPixelColor.a */; };
 		906197F97D3249FF8BE40B72 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E010721A863740FA8C9CD7D2 /* libRNFetchBlob.a */; };
 		A515C74243C14372A045FEE6 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 411D505944B64B359275397E /* libRNBlur.a */; };
+		985144782D9F47D2B8F8BC9B /* libRNNodeJsMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6931D93D014F3A8D3BC0DA /* libRNNodeJsMobile.a */; };
+		1751EC67361B4CDF9B717548 /* NodeMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE16FE62E5E4D8B90963C7E /* NodeMobile.framework */; };
+		5A107983907C451FBF86DFC0 /* NodeMobile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE16FE62E5E4D8B90963C7E /* NodeMobile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		DDA267812E844DAB926635DA /* nodejs-project in Resources */ = {isa = PBXBuildFile; fileRef = 346E8C2D5EB6498F9A01CCC7 /* nodejs-project */; };
+		F47653E24851449AA20E35D7 /* builtin_modules in Resources */ = {isa = PBXBuildFile; fileRef = 272786D3529642E5833CF004 /* builtin_modules */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -405,8 +410,12 @@
 		13DA7AEB275A4040936FF1F8 /* libRNPixelColor.a */ = {isa = PBXFileReference; name = "libRNPixelColor.a"; path = "libRNPixelColor.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		3E3681F22E3645B984B64FF1 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; name = "RNFetchBlob.xcodeproj"; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		E010721A863740FA8C9CD7D2 /* libRNFetchBlob.a */ = {isa = PBXFileReference; name = "libRNFetchBlob.a"; path = "libRNFetchBlob.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		52DE8CDBFDA241B3BD6582FC /* RNBlur.xcodeproj */ = {isa = PBXFileReference; name = "RNBlur.xcodeproj"; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		411D505944B64B359275397E /* libRNBlur.a */ = {isa = PBXFileReference; name = "libRNBlur.a"; path = "libRNBlur.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		5A4709F45174434DA1C24045 /* RNNodeJsMobile.xcodeproj */ = {isa = PBXFileReference; name = "RNNodeJsMobile.xcodeproj"; path = "../node_modules/nodejs-mobile-react-native/ios/RNNodeJsMobile.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5B6931D93D014F3A8D3BC0DA /* libRNNodeJsMobile.a */ = {isa = PBXFileReference; name = "libRNNodeJsMobile.a"; path = "libRNNodeJsMobile.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		2EE16FE62E5E4D8B90963C7E /* NodeMobile.framework */ = {isa = PBXFileReference; name = "NodeMobile.framework"; path = "../node_modules/nodejs-mobile-react-native/ios/NodeMobile.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		346E8C2D5EB6498F9A01CCC7 /* nodejs-project */ = {isa = PBXFileReference; name = "nodejs-project"; path = "../nodejs-assets/nodejs-project"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		272786D3529642E5833CF004 /* builtin_modules */ = {isa = PBXFileReference; name = "builtin_modules"; path = "../node_modules/nodejs-mobile-react-native/install/resources/nodejs-modules/builtin_modules"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -443,6 +452,8 @@
 				6977BA533DFA409B8FCE9CC1 /* libRNPixelColor.a in Frameworks */,
 				906197F97D3249FF8BE40B72 /* libRNFetchBlob.a in Frameworks */,
 				A515C74243C14372A045FEE6 /* libRNBlur.a in Frameworks */,
+				985144782D9F47D2B8F8BC9B /* libRNNodeJsMobile.a in Frameworks */,
+				1751EC67361B4CDF9B717548 /* NodeMobile.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,6 +601,7 @@
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
+				2EE16FE62E5E4D8B90963C7E /* NodeMobile.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -652,6 +664,7 @@
 				D9660C6E15F446438CBCF083 /* RNPixelColor.xcodeproj */,
 				3E3681F22E3645B984B64FF1 /* RNFetchBlob.xcodeproj */,
 				52DE8CDBFDA241B3BD6582FC /* RNBlur.xcodeproj */,
+				5A4709F45174434DA1C24045 /* RNNodeJsMobile.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -675,6 +688,8 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				725D3898208E046000D815FB /* Recovered References */,
 				1E0FB460329F41898A401CEA /* Resources */,
+				346E8C2D5EB6498F9A01CCC7 /* nodejs-project */,
+				272786D3529642E5833CF004 /* builtin_modules */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -759,6 +774,9 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				B7C208B4556B4ED8AA736E6D /* Embed Frameworks */,
+				816A662183AE492198A05D17 /* Build NodeJS Mobile Native Modules */,
+				355D5E490C0043E7A5D38144 /* Sign NodeJS Mobile Native Modules */,
 			);
 			buildRules = (
 			);
@@ -1206,6 +1224,8 @@
 				66515028A40848838449FA1C /* Bauhaus 93.ttf in Resources */,
 				14E8CF1BFD484A6D8E568421 /* Myriad Pro Bold.ttf in Resources */,
 				70428EDE5BD34D1F9D0C79C6 /* Myriad Pro Regular.ttf in Resources */,
+				DDA267812E844DAB926635DA /* nodejs-project in Resources */,
+				F47653E24851449AA20E35D7 /* builtin_modules in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1254,6 +1274,80 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		816A662183AE492198A05D17 /* Build NodeJS Mobile Native Modules */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Build NodeJS Mobile Native Modules";
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			shellScript = "
+set -e
+if [ -z \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then
+# If build native modules preference is not set, look for it in the project's
+#nodejs-assets/BUILD_NATIVE_MODULES.txt file.
+NODEJS_ASSETS_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../nodejs-assets/ && pwd )\"
+PREFERENCE_FILE_PATH=\"$NODEJS_ASSETS_DIR/BUILD_NATIVE_MODULES.txt\"
+if [ -f \"$PREFERENCE_FILE_PATH\" ]; then
+  NODEJS_MOBILE_BUILD_NATIVE_MODULES=\"$(cat $PREFERENCE_FILE_PATH | xargs)\"
+else
+  NODEJS_MOBILE_BUILD_NATIVE_MODULES=0
+fi
+fi
+if [ \"1\" != \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then exit 0; fi
+# Apply patches to the modules package.json
+PATCH_SCRIPT_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../node_modules/nodejs-mobile-react-native/scripts/ && pwd )\"
+NODEJS_PROJECT_MODULES_DIR=\"$( cd \"$CODESIGNING_FOLDER_PATH\" && cd nodejs-project/node_modules/ && pwd )\"
+node \"$PATCH_SCRIPT_DIR\"/patch-package.js $NODEJS_PROJECT_MODULES_DIR
+# Get the nodejs-mobile-gyp location
+NODEJS_MOBILE_GYP_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../node_modules/nodejs-mobile-gyp/ && pwd )\"
+NODEJS_MOBILE_GYP_BIN_FILE=\"$NODEJS_MOBILE_GYP_DIR\"/bin/node-gyp.js
+# Rebuild modules with right environment
+NODEJS_HEADERS_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../node_modules/nodejs-mobile-react-native/ios/libnode/ && pwd )\"
+pushd $CODESIGNING_FOLDER_PATH/nodejs-project/
+if [ \"$PLATFORM_NAME\" == \"iphoneos\" ]
+then
+  GYP_DEFINES=\"OS=ios\" npm_config_nodedir=\"$NODEJS_HEADERS_DIR\" npm_config_node_gyp=\"$NODEJS_MOBILE_GYP_BIN_FILE\" npm_config_platform=\"ios\" npm_config_node_engine=\"chakracore\" npm_config_arch=\"arm64\" npm --verbose rebuild --build-from-source
+else
+  GYP_DEFINES=\"OS=ios\" npm_config_nodedir=\"$NODEJS_HEADERS_DIR\" npm_config_node_gyp=\"$NODEJS_MOBILE_GYP_BIN_FILE\" npm_config_platform=\"ios\" npm_config_node_engine=\"chakracore\" npm_config_arch=\"x64\" npm --verbose rebuild --build-from-source
+fi
+popd
+";
+		};
+		355D5E490C0043E7A5D38144 /* Sign NodeJS Mobile Native Modules */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Sign NodeJS Mobile Native Modules";
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			shellScript = "
+set -e
+if [ -z \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then
+# If build native modules preference is not set, look for it in the project's
+#nodejs-assets/BUILD_NATIVE_MODULES.txt file.
+NODEJS_ASSETS_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../nodejs-assets/ && pwd )\"
+PREFERENCE_FILE_PATH=\"$NODEJS_ASSETS_DIR/BUILD_NATIVE_MODULES.txt\"
+if [ -f \"$PREFERENCE_FILE_PATH\" ]; then
+  NODEJS_MOBILE_BUILD_NATIVE_MODULES=\"$(cat $PREFERENCE_FILE_PATH | xargs)\"
+else
+  NODEJS_MOBILE_BUILD_NATIVE_MODULES=0
+fi
+fi
+if [ \"1\" != \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then exit 0; fi
+/usr/bin/codesign --force --sign $EXPANDED_CODE_SIGN_IDENTITY --preserve-metadata=identifier,entitlements,flags --timestamp=none $(find \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -type f -name \"*.node\")
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1337,13 +1431,14 @@
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-pixel-color/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/nodejs-mobile-react-native/ios/**",
 				);
 				INFOPLIST_FILE = BobTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1359,6 +1454,12 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bob.app/Bob";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+				);
+				ENABLE_BITCODE = NO;
 			};
 			name = Debug;
 		};
@@ -1377,13 +1478,14 @@
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-pixel-color/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/nodejs-mobile-react-native/ios/**",
 				);
 				INFOPLIST_FILE = BobTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1399,6 +1501,12 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bob.app/Bob";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+				);
+				ENABLE_BITCODE = NO;
 			};
 			name = Release;
 		};
@@ -1418,7 +1526,7 @@
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-pixel-color/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/nodejs-mobile-react-native/ios/**",
 				);
 				INFOPLIST_FILE = Bob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1430,6 +1538,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Hass.Bob;
 				PRODUCT_NAME = Bob;
 				VERSIONING_SYSTEM = "apple-generic";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+				);
+				ENABLE_BITCODE = NO;
 			};
 			name = Debug;
 		};
@@ -1448,7 +1561,7 @@
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-pixel-color/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/nodejs-mobile-react-native/ios/**",
 				);
 				INFOPLIST_FILE = Bob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1460,6 +1573,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Hass.Bob;
 				PRODUCT_NAME = Bob;
 				VERSIONING_SYSTEM = "apple-generic";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+				);
+				ENABLE_BITCODE = NO;
 			};
 			name = Release;
 		};
@@ -1487,12 +1605,13 @@
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-pixel-color/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/nodejs-mobile-react-native/ios/**",
 				);
 				INFOPLIST_FILE = "Bob-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1512,6 +1631,12 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+				);
+				ENABLE_BITCODE = NO;
 			};
 			name = Debug;
 		};
@@ -1539,12 +1664,13 @@
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-pixel-color/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/nodejs-mobile-react-native/ios/**",
 				);
 				INFOPLIST_FILE = "Bob-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1564,6 +1690,12 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+				);
+				ENABLE_BITCODE = NO;
 			};
 			name = Release;
 		};
@@ -1588,12 +1720,13 @@
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-pixel-color/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/nodejs-mobile-react-native/ios/**",
 				);
 				INFOPLIST_FILE = "Bob-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1612,6 +1745,12 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bob-tvOS.app/Bob-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+				);
+				ENABLE_BITCODE = NO;
 			};
 			name = Debug;
 		};
@@ -1636,12 +1775,13 @@
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-pixel-color/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/nodejs-mobile-react-native/ios/**",
 				);
 				INFOPLIST_FILE = "Bob-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1660,6 +1800,12 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bob-tvOS.app/Bob-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+					"\"../node_modules/nodejs-mobile-react-native/ios\"",
+				);
+				ENABLE_BITCODE = NO;
 			};
 			name = Release;
 		};
@@ -1701,6 +1847,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				ENABLE_BITCODE = NO;
 			};
 			name = Debug;
 		};
@@ -1736,6 +1883,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				ENABLE_BITCODE = NO;
 			};
 			name = Release;
 		};
@@ -1788,6 +1936,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B7C208B4556B4ED8AA736E6D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5A107983907C451FBF86DFC0 /* NodeMobile.framework in Embed Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			name = "Embed Frameworks";
+			dstPath = "";
+			dstSubfolderSpec = 10;
+		};
+/* End PBXCopyFilesBuildPhase section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }

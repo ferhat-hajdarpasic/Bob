@@ -136,6 +136,8 @@ android {
         packagingOptions {
             pickFirst 'lib/armeabi-v7a/libgnustl_shared.so'
             pickFirst 'lib/x86/libgnustl_shared.so'
+            doNotStrip '*/mips/*.so'
+            doNotStrip '*/mips64/*.so'
         }
     }
     // applicationVariants are e.g. debug, release
@@ -155,7 +157,6 @@ android {
 
 dependencies {
     compile project(':nodejs-mobile-react-native')
-    compile project(':react-native-blur')
     compile project(':rn-spotify-sdk')
     compile project(':react-native-vector-icons')
     compile project(':react-native-linear-gradient')
