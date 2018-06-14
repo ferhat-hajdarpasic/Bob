@@ -20,11 +20,12 @@ import RecentlyPlayed from './RecentlyPlayed'
 import Albums from './Albums'
 import PlayerScreen from "./PlayerScreen.js"
 import Album from "./Album.js"
+import ReactNode from "./ReactNode.js"
 
 export default StackNavigator(
   {
-    //Main: { screen: PlayerScreen },
-    Main: { screen: BobLogin },
+    Main: { screen: ReactNode },
+    //Main: { screen: BobLogin },
     LoginToSpotify: {screen: LoginToSpotify },
     InitialScreen: {screen: InitialScreen},        
     ImportFromSpotify: {screen: ImportFromSpotify},
