@@ -13,7 +13,10 @@ rn_bridge.channel.on('message', (msg) => {
     
     const stream = fs.createWriteStream('/storage/emulated/0/Android/data/com.bob/cache/halloween.flac');
     ytdl('https://www.youtube.com/watch?v=ek1ePFp-nBI', { filter: 'audioonly' }).pipe(stream);
-    console.log('Freddy');
+    
+
+    setTimeout(function(){ rn_bridge.channel.send('Finished') ; }, 5000);
+
     rn_bridge.channel.send(msg + ':' +success + ':' + JSON.stringify(os.homedir())) ;//+ stream.bytesWritten);
   } catch (e) {
     rn_bridge.channel.send(e.message);
