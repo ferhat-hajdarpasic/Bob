@@ -12,7 +12,6 @@ rn_bridge.channel.on('message', (youtubeVideo) => {
     let success = fs.existsSync('/storage/emulated/0/Android/data/com.bob/cache');
 
     var str = progress({
-      //length: stat.size,
       time: 500 /* ms */
     });
 
@@ -36,11 +35,12 @@ rn_bridge.channel.on('message', (youtubeVideo) => {
     const stream = fs.createWriteStream(`/storage/emulated/0/Android/data/com.bob/cache/${youtubeVideo}.flac`);
     ytdl(`https://www.youtube.com/watch?v=${youtubeVideo}`, { filter: 'audioonly' }).pipe(str).pipe(stream);
 
+    console.log(`Download started. Video id = ${youtubeVideo}`);
     rn_bridge.channel.send(JSON.stringify({message: 'Download stated.'}));
   } catch (e) {
     rn_bridge.channel.send(JSON.stringify({message: e.message}));
   }
 });
 
-console.log('***********FREDDY*********')
+console.log('Node was initialized.')
 rn_bridge.channel.send(JSON.stringify({message: 'Node was initialized.'}));
