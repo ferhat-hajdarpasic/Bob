@@ -7,8 +7,7 @@ const ytdl = require('ytdl-core');
 const os = require('os');
 const progress = require('progress-stream');
 
-// Echo every message received from react-native.
-rn_bridge.channel.on('message', (msg) => {
+rn_bridge.channel.on('message', (youtubeVideo) => {
   try {
     let success = fs.existsSync('/storage/emulated/0/Android/data/com.bob/cache');
 
@@ -19,6 +18,7 @@ rn_bridge.channel.on('message', (msg) => {
 
     str.on('progress', function (progress) {
       console.log(progress);
+      rn_bridge.channel.send(JSON.stringify(progress));
       /*
       {
           percentage: 9.05,
@@ -33,21 +33,14 @@ rn_bridge.channel.on('message', (msg) => {
       */
     });
 
-    const stream = fs.createWriteStream('/storage/emulated/0/Android/data/com.bob/cache/halloween.flac');
-    ytdl('https://www.youtube.com/watch?v=ek1ePFp-nBI', { filter: 'audioonly' }).pipe(str).pipe(stream);
+    const stream = fs.createWriteStream(`/storage/emulated/0/Android/data/com.bob/cache/${youtubeVideo}.flac`);
+    ytdl(`https://www.youtube.com/watch?v=${youtubeVideo}`, { filter: 'audioonly' }).pipe(str).pipe(stream);
 
-
-    // setTimeout(function () {
-    //   console.log('***********FREDDY FINISHED*********')
-    //   rn_bridge.channel.send('Finished');
-    // }, 5000);
-
-    rn_bridge.channel.send(msg + ':' + success + ':' + JSON.stringify(os.homedir()));//+ stream.bytesWritten);
+    rn_bridge.channel.send(JSON.stringify({message: 'Download stated.'}));
   } catch (e) {
-    rn_bridge.channel.send(e.message);
+    rn_bridge.channel.send(JSON.stringify({message: e.message}));
   }
 });
 
-// Inform react-native node is initialized.
 console.log('***********FREDDY*********')
-rn_bridge.channel.send("Node was initialized.");
+rn_bridge.channel.send(JSON.stringify({message: 'Node was initialized.'}));
