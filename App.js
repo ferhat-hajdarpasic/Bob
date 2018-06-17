@@ -21,10 +21,12 @@ import Albums from './Albums'
 import PlayerScreen from "./PlayerScreen.js"
 import Album from "./Album.js"
 import ReactNode from "./ReactNode.js"
+import LoginToYoutube from "./LoginToYoutube.js"
 
 export default StackNavigator(
   {
-    Main: { screen: ReactNode },
+    Main: { screen: LoginToYoutube},
+    //Main: { screen: ReactNode },
     //Main: { screen: BobLogin },
     LoginToSpotify: {screen: LoginToSpotify },
     InitialScreen: {screen: InitialScreen},        
