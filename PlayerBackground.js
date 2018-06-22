@@ -4,13 +4,12 @@ import { StyleSheet, View, Text, TextInput, Image, ImageBackground, Dimensions }
 
 class PlayerBackground_ extends Component {
   render() {
-    let albumImageUri = (this.props.track.album) ? this.props.track.album.images[0].url : this.props.album.images[0].url;
     return (
       <View style={{ flex: 1 }}>
         <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', }}>
-          <ImageBackground source={{ uri: albumImageUri }} style={styles.imageTop} />
+          <ImageBackground source={{ uri: this.props.artwork }} style={styles.imageTop} />
           <View style={{ height: '50%', overflow:'hidden', borderColor:'transparent', borderWidth:0}}>
-            <ImageBackground source={{ uri: albumImageUri }} style={styles.imageBottom} blurRadius={3}/>
+            <ImageBackground source={{ uri: this.props.artwork }} style={styles.imageBottom} blurRadius={3}/>
           </View>
         </View>
         <View style={{flex: 1,backgroundColor: 'transparent',justifyContent: 'center'}}>
@@ -23,7 +22,7 @@ class PlayerBackground_ extends Component {
 export default class PlayerBackground extends Component {
   render() {
     return (
-      <PlayerBackground_ track={this.props.track} album={this.props.album}>
+      <PlayerBackground_ artwork={this.props.artwork}>
         {this.props.children}
       </PlayerBackground_>
     );

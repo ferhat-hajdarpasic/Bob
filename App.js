@@ -25,11 +25,13 @@ import LoginToYoutube from "./LoginToYoutube.js"
 
 import LandingScreen from './player/screens/LandingScreen';
 import PlaylistScreen from './player/screens/PlaylistScreen';
+import TrackPlayerScreen from './player/screens/TrackPlayerScreen';
 
 export default StackNavigator(
   {
-    Main: { screen: PlaylistScreen },
+    Main: { screen: TrackPlayerScreen },
     Playlist: { screen: PlaylistScreen },
+    TrackPlayerScreen: { screen: TrackPlayerScreen },
     //Main: { screen: ReactNode },
     //Main: { screen: BobLogin },
     LoginToYoutube: {screen: LoginToYoutube },
