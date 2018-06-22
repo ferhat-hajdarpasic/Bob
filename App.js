@@ -21,6 +21,7 @@ import Albums from './Albums'
 import PlayerScreen from "./PlayerScreen.js"
 import Album from "./Album.js"
 import ReactNode from "./ReactNode.js"
+import LoginToYoutube from "./LoginToYoutube.js"
 
 import LandingScreen from './player/screens/LandingScreen';
 import PlaylistScreen from './player/screens/PlaylistScreen';
@@ -31,6 +32,7 @@ export default StackNavigator(
     Playlist: { screen: PlaylistScreen },
     //Main: { screen: ReactNode },
     //Main: { screen: BobLogin },
+    LoginToYoutube: {screen: LoginToYoutube },
     LoginToSpotify: {screen: LoginToSpotify },
     InitialScreen: {screen: InitialScreen},        
     ImportFromSpotify: {screen: ImportFromSpotify},

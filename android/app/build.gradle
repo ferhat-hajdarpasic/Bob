@@ -156,6 +156,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-google-signin')
     compile project(':nodejs-mobile-react-native')
     compile project(':rn-spotify-sdk')
     compile project(':react-native-vector-icons')

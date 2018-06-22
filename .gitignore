@@ -56,4 +56,7 @@ buck-out/
 .vscode
 nodejs-assets/nodejs-project/sample-main.js
 nodejs-assets/nodejs-project/sample-package.json
+android/.settings/org.eclipse.buildship.core.prefs
+nodejs-assets/build-native-modules-MacOS-helper-script-node.sh
+nodejs-assets/build-native-modules-MacOS-helper-script-npm.sh
 youtube/android/.project

@@ -4,24 +4,48 @@
 var rn_bridge = require('rn-bridge');
 const fs = require('fs');
 const ytdl = require('ytdl-core');
-const os = require('os');
+const progress = require('progress-stream');
 
-// Echo every message received from react-native.
 rn_bridge.channel.on('message', (msg) => {
+  const command = JSON.parse(msg);
+  const youtubeVideo = command.video;
+  const folder = command.folder;
+  
   try {
-    let success = fs.existsSync('/storage/emulated/0/Android/data/com.bob/cache');
-    
-    const stream = fs.createWriteStream('/storage/emulated/0/Android/data/com.bob/cache/halloween.flac');
-    ytdl('https://www.youtube.com/watch?v=ek1ePFp-nBI', { filter: 'audioonly' }).pipe(stream);
-    
+    var str = progress({
+      time: 500 /* ms */
+    });
 
-    setTimeout(function(){ rn_bridge.channel.send('Finished') ; }, 5000);
+    str.on('progress', function (progress) {
+      console.log(progress);
+      rn_bridge.channel.send(JSON.stringify(progress));
+      /*
+      {
+          percentage: 9.05,
+          transferred: 949624,
+          length: 10485760,
+          remaining: 9536136,
+          eta: 42,
+          runtime: 3,
+          delta: 295396,
+          speed: 949624
+      }
+      */
+    });
 
-    rn_bridge.channel.send(msg + ':' +success + ':' + JSON.stringify(os.homedir())) ;//+ stream.bytesWritten);
+    const fullpath = `${folder}/${youtubeVideo}.flac`;
+    const stream = fs.createWriteStream(fullpath);
+    ytdl(`https://www.youtube.com/watch?v=${youtubeVideo}`, { filter: 'audioonly' }).pipe(str).pipe(stream);
+
+    console.log(`Download started. Video = ${fullpath}`);
+    //let success = fs.existsSync('/storage/emulated/0/Android/data/com.bob/cache');
+    let folderExists = fs.existsSync(`${folder}`);
+
+    rn_bridge.channel.send(JSON.stringify({message: `Download started. Folder is ${folderExists}`}));
   } catch (e) {
-    rn_bridge.channel.send(e.message);
+    rn_bridge.channel.send(JSON.stringify({message: e.message}));
   }
 });
 
-// Inform react-native node is initialized.
-rn_bridge.channel.send("Node was initialized.");
+console.log('Node was initialized.')
+rn_bridge.channel.send(JSON.stringify({message: 'Node was initialized.'}));
