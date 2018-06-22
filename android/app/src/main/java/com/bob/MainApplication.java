@@ -15,6 +15,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactlibrary.imagecolorpicker.RNImageColorPickerPackage;
+import guichaguri.trackplayer.TrackPlayer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +41,8 @@ public class MainApplication extends Application implements ReactApplication {
             new LinearGradientPackage(),
             new RNFetchBlobPackage(),
             new RNEventEmitterPackage(),
-              new RNImageColorPickerPackage()
+            new RNImageColorPickerPackage(),
+            new TrackPlayer()
       );
     }
 
