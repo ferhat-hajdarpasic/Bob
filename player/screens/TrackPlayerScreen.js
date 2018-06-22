@@ -86,9 +86,11 @@ export default class TrackPlayerScreen extends Component {
 		this.props.navigation.dispatch(navAction);
 	}
 
-	pause() {
-		let playbackState = TrackPlayer.getState();
-		console.log('playbackState=' + JSON.stringify(playbackState));
+	async pause() {
+		let playbackState = await TrackPlayer.getState();
+		console.log('playbackState=' + playbackState);
+		console.log('TrackPlayer.STATE_PLAYING=' + TrackPlayer.STATE_PLAYING);
+		console.log('TrackPlayer.getDuration()=' + TrackPlayer.getDuration());
 		if (playbackState == TrackPlayer.STATE_PLAYING) {
 			TrackPlayer.pause();
 			this.setState({
