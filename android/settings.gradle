@@ -13,5 +13,7 @@ include ':react-native-events'
 project(':react-native-events').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-events/android')
 include ':image-color-picker'
 project(':image-color-picker').projectDir = new File(rootProject.projectDir, '../node_modules/image-color-picker/android')
+include ':react-native-track-player'
+project(':react-native-track-player').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-track-player/android')
 
 include ':app'

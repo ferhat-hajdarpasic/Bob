@@ -22,9 +22,14 @@ import PlayerScreen from "./PlayerScreen.js"
 import Album from "./Album.js"
 import ReactNode from "./ReactNode.js"
 
+import LandingScreen from './player/screens/LandingScreen';
+import PlaylistScreen from './player/screens/PlaylistScreen';
+
 export default StackNavigator(
   {
-    Main: { screen: ReactNode },
+    Main: { screen: PlaylistScreen },
+    Playlist: { screen: PlaylistScreen },
+    //Main: { screen: ReactNode },
     //Main: { screen: BobLogin },
     LoginToSpotify: {screen: LoginToSpotify },
     InitialScreen: {screen: InitialScreen},        

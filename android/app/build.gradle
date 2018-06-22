@@ -94,13 +94,13 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 26
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.bob"
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion 23
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         ndk {
@@ -164,10 +164,12 @@ dependencies {
 	compile project(':react-native-events')
     compile project(':image-color-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
-    compile ("com.facebook.react:react-native:0.53.3") { force = true }  // From node_modules
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:support-v4:26.1.0'
+    compile ("com.facebook.react:react-native:0.55.4") { force = true }  // From node_modules
     compile(name: 'spotify-android-auth-1.0.0', ext: 'aar')
     compile(name: 'spotify-player-24-noconnect-2.20b', ext: 'aar')
+    compile project(':react-native-track-player')
 }
 
 // Run this once to be able to run the application with BUCK
