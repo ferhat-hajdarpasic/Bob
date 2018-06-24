@@ -14,8 +14,8 @@ class Background extends Component {
             locations={[0.0, 1.0]}
             colors={['#656263', '#393536']} style={styles.LinearGradientStyle} >
             <Text style={styles.titleText}>{this.props.title}</Text>
-            <ImageBackground source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
-            <ImageBackground source={require('./Resources/BOB_LOGOS/BOB_LOGO_K50.png')} style={styles.image} />
+            <ImageBackground source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
+            <ImageBackground source={require('../Resources/BOB_LOGOS/BOB_LOGO_K50.png')} style={styles.image} />
           </LinearGradient>
         </View>
         <View style={{flex: 1,backgroundColor: 'transparent',justifyContent: 'center'}}>

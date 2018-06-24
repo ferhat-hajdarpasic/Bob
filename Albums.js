@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform } from 'react-native';
-import BKD from './BobBackground'
+import BKD from './screens/BobBackground'
 import AlbumsFlatList from './AlbumsFlatList'
 
 export default class Albums extends Component {

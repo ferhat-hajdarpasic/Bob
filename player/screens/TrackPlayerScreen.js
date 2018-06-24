@@ -12,7 +12,7 @@ import {
 
 import timer from 'react-native-timer';
 
-import PlayerBackground from '../../PlayerBackground'
+import PlayerBackground from '../../screens/PlayerBackground'
 
 import { NavigationActions } from 'react-navigation';
 import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
@@ -66,6 +66,11 @@ export default class TrackPlayerScreen extends Component {
 			await TrackPlayer.add(playlistData);
 			TrackPlayer.play();
 		}
+
+
+		TrackPlayer.registerEventHandler(async (data) => {
+			console.log('event='+JSON.stringify(data));
+		});
 	}
 
 	async positionSlidingComplete(value) {
@@ -90,7 +95,7 @@ export default class TrackPlayerScreen extends Component {
 		let playbackState = await TrackPlayer.getState();
 		console.log('playbackState=' + playbackState);
 		console.log('TrackPlayer.STATE_PLAYING=' + TrackPlayer.STATE_PLAYING);
-		console.log('TrackPlayer.getDuration()=' + TrackPlayer.getDuration());
+		console.log('TrackPlayer.getDuration()=' + await TrackPlayer.getDuration());
 		if (playbackState == TrackPlayer.STATE_PLAYING) {
 			TrackPlayer.pause();
 			this.setState({

@@ -12,7 +12,7 @@ import {
 
 import timer from 'react-native-timer';
 
-import PlayerBackground from './PlayerBackground'
+import PlayerBackground from './screens/PlayerBackground'
 
 import { NavigationActions } from 'react-navigation';
 import Spotify from 'rn-spotify-sdk';
@@ -137,9 +137,10 @@ export default class PlayerScreen extends Component {
 		let track_json = '{"album":{"album_type":"album","artists":[{"external_urls":{"spotify":"https://open.spotify.com/artist/00FQb4jTyendYWaN8pK0wa"},"href":"https://api.spotify.com/v1/artists/00FQb4jTyendYWaN8pK0wa","id":"00FQb4jTyendYWaN8pK0wa","name":"Lana Del Rey","type":"artist","uri":"spotify:artist:00FQb4jTyendYWaN8pK0wa"}],"available_markets":["AD","AR","AT","AU","BE","BG","BO","BR","CA","CH","CL","CO","CR","CY","CZ","DE","DK","DO","EC","EE","ES","FI","FR","GB","GR","GT","HK","HN","HU","ID","IE","IL","IS","IT","JP","LI","LT","LU","LV","MC","MT","MX","MY","NI","NL","NO","NZ","PA","PE","PH","PL","PT","PY","RO","SE","SG","SK","SV","TH","TR","TW","US","UY","VN","ZA"],"external_urls":{"spotify":"https://open.spotify.com/album/5VoeRuTrGhTbKelUfwymwu"},"href":"https://api.spotify.com/v1/albums/5VoeRuTrGhTbKelUfwymwu","id":"5VoeRuTrGhTbKelUfwymwu","images":[{"height":640,"url":"https://i.scdn.co/image/d0b1088e6172acbe186bd7cdb47b099d252261ff","width":640},{"height":300,"url":"https://i.scdn.co/image/b04e4dc5b10c8a25687e81439499cc0df7b5aed1","width":300},{"height":64,"url":"https://i.scdn.co/image/5f778444676eb87f367d21ec5f1711314d3b155f","width":64}],"name":"Born To Die - The Paradise Edition","release_date":"2012-01-01","release_date_precision":"day","type":"album","uri":"spotify:album:5VoeRuTrGhTbKelUfwymwu"},"artists":[{"external_urls":{"spotify":"https://open.spotify.com/artist/00FQb4jTyendYWaN8pK0wa"},"href":"https://api.spotify.com/v1/artists/00FQb4jTyendYWaN8pK0wa","id":"00FQb4jTyendYWaN8pK0wa","name":"Lana Del Rey","type":"artist","uri":"spotify:artist:00FQb4jTyendYWaN8pK0wa"}],"available_markets":["AD","AR","AT","AU","BE","BG","BO","BR","CA","CH","CL","CO","CR","CY","CZ","DE","DK","DO","EC","EE","ES","FI","FR","GB","GR","GT","HK","HN","HU","ID","IE","IL","IS","IT","JP","LI","LT","LU","LV","MC","MT","MX","MY","NI","NL","NO","NZ","PA","PE","PH","PL","PT","PY","RO","SE","SG","SK","SV","TH","TR","TW","US","UY","VN","ZA"],"disc_number":1,"duration_ms":281960,"explicit":false,"external_ids":{"isrc":"GBUM71111621"},"external_urls":{"spotify":"https://open.spotify.com/track/0fBSs3fRoh1yJcne77fdu9"},"href":"https://api.spotify.com/v1/tracks/0fBSs3fRoh1yJcne77fdu9","id":"0fBSs3fRoh1yJcne77fdu9","is_local":false,"name":"Video Games","popularity":70,"preview_url":"https://p.scdn.co/mp3-preview/efda1e4784e32ece2c4a6ceb77c76585408fa98b?cid=774b29d4f13844c495f206cafdad9c86","track_number":4,"type":"track","uri":"spotify:track:0fBSs3fRoh1yJcne77fdu9"}';
 		let track = this.state.track;
 		let album = this.state.album;
+		let albumImageUri = (track.album) ? track.album.images[0].url : album.images[0].url;
 
 		return (
-			<PlayerBackground track={track} album={album}>
+			<PlayerBackground artwork={albumImageUri}>
 				<View style={{ flex: 1, flexDirection: 'column' }}>
 					<View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
 						<Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_WHITE.png')} style={styles.homeImage} />

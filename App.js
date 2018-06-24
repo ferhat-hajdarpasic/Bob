@@ -15,7 +15,7 @@ import InitialScreen from './InitialScreen'
 
 import ImportFromSpotify from './ImportFromSpotify'
 import Playlists from './Playlists'
-import Playlist from './Playlist'
+//import Playlist from './Playlist'
 import RecentlyPlayed from './RecentlyPlayed'
 import Albums from './Albums'
 import PlayerScreen from "./PlayerScreen.js"
@@ -24,22 +24,24 @@ import ReactNode from "./ReactNode.js"
 import LoginToYoutube from "./LoginToYoutube.js"
 
 import LandingScreen from './player/screens/LandingScreen';
-import PlaylistScreen from './player/screens/PlaylistScreen';
 import TrackPlayerScreen from './player/screens/TrackPlayerScreen';
+import AddFavourites from './screens/AddFavourites';
+import ImportFromYoutube from './screens/ImportFromYoutube';
+import YouTubePlaylists from './screens/YouTubePlaylists';
 
 export default StackNavigator(
   {
-    Main: { screen: TrackPlayerScreen },
-    Playlist: { screen: PlaylistScreen },
+    Main: { screen: AddFavourites },
     TrackPlayerScreen: { screen: TrackPlayerScreen },
     //Main: { screen: ReactNode },
-    //Main: { screen: BobLogin },
     LoginToYoutube: {screen: LoginToYoutube },
     LoginToSpotify: {screen: LoginToSpotify },
     InitialScreen: {screen: InitialScreen},        
     ImportFromSpotify: {screen: ImportFromSpotify},
+    ImportFromYoutube: {screen: ImportFromYoutube},
+    YouTubePlaylists: {screen: YouTubePlaylists},
     Playlists: {screen: Playlists},
-    Playlist: {screen: Playlist},
+    //Playlist: {screen: Playlist},
     RecentlyPlayed: {screen: RecentlyPlayed},
     Albums: {screen: Albums},
     Album: {screen: Album},
