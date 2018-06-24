@@ -24,7 +24,7 @@ export default class ImportFromYoutube extends Component {
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5 }}>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, alignItems: 'center' }}>
-            <Image source={require('../Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
+            <Image source={require('../Resources/3RD_PARTY_LOGOS/YOUTUBE.png')} style={styles.youtube} />
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
             <ImportFlatList code={this.state.code} navigation={this.props.navigation}/>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   loginToBob: { color: 'white', fontFamily: 'Bauhaus 93', fontSize: 20, marginBottom: '10%' },
   login: { color: '#FCB415', fontFamily: 'Bauhaus 93', fontSize: 20, marginBottom: '10%' },
   import: { color: '#FCB415', fontFamily: 'Bauhaus 93', fontSize: 20 },
-  spotify: { width: 40, height: 40 * (1065 / 1045), marginLeft:'17%' },
+  youtube: { width: 40, height: 40 * ((1084 / 1543)), marginLeft:'17%' },
   facebook: { width: 40, height: 40 },
   titleImage: {
     width: 50,
