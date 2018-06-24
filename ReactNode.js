@@ -6,9 +6,10 @@ import rnfetchblob from 'react-native-fetch-blob';
 export default class ReactNode extends Component {
   constructor(props) {
     super(props);
+    const { params } = this.props.navigation.state;
     this.state = {
       message: 'React NodeJs',
-      videoId: 'ek1ePFp-nBI'
+      videoId: params.videoId
     };
   }
   render() {
@@ -28,6 +29,7 @@ export default class ReactNode extends Component {
     nodejs.channel.addListener(
       'message',
       (msg) => {
+        console.log(`msg=${msg}`);
         const message = JSON.parse(msg);
         if(message.transferred) {
           this.setState({message: `Transfered: ${message.transferred}, ${message.percentage} %`});

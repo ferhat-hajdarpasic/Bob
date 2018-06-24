@@ -21,7 +21,7 @@ export default class YouTubePlaylistFlatList extends BobFlatList {
     for(let i = 0; i < playlist.items.length; i++) {
       let video = playlist.items[i];
       console.log('FRED track='+JSON.stringify(video));
-      let artistName = '<???>';
+      let artistName = `${video.snippet.resourceId.videoId}`;
       videos.push({
         artist: artistName,
         title: video.snippet.title,
@@ -62,7 +62,7 @@ export default class YouTubePlaylistFlatList extends BobFlatList {
     }
 
     play = (videoId) => {
-      this.props.navigation.navigate('TrackPlayer', { videoId: videoId });
+      this.props.navigation.navigate('ReactNode', { videoId: videoId });
     };
 }
 

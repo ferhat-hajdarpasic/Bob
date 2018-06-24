@@ -34,7 +34,7 @@ export default StackNavigator(
   {
     Main: { screen: AddFavourites },
     TrackPlayerScreen: { screen: TrackPlayerScreen },
-    //Main: { screen: ReactNode },
+    ReactNode: { screen: ReactNode },
     LoginToYoutube: {screen: LoginToYoutube },
     LoginToSpotify: {screen: LoginToSpotify },
     InitialScreen: {screen: InitialScreen},        

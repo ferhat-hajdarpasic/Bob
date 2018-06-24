@@ -35,13 +35,13 @@ rn_bridge.channel.on('message', (msg) => {
 
     const fullpath = `${folder}/${youtubeVideo}.flac`;
     const stream = fs.createWriteStream(fullpath);
-    ytdl(`https://www.youtube.com/watch?v=${youtubeVideo}`, { filter: 'audioonly' }).pipe(str).pipe(stream);
+    const videoUrl = `https://www.youtube.com/watch?v=${youtubeVideo}`;
+
+    ytdl(vidoeUrl, { filter: 'audioonly' }).pipe(str).pipe(stream);
 
     console.log(`Download started. Video = ${fullpath}`);
-    //let success = fs.existsSync('/storage/emulated/0/Android/data/com.bob/cache');
-    let folderExists = fs.existsSync(`${folder}`);
 
-    rn_bridge.channel.send(JSON.stringify({message: `Download started. Folder is ${folderExists}`}));
+    rn_bridge.channel.send(JSON.stringify({message: `Download started. Full video url is ${videoUrl}`}));
   } catch (e) {
     rn_bridge.channel.send(JSON.stringify({message: e.message}));
   }
