@@ -20,10 +20,6 @@ export default class ImportFromYouTubeFlatList extends BobFlatList {
     console.log("access token=" + user.accessToken);
 
     this.setState({ loading: true });
-
-    //this.state.accessToken = await GoogleSignin.getAccessToken();
-    //console.log("access token=" + this.state.accessToken);
-
     this.state.playlists = await api.playlists(user.accessToken);
 
     this.setState({

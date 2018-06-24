@@ -28,6 +28,7 @@ import TrackPlayerScreen from './player/screens/TrackPlayerScreen';
 import AddFavourites from './screens/AddFavourites';
 import ImportFromYoutube from './screens/ImportFromYoutube';
 import YouTubePlaylists from './screens/YouTubePlaylists';
+import YouTubePlaylist from './screens/YouTubePlaylist';
 
 export default StackNavigator(
   {
@@ -40,6 +41,7 @@ export default StackNavigator(
     ImportFromSpotify: {screen: ImportFromSpotify},
     ImportFromYoutube: {screen: ImportFromYoutube},
     YouTubePlaylists: {screen: YouTubePlaylists},
+    YouTubePlaylist: {screen: YouTubePlaylist},
     Playlists: {screen: Playlists},
     //Playlist: {screen: Playlist},
     RecentlyPlayed: {screen: RecentlyPlayed},

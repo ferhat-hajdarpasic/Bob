@@ -20,14 +20,14 @@ export default class YouTubeApi {
         return await handleResponse(meResponse);
     }
 
-    async playlist(access_token, playlist_href) {
-        console.log(playlist_href);
-        let playlistResponse = await fetch(playlist_href, {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + access_token
-            }
+    async playlist(access_token, playlist_id) {
+       console.log(playlist_id);
+       let key = 'AIzaSyBtnAcka845n2BMkL7mrXWKcS2FTXPi6I0';
+       let url =`https://www.googleapis.com/youtube/v3/playlistItems?playlistId=${playlist_id}&part=snippet,contentDetails&key=${key}&access_token=${access_token}`;
+        let playlistResponse = await fetch(url, {
+            method: 'GET'
         });
+        console.log(`url=${url}`);
         return await handleResponse(playlistResponse);
     }    
 }

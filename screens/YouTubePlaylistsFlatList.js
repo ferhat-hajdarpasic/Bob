@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
-import { GoogleSignin } from 'react-native-google-signin'
-
 import BobFlatList from '../BobFlatList'
 
+import { GoogleSignin } from 'react-native-google-signin'
 import YouTubeApi  from '../api/youtube/YouTubeApi';
 
 let api = new YouTubeApi();
@@ -65,7 +64,7 @@ export default class PlaylistsFlatList extends BobFlatList {
   
       play = (item) => {
         console.log('item=' + JSON.stringify(item));
-        this.props.navigation.navigate('YouTUbePlaylist', { href: item.playlistId, name: item.name });
+        this.props.navigation.navigate('YouTubePlaylist', { playlistId: item.playlistId, name: item.name });
       };
   }
   
