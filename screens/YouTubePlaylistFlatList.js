@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
 
+import rnfetchblob from 'react-native-fetch-blob';
+
 import BobFlatList from '../BobFlatList';
 import { GoogleSignin } from 'react-native-google-signin'
 import YouTubeApi  from '../api/youtube/YouTubeApi';
@@ -61,9 +63,16 @@ export default class YouTubePlaylistFlatList extends BobFlatList {
     );
     }
 
-    play = (videoId, artwork, title) => {
-      this.props.navigation.navigate('TrackPlayerScreen', { videoId: videoId, artwork: artwork, title: title });
-      //this.props.navigation.navigate('ReactNode', { videoId: videoId });
+    play = async (videoId, artwork, title) => {
+      const videoFile = `${rnfetchblob.fs.dirs.MusicDir}/${videoId}.flac`;
+      console.log(`Checkig if file '${videoFile} exists`);
+      let exists = await rnfetchblob.fs.exists(videoFile);
+      if(exists) {
+        let videoUrl = `file:///${videoFile}`;
+        this.props.navigation.navigate('TrackPlayerScreen', { videoUrl: videoUrl, artwork: artwork, title: title });
+      } else {
+        this.props.navigation.navigate('ReactNode', { videoId: videoId });
+      }
     };
 }
 

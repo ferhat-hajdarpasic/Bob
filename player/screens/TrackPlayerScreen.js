@@ -38,7 +38,7 @@ export default class TrackPlayerScreen extends Component {
 			position: 0,
 			//track: track,
 			//album: album,
-			videoId: params.videoId,
+			videoUrl: params.videoUrl,
 			title: params.title,
 			artwork: params.artwork,
 			pausedImage: require('../../Resources/ICONS/PAUSE.png')
@@ -65,12 +65,11 @@ export default class TrackPlayerScreen extends Component {
 		});
 		const currentTrack = await TrackPlayer.getCurrentTrack();
 
-		let videoUrl = `file:///storage/emulated/0/Music/${this.state.videoId}.flac`;
-		console.log(`Playing videoUrl=${videoUrl}`);
+		console.log(`Playing videoUrl=${this.state.videoUrl}`);
 
 		let track = {
 			id: this.state.videoId, 
-			url: videoUrl,
+			url: this.state.videoUrl,
 			title: this.state.title,
 			artist: this.state.videoId,
 			artwork: this.state.artwork
