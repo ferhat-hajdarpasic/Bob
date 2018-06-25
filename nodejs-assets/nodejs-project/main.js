@@ -37,13 +37,13 @@ rn_bridge.channel.on('message', (msg) => {
     const stream = fs.createWriteStream(fullpath);
     const videoUrl = `https://www.youtube.com/watch?v=${youtubeVideo}`;
 
-    ytdl(vidoeUrl, { filter: 'audioonly' }).pipe(str).pipe(stream);
+    ytdl(videoUrl, { filter: 'audioonly' }).pipe(str).pipe(stream);
 
     console.log(`Download started. Video = ${fullpath}`);
 
     rn_bridge.channel.send(JSON.stringify({message: `Download started. Full video url is ${videoUrl}`}));
   } catch (e) {
-    rn_bridge.channel.send(JSON.stringify({message: e.message}));
+    rn_bridge.channel.send(JSON.stringify({message: `Error: ${e.message}`}));
   }
 });
 
