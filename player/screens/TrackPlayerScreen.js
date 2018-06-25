@@ -89,6 +89,9 @@ export default class TrackPlayerScreen extends Component {
 
 	async positionSlidingComplete(value) {
 		console.log('Value=' + value);
+		console.log('Duration=' + JSON.stringify(await TrackPlayer.getDuration()));
+		
+		TrackPlayer.seekTo(value);
 	}
 
 	async volumeSlidingComplete(value) {
@@ -136,7 +139,7 @@ export default class TrackPlayerScreen extends Component {
 					<Slider step={1} maximumValue={this.state.duration} onSlidingComplete={this.positionSlidingComplete.bind(this)} value={this.state.position} style={{ width: '100%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
 					<View style={{ flex: 1 }}>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '10%', marginRight: '10%' }}>
-							<Image source={require('../../Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
+							<Image source={require('../../Resources/3RD_PARTY_LOGOS/YOUTUBE.png')} style={styles.yuotube} />
 							<View style={{ flexDirection: 'column', flex: 1, alignItems: 'center' }}>
 								<Text style={styles.trackName}>{this.state.title}</Text>
 								<Text style={styles.artistName}>{this.state.videoId}</Text>
@@ -170,7 +173,7 @@ export default class TrackPlayerScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-	spotify: { width: 40, height: 40 * (1065 / 1045) },
+	yuotube: { width: 40, height: 40 * (1084 / 1583) },
 	homeImage: {
 		width: 50,
 		height: (214 / 241) * 50,
