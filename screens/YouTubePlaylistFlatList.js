@@ -48,7 +48,7 @@ export default class YouTubePlaylistFlatList extends BobFlatList {
 
   renderItem = ( {item, index} ) => {
     return (
-      <TouchableHighlight onPress={() => this.play(item.videoId)}>
+      <TouchableHighlight onPress={() => this.play(item.videoId, item.artwork, item.title)}>
       <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
         <Image source={{uri: item.artwork}} style={{width:50, height:50}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
@@ -61,8 +61,9 @@ export default class YouTubePlaylistFlatList extends BobFlatList {
     );
     }
 
-    play = (videoId) => {
-      this.props.navigation.navigate('ReactNode', { videoId: videoId });
+    play = (videoId, artwork, title) => {
+      this.props.navigation.navigate('TrackPlayerScreen', { videoId: videoId, artwork: artwork, title: title });
+      //this.props.navigation.navigate('ReactNode', { videoId: videoId });
     };
 }
 

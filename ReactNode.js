@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { View, Text, TextInput, Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, TouchableHighlight, Slider } from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
 import rnfetchblob from 'react-native-fetch-blob';
 export default class ReactNode extends Component {
@@ -9,7 +9,8 @@ export default class ReactNode extends Component {
     const { params } = this.props.navigation.state;
     this.state = {
       message: 'React NodeJs',
-      videoId: params.videoId
+      videoId: params.videoId,
+      percentage: 0
     };
   }
   render() {
@@ -19,11 +20,15 @@ export default class ReactNode extends Component {
           onChangeText={(videoId) => this.setState({ videoId: videoId })} value={this.state.videoId} />
           <TouchableHighlight onPress={() => {
               console.log(`videoId=${this.state.videoId}`);
+              this.setState({percentage: 0});
               nodejs.channel.send(JSON.stringify({folder: rnfetchblob.fs.dirs.MusicDir, video: this.state.videoId}))
             }} >
             <Image source={require('./Resources/ICONS/DOWNLOAD_AVAILABLE.png')} style={styles.titleImage} />
           </TouchableHighlight>
         <Text style={styles.titleText}>{this.state.message}</Text>
+        <Slider step={1} maximumValue={100}  
+          value={this.state.percentage} style={{ width: '100%' }} thumbTintColor='orange' 
+          maximumTrackTintColor='orange' minimumTrackTintColor='orange' />
       </View>
     );
   }
@@ -37,7 +42,7 @@ export default class ReactNode extends Component {
         console.log(`msg=${msg}`);
         const message = JSON.parse(msg);
         if(message.transferred) {
-          this.setState({message: `Transfered: ${message.transferred}, ${message.percentage} %`});
+          this.setState({message: `Transfered: ${message.transferred}, ${message.percentage} %`, percentage: message.percentage});
         } else if(message.message) {
           this.setState({message: message.message});
         } else {

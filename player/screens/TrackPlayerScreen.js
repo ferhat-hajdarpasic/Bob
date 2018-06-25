@@ -38,6 +38,9 @@ export default class TrackPlayerScreen extends Component {
 			position: 0,
 			//track: track,
 			//album: album,
+			videoId: params.videoId,
+			title: params.title,
+			artwork: params.artwork,
 			pausedImage: require('../../Resources/ICONS/PAUSE.png')
 		};
 
@@ -61,9 +64,21 @@ export default class TrackPlayerScreen extends Component {
 			]
 		});
 		const currentTrack = await TrackPlayer.getCurrentTrack();
+
+		let videoUrl = `file:///storage/emulated/0/Music/${this.state.videoId}.flac`;
+		console.log(`Playing videoUrl=${videoUrl}`);
+
+		let track = {
+			id: this.state.videoId, 
+			url: videoUrl,
+			title: this.state.title,
+			artist: this.state.videoId,
+			artwork: this.state.artwork
+		  }
+
 		if (currentTrack == null) {
 			TrackPlayer.reset();
-			await TrackPlayer.add(playlistData);
+			await TrackPlayer.add([track]);
 			TrackPlayer.play();
 		}
 
@@ -114,7 +129,7 @@ export default class TrackPlayerScreen extends Component {
 		//let album = this.state.album;
 
 		return (
-			<PlayerBackground artwork='https://picsum.photos/640/640/?image=436'>
+			<PlayerBackground artwork={this.state.artwork}>
 				<View style={{ flex: 1, flexDirection: 'column' }}>
 					<View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
 						<Image source={require('../../Resources/BOB_LOGOS/BOB_LOGO_WHITE.png')} style={styles.homeImage} />
@@ -124,8 +139,8 @@ export default class TrackPlayerScreen extends Component {
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '10%', marginRight: '10%' }}>
 							<Image source={require('../../Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
 							<View style={{ flexDirection: 'column', flex: 1, alignItems: 'center' }}>
-								<Text style={styles.trackName}>{TrackStore.title}</Text>
-								<Text style={styles.artistName}>{TrackStore.artist}</Text>
+								<Text style={styles.trackName}>{this.state.title}</Text>
+								<Text style={styles.artistName}>{this.state.videoId}</Text>
 							</View>
 							<Image source={require('../../Resources/ICONS/ACTION_MENU.png')} style={{ width: 20, height: (209 / 783) * 20 }} />
 						</View>
