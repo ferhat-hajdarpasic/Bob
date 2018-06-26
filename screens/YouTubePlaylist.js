@@ -5,6 +5,7 @@ import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 import { StyleSheet, WebView, Platform } from 'react-native';
 import BKD from './BobBackground'
 import YouTubePlaylistFlatList from './YouTubePlaylistFlatList'
+import nodejs from 'nodejs-mobile-react-native';
 
 export default class YouTubePlaylist extends Component {
   constructor(props) {
@@ -36,6 +37,11 @@ export default class YouTubePlaylist extends Component {
     );
   }
   async componentDidMount() {
+  }
+  componentWillMount()
+  {
+    nodejs.start('main.js');
+    nodejs.channel.addListener('message', (msg) => {console.log(`msg=${msg}`);},this );
   }
 }
 

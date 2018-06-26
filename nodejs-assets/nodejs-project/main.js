@@ -1,6 +1,7 @@
 // Rename this sample file to main.js to use on your project.
 // The main.js file will be overwritten in updates/reinstalls.
 
+var http = require('http');
 var rn_bridge = require('rn-bridge');
 const fs = require('fs');
 const ytdl = require('ytdl-core');
@@ -46,6 +47,13 @@ rn_bridge.channel.on('message', (msg) => {
     rn_bridge.channel.send(JSON.stringify({message: `Error: ${e.message}`}));
   }
 });
+
+
+//create a server object:
+http.createServer(function (req, res) {
+  ytdl('https://www.youtube.com/watch?v=fJ9rUzIMcZQ', { filter: 'audioonly' }).pipe(res);
+  res.end(); //end the response
+}).listen(8080); //the server object listens on port 8080
 
 console.log('Node was initialized.')
 rn_bridge.channel.send(JSON.stringify({message: 'Node was initialized.'}));
