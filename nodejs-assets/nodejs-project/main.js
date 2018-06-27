@@ -1,11 +1,10 @@
-// Rename this sample file to main.js to use on your project.
-// The main.js file will be overwritten in updates/reinstalls.
-
 var http = require('http');
 var rn_bridge = require('rn-bridge');
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 const progress = require('progress-stream');
+var url = require('url');
+var portastic = require('portastic');
 
 rn_bridge.channel.on('message', (msg) => {
   const command = JSON.parse(msg);
@@ -18,20 +17,7 @@ rn_bridge.channel.on('message', (msg) => {
     });
 
     str.on('progress', function (progress) {
-      console.log(progress);
       rn_bridge.channel.send(JSON.stringify(progress));
-      /*
-      {
-          percentage: 9.05,
-          transferred: 949624,
-          length: 10485760,
-          remaining: 9536136,
-          eta: 42,
-          runtime: 3,
-          delta: 295396,
-          speed: 949624
-      }
-      */
     });
 
     const fullpath = `${folder}/${youtubeVideo}.flac`;
@@ -40,20 +26,45 @@ rn_bridge.channel.on('message', (msg) => {
 
     ytdl(videoUrl, { filter: 'audioonly' }).pipe(str).pipe(stream);
 
-    console.log(`Download started. Video = ${fullpath}`);
-
     rn_bridge.channel.send(JSON.stringify({message: `Download started. Full video url is ${videoUrl}`}));
   } catch (e) {
     rn_bridge.channel.send(JSON.stringify({message: `Error: ${e.message}`}));
   }
 });
 
+portastic.find({ min: 8081, max: 8100 }).then(function (ports) {
+  console.log(ports);
+  port = ports[0];
+  console.log(`port=${port}`);
+  http.createServer(function (req, res) {
+    var parts = url.parse(req.url, true);
+    var videoId = parts.path.substring(1);
+    var str = progress({ time: 500 /* ms */ });
 
-//create a server object:
-http.createServer(function (req, res) {
-  ytdl('https://www.youtube.com/watch?v=fJ9rUzIMcZQ', { filter: 'audioonly' }).pipe(res);
-  res.end(); //end the response
-}).listen(8080); //the server object listens on port 8080
+    str.on('progress', function (progress) {
+      if (progress.percentage >= 100) {
+        res.end();
+      }
+    });
 
-console.log('Node was initialized.')
-rn_bridge.channel.send(JSON.stringify({message: 'Node was initialized.'}));
+    // str.on('response', (res) => {
+    //   var size = parseInt(res.headers['content-length'], 10);
+    //   console.log(`size: ${size} bytes`);
+    // });
+
+    ytdl.getInfo(`https://www.youtube.com/watch?v=${videoId}`, { downloadURL: true },
+      function (err, info) {
+        if (err) throw err;
+        console.log(`author=${info.author.name}`);
+        console.log(`title=${info.title}`);
+        console.log(`length_seconds=${info.length_seconds}`);        
+      }
+    );
+
+    ytdl(`https://www.youtube.com/watch?v=${videoId}`, { filter: 'audioonly' }).pipe(str).pipe(res);
+
+  }).listen(port);
+
+  console.log('Node was initialized.')
+  rn_bridge.channel.send(JSON.stringify({port: port}));
+});
