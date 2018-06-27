@@ -69,8 +69,9 @@ export default class YouTubePlaylistFlatList extends BobFlatList {
       //let exists = await rnfetchblob.fs.exists(videoFile);
       //if(exists) {
         //let videoUrl = `file:///${videoFile}`;
-        let videoUrl = 'http://localhost:8080';
-        this.props.navigation.navigate('TrackPlayerScreen', { videoUrl: videoUrl, artwork: artwork, title: title });
+        let videoUrl = `http://localhost:${this.props.port}/${videoId}`;
+        console.log(`videoUrl=${videoUrl}`);
+        this.props.navigation.navigate('TrackPlayerScreen', { videoId: videoId, videoUrl: videoUrl, artwork: artwork, title: title });
       //} else {
        // this.props.navigation.navigate('ReactNode', { videoId: videoId });
       //}

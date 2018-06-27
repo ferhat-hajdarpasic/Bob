@@ -10,11 +10,33 @@ import nodejs from 'nodejs-mobile-react-native';
 export default class YouTubePlaylist extends Component {
   constructor(props) {
     super(props);
+    this.state = {};
   }
   render() {
     const { params } = this.props.navigation.state;
     let playlistId = params.playlistId;
     let playlistName = params.name
+    if(!this.state.port) {
+      return (
+        <BKD title={playlistName}>
+        <View style={{
+          flex: 1,
+          flexDirection: 'column',
+        }}>
+          <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5,  justifyContent: 'flex-end', alignItems: 'center'}}>
+            <Image source={require('../Resources/3RD_PARTY_LOGOS/YOUTUBE.png')} style={styles.youtube} />
+          </View>
+          <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 7, marginLeft:'10%' }}>
+            <Text style={styles.titleText}>Faiting for...</Text>
+          </View>
+          <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
+            <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
+            <Text style={styles.titleText}>import all to bob</Text>
+          </View>
+        </View>
+      </BKD>
+      );
+    } else {
 
     return (
         <BKD title={playlistName}>
@@ -26,7 +48,7 @@ export default class YouTubePlaylist extends Component {
             <Image source={require('../Resources/3RD_PARTY_LOGOS/YOUTUBE.png')} style={styles.youtube} />
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 7, marginLeft:'10%' }}>
-            <YouTubePlaylistFlatList playlistId={playlistId} navigation={this.props.navigation}/>
+            <YouTubePlaylistFlatList port={this.state.port} playlistId={playlistId} navigation={this.props.navigation}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
@@ -36,12 +58,17 @@ export default class YouTubePlaylist extends Component {
       </BKD>
     );
   }
+  }
   async componentDidMount() {
   }
   componentWillMount()
   {
     nodejs.start('main.js');
-    nodejs.channel.addListener('message', (msg) => {console.log(`msg=${msg}`);},this );
+    nodejs.channel.addListener('message', (msg) => {
+      console.log(`msg=${msg}`);
+      let port = JSON.parse(msg).port;
+      this.setState({port: port});
+    },this );
   }
 }
 

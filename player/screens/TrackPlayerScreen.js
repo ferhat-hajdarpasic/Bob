@@ -38,6 +38,7 @@ export default class TrackPlayerScreen extends Component {
 			position: 0,
 			//track: track,
 			//album: album,
+			videoId: params.videoId,
 			videoUrl: params.videoUrl,
 			title: params.title,
 			artwork: params.artwork,
@@ -126,6 +127,10 @@ export default class TrackPlayerScreen extends Component {
 		}
 	}
 
+	async download() {
+       this.props.navigation.navigate('ReactNode', { videoId: this.state.videoId});
+	}
+
 	render() {
 		//let track = this.state.track;
 		//let album = this.state.album;
@@ -161,7 +166,9 @@ export default class TrackPlayerScreen extends Component {
 							<Image source={require('../../Resources/ICONS/VOLUME_UP.png')} style={{ width: 20, height: (1550 / 1560) * 20 }} />
 						</View>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '25%', marginRight: '25%', height: '10%' }}>
-							<Image source={require('../../Resources/ICONS/DOWNLOAD_AVAILABLE.png')} style={{ width: 30, height: (561 / 842) * 30 }} />
+							<TouchableHighlight onPress={() => this.download()}>
+								<Image source={require('../../Resources/ICONS/DOWNLOAD_AVAILABLE.png')} style={{ width: 30, height: (561 / 842) * 30 }} />
+							</TouchableHighlight>
 							<Image source={require('../../Resources/ICONS/FAVOURITE_UNSELECTED.png')} style={{ width: 30, height: (687 / 649) * 30 }} />
 							<Image source={require('../../Resources/ICONS/QUEUE.png')} style={{ width: 30, height: (652 / 908) * 30 }} />
 						</View>

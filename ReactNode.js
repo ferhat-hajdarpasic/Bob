@@ -35,7 +35,7 @@ export default class ReactNode extends Component {
   componentWillMount()
   {
     console.log(`Downloading music into ${rnfetchblob.fs.dirs.MusicDir}`);
-    nodejs.start('main.js');
+    //nodejs.start('main.js');
     nodejs.channel.addListener(
       'message',
       (msg) => {
