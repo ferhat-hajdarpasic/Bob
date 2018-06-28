@@ -1,9 +1,31 @@
 import React, { Component } from 'react';
 
-import { View, Text, TextInput, Image, StyleSheet, TouchableHighlight, Slider } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, TouchableHighlight, Slider, ActivityIndicator } from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
 import rnfetchblob from 'react-native-fetch-blob';
 export default class ReactNode extends Component {
+  static port;
+  static getPortAsync = () => {
+    return new Promise((resolve, reject) => {
+      if(!ReactNode.port) {
+        nodejs.start('main.js');
+        nodejs.channel.addListener(
+          'message',
+          (msg) => {
+            console.log(`msg=${msg}`);
+            const message = JSON.parse(msg);
+            if(message.port) {
+              ReactNode.port = message.port;
+              resolve(ReactNode.port);
+            }
+          },
+          this 
+        );
+      } else {
+        resolve(ReactNode.port);
+      }
+    });
+  }
   constructor(props) {
     super(props);
     const { params } = this.props.navigation.state;
@@ -25,6 +47,7 @@ export default class ReactNode extends Component {
             }} >
             <Image source={require('./Resources/ICONS/DOWNLOAD_AVAILABLE.png')} style={styles.titleImage} />
           </TouchableHighlight>
+        <ActivityIndicator size="small" color="orange" />
         <Text style={styles.titleText}>{this.state.message}</Text>
         <Slider step={1} maximumValue={100}  
           value={this.state.percentage} style={{ width: '100%' }} thumbTintColor='orange' 
@@ -34,23 +57,6 @@ export default class ReactNode extends Component {
   }
   componentWillMount()
   {
-    console.log(`Downloading music into ${rnfetchblob.fs.dirs.MusicDir}`);
-    //nodejs.start('main.js');
-    nodejs.channel.addListener(
-      'message',
-      (msg) => {
-        console.log(`msg=${msg}`);
-        const message = JSON.parse(msg);
-        if(message.transferred) {
-          this.setState({message: `Transfered: ${message.transferred}, ${message.percentage} %`, percentage: message.percentage});
-        } else if(message.message) {
-          this.setState({message: message.message});
-        } else {
-          this.setState({message: 'UNKNOWN MESSAGE' + msg});
-        }
-      },
-      this 
-    );
   }
 }
 

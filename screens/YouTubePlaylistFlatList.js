@@ -7,6 +7,8 @@ import rnfetchblob from 'react-native-fetch-blob';
 import BobFlatList from '../BobFlatList';
 import { GoogleSignin } from 'react-native-google-signin'
 import YouTubeApi  from '../api/youtube/YouTubeApi';
+import ReactNode from '../ReactNode';
+
 let api = new YouTubeApi();
 
 export default class YouTubePlaylistFlatList extends BobFlatList {
@@ -69,7 +71,8 @@ export default class YouTubePlaylistFlatList extends BobFlatList {
       //let exists = await rnfetchblob.fs.exists(videoFile);
       //if(exists) {
         //let videoUrl = `file:///${videoFile}`;
-        let videoUrl = `http://localhost:${this.props.port}/${videoId}`;
+        let port = await ReactNode.getPortAsync();
+        let videoUrl = `http://localhost:${port}/${videoId}`;
         console.log(`videoUrl=${videoUrl}`);
         this.props.navigation.navigate('TrackPlayerScreen', { videoId: videoId, videoUrl: videoUrl, artwork: artwork, title: title });
       //} else {
