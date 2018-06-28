@@ -128,7 +128,7 @@ export default class TrackPlayerScreen extends Component {
 	}
 
 	async download() {
-       this.props.navigation.navigate('ReactNode', { videoId: this.state.videoId});
+       this.props.navigation.navigate('ReactNode', { videoId: this.state.videoId, title: this.state.title});
 	}
 
 	render() {

@@ -3,18 +3,21 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, Image, StyleSheet, TouchableHighlight, Slider, ActivityIndicator } from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
 import rnfetchblob from 'react-native-fetch-blob';
+import BKD from './screens/BobBackground'
+
 export default class ReactNode extends Component {
   static port;
   static getPortAsync = () => {
     return new Promise((resolve, reject) => {
       if(!ReactNode.port) {
+        console.log('Starting nodejs...');
         nodejs.start('main.js');
         nodejs.channel.addListener(
           'message',
           (msg) => {
-            console.log(`msg=${msg}`);
             const message = JSON.parse(msg);
             if(message.port) {
+              console.log(`Got port ${message.port}`);
               ReactNode.port = message.port;
               resolve(ReactNode.port);
             }
@@ -22,6 +25,7 @@ export default class ReactNode extends Component {
           this 
         );
       } else {
+        console.log('Port already set ...');
         resolve(ReactNode.port);
       }
     });
@@ -32,31 +36,54 @@ export default class ReactNode extends Component {
     this.state = {
       message: 'React NodeJs',
       videoId: params.videoId,
-      percentage: 0
+      title: params.title,
+      percentage: 0,
+      transferred: 0,
+      speed: 0,
+      downloading: false,
+      image: require('./Resources/ICONS/DOWNLOAD_AVAILABLE.png')
     };
+  }
+  download() {
+    if(this.state.downloading) {
+      return;
+    }
+    console.log(`videoId=${this.state.videoId}`);
+    this.setState({percentage: 0, downloading: true});
+    nodejs.channel.send(JSON.stringify({folder: rnfetchblob.fs.dirs.MusicDir, video: this.state.videoId}));
+    nodejs.channel.addListener(
+      'message',
+      (msg) => {
+        console.log(`msg=${msg}`);
+        const message = JSON.parse(msg);
+        let percentage = Math.ceil(new Number(message.percentage));
+        this.setState(
+          {
+            percentage: percentage,
+            transferred: Math.ceil(new Number(message.transferred)/10000)/100,
+            speed: Math.ceil(new Number(message.speed)/1000),
+            image: percentage < 100 ? require('./Resources/ICONS/DOWNLOAD_AVAILABLE.png') : require('./Resources/ICONS/DOWNLOADED_LOCAL.png')
+          }
+        );
+      },
+      this 
+    );
   }
   render() {
     return (
-      <View style={{ flexDirection: 'column', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
-        <TextInput placeholder="Enter Video Name" underlineColorAndroid='transparent' style={styles.video} 
-          onChangeText={(videoId) => this.setState({ videoId: videoId })} value={this.state.videoId} />
-          <TouchableHighlight onPress={() => {
-              console.log(`videoId=${this.state.videoId}`);
-              this.setState({percentage: 0});
-              nodejs.channel.send(JSON.stringify({folder: rnfetchblob.fs.dirs.MusicDir, video: this.state.videoId}))
-            }} >
-            <Image source={require('./Resources/ICONS/DOWNLOAD_AVAILABLE.png')} style={styles.titleImage} />
-          </TouchableHighlight>
-        <ActivityIndicator size="small" color="orange" />
-        <Text style={styles.titleText}>{this.state.message}</Text>
-        <Slider step={1} maximumValue={100}  
-          value={this.state.percentage} style={{ width: '100%' }} thumbTintColor='orange' 
-          maximumTrackTintColor='orange' minimumTrackTintColor='orange' />
+      <BKD title={'Downloading ' + this.state.title}>
+      <View style={{ flexDirection: 'column', backgroundColor: 'transparent', flex: 1, marginTop:'40%', alignItems: 'center', alignContent: 'space-between' }}>
+        <Image source={this.state.image} style={styles.titleImage} />
+        <ActivityIndicator size="large" color="white" animating={this.state.percentage < 100} hidesWhenStopped={true}/>
+        <Text style={styles.titleText}>Transfered so far {this.state.transferred} MB</Text>
+        <Text style={styles.titleText}>Speed {this.state.speed} kB/s</Text>        
       </View>
+      </BKD>
     );
   }
   componentWillMount()
   {
+    this.download();
   }
 }
 
@@ -66,7 +93,6 @@ const styles = StyleSheet.create({
     titleImage: {
       width: 80,
       height: (561 / 842) * 80,
-      marginRight:20
     },
     artistText: {
       color: 'white',
