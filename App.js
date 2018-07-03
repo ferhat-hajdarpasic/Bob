@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import BobLogin from './BobLogin'
-import LoginToSpotify from './LoginToSpotify'
+//import LoginToSpotify from './LoginToSpotify'
 import InitialScreen from './InitialScreen'
 
 import ImportFromSpotify from './ImportFromSpotify'
@@ -22,11 +22,13 @@ import PlayerScreen from "./PlayerScreen.js"
 import Album from "./Album.js"
 import ReactNode from "./ReactNode.js"
 import LoginToYoutube from "./LoginToYoutube.js"
+import LoginToSoundCloud from "./LoginToSoundCloud.js"
 
 import LandingScreen from './player/screens/LandingScreen';
 import TrackPlayerScreen from './player/screens/TrackPlayerScreen';
 import AddFavourites from './screens/AddFavourites';
 import ImportFromYoutube from './screens/ImportFromYoutube';
+import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';
 import YouTubePlaylists from './screens/YouTubePlaylists';
 import YouTubePlaylist from './screens/YouTubePlaylist';
 
@@ -36,10 +38,12 @@ export default StackNavigator(
     TrackPlayerScreen: { screen: TrackPlayerScreen },
     ReactNode: { screen: ReactNode },
     LoginToYoutube: {screen: LoginToYoutube },
-    LoginToSpotify: {screen: LoginToSpotify },
+    //LoginToSpotify: {screen: LoginToSpotify },
+    LoginToSoundCloud: {screen: LoginToSoundCloud },
     InitialScreen: {screen: InitialScreen},        
     ImportFromSpotify: {screen: ImportFromSpotify},
     ImportFromYoutube: {screen: ImportFromYoutube},
+    ImportFromSoundCloud: {screen: ImportFromSoundCloud},
     YouTubePlaylists: {screen: YouTubePlaylists},
     YouTubePlaylist: {screen: YouTubePlaylist},
     Playlists: {screen: Playlists},

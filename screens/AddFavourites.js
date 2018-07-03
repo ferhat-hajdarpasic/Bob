@@ -14,6 +14,7 @@ export default class BobLogin extends Component {
 		this.state = { username: '', password: '', spotifyInitialized: false };
 		this.spotifyButtonPressed = this.spotifyButtonPressed.bind(this);
 		this.youtubeButtonPressed = this.youtubeButtonPressed.bind(this);
+		this.soundcloudButtonPressed = this.soundcloudButtonPressed.bind(this);
 	}
 	componentDidMount() {
 		// initialize Spotify if it hasn't been initialized yet
@@ -53,6 +54,10 @@ export default class BobLogin extends Component {
 			// error
 			console.log("Error", error);
 		});
+	}
+
+	soundcloudButtonPressed() {
+		this.props.navigation.navigate('LoginToSoundCloud', {});
 	}
 
 	async youtubeButtonPressed() {
@@ -96,7 +101,7 @@ export default class BobLogin extends Component {
 					</View>
 					<View style={{ flex: 9, flexDirection: 'row', justifyContent: 'space-between' }}>
 						<View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-							<TouchableHighlight>
+							<TouchableHighlight onPress={this.soundcloudButtonPressed}>
 								<Image source={require('../Resources/3RD_PARTY_LOGOS/SOUNDCLOUD.png')} style={styles.soundcloud} />
 							</TouchableHighlight>
 							<TouchableHighlight onPress={this.spotifyButtonPressed}>
