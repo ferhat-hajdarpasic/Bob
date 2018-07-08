@@ -13,6 +13,7 @@ async function handleResponse(response) {
     }
 }
 
+export default client_id;
 export default class SoundCloudApi {
     async playlists(access_token) {
         console.log('playlists:'+ access_token);

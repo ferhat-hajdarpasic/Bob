@@ -30,7 +30,9 @@ import AddFavourites from './screens/AddFavourites';
 import ImportFromYoutube from './screens/ImportFromYoutube';
 import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';
 import YouTubePlaylists from './screens/YouTubePlaylists';
+import SoundCloudPlaylists from './soundcloud/SoundCloudPlaylists';
 import YouTubePlaylist from './screens/YouTubePlaylist';
+import SoundCloudPlaylist from './soundcloud/SoundCloudPlaylist';
 
 export default StackNavigator(
   {
@@ -45,7 +47,9 @@ export default StackNavigator(
     ImportFromYoutube: {screen: ImportFromYoutube},
     ImportFromSoundCloud: {screen: ImportFromSoundCloud},
     YouTubePlaylists: {screen: YouTubePlaylists},
+    SoundCloudPlaylists: {screen: SoundCloudPlaylists},
     YouTubePlaylist: {screen: YouTubePlaylist},
+    SoundCloudPlaylist: {screen: SoundCloudPlaylist},
     Playlists: {screen: Playlists},
     //Playlist: {screen: Playlist},
     RecentlyPlayed: {screen: RecentlyPlayed},

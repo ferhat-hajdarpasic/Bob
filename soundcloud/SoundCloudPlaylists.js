@@ -3,17 +3,17 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform } from 'react-native';
-import BKD from './BobBackground'
+import BKD from '../screens/BobBackground'
 import SoundCloudPlaylistsFlatList from './SoundCloudPlaylistsFlatList'
 
-export default class Playlists extends Component {
+export default class SoundCloudPlaylists extends Component {
   constructor(props) {
     super(props);
-    this.state = { code: '' };
+    this.state = { accessToken: '', playlists: [] };
   }
   render() {
     const { params } = this.props.navigation.state;
-    this.state.code = params.code;
+    this.state = { accessToken: params.accessToken, playlists: params.playlists };
     return (
         <BKD title='SoundCloud playlists'>
         <View style={{
@@ -23,7 +23,7 @@ export default class Playlists extends Component {
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5 }}>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
-            <SoundCloudPlaylistsFlatList code={this.state.code} playlists={this.state.playlists} navigation={this.props.navigation}/>
+            <SoundCloudPlaylistsFlatList accessToken={this.state.accessToken} playlists={this.state.playlists} navigation={this.props.navigation}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />

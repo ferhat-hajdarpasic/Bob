@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform } from 'react-native';
-import BKD from './BobBackground'
+import BKD from '../screens/BobBackground'
 import SoundCloudPlaylistFlatList from './SoundCloudPlaylistFlatList'
 
 export default class SoundCloudPlaylist extends Component {
@@ -13,10 +13,9 @@ export default class SoundCloudPlaylist extends Component {
   }
   render() {
     const { params } = this.props.navigation.state;
-    let playlistId = params.playlistId;
-    let playlistName = params.name
+    let playlist = params.playlist;
     return (
-        <BKD title={playlistName}>
+        <BKD title={playlist.title}>
         <View style={{
           flex: 1,
           flexDirection: 'column',
@@ -25,7 +24,7 @@ export default class SoundCloudPlaylist extends Component {
             <Image source={require('../Resources/3RD_PARTY_LOGOS/SOUNDCLOUD.png')} style={styles.soundcloud} />
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 7, marginLeft:'10%' }}>
-            <SoundCloudPlaylistFlatList playlistId={playlistId} navigation={this.props.navigation}/>
+            <SoundCloudPlaylistFlatList playlist={playlist} navigation={this.props.navigation}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />

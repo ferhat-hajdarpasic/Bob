@@ -16,19 +16,19 @@ export default class PlaylistsFlatList extends BobFlatList {
 
   makeRemoteRequest = async () => {
     this.setState({ loading: true });
-    const user = await GoogleSignin.currentUserAsync()
 
-    let playlists = await api.playlists(user.accessToken);
+    console.log(`accessToken=${this.props.accessToken}`)
+    this.state.playlists = await api.playlists(this.props.accessToken);
 
     let data = []
 
-    for(let i = 0; i < playlists.items.length; i++) {
-      let item = playlists.items[i];
+    for(let i = 0; i < this.state.playlists.length; i++) {
+      let item = this.state.playlists[i];
 
       data.push({
-        name: item.snippet.title,
-        imageUrl: item.snippet.thumbnails.high.url,
-        playlistId: item.id
+        name: item.title,
+        imageUrl: (item.tracks[0]) ? item.tracks[0].artwork_url : '',
+        playlist: item
       });
     }
 
@@ -64,7 +64,7 @@ export default class PlaylistsFlatList extends BobFlatList {
   
       play = (item) => {
         console.log('item=' + JSON.stringify(item));
-        this.props.navigation.navigate('SoundCloudPlaylist', { playlistId: item.playlistId, name: item.name });
+        this.props.navigation.navigate('SoundCloudPlaylist', { playlist: item.playlist});
       };
   }
   

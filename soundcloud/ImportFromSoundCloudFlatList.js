@@ -17,10 +17,12 @@ export default class ImportFromSoundCloudFlatList extends BobFlatList {
     this.setState({ loading: true });
     this.state.playlists = await api.playlists(this.props.accessToken);
 
+    console.log(`URL = ${this.state.playlists[0].tracks[0].artwork_url}`);
+
     this.setState({
       data: [
         {
-          //url: this.state.playlists.items[0].snippet.thumbnails.high.url,
+          url: this.state.playlists[0].tracks[0].artwork_url,
           name: 'playlists'
         }
       ],
@@ -56,8 +58,8 @@ export default class ImportFromSoundCloudFlatList extends BobFlatList {
     console.log('You touched:' + name);
     //this.props.navigation.navigate('player', {});
 
-    console.log('this.state.accessToken:' + this.state.accessToken);
-    const accessToken = this.state.accessToken;
+    console.log('this.props.accessToken:' + this.props.accessToken);
+    const accessToken = this.props.accessToken;
     switch(name) {
       case 'playlists':
         this.props.navigation.navigate('SoundCloudPlaylists', { accessToken: accessToken, playlists: this.state.playlists });

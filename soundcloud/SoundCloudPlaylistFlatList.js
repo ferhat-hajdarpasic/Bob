@@ -17,25 +17,26 @@ export default class SoundCloudPlaylistFlatList extends BobFlatList {
     
   }
 
-  async makeRemoteRequest() {
-    const user = await GoogleSignin.currentUserAsync()
-    let playlist = await api.playlist(user.accessToken, this.props.playlistId);
-    let videos = [];
+  makeRemoteRequest() {
+    let playlist = this.props.playlist;
+    let tracks = [];
 
-    for(let i = 0; i < playlist.items.length; i++) {
-      let video = playlist.items[i];
-      console.log('FRED track='+JSON.stringify(video));
-      let artistName = `${video.snippet.resourceId.videoId}`;
-      videos.push({
-        artist: artistName,
-        title: video.snippet.title,
-        videoId: video.snippet.resourceId.videoId,
-        artwork: video.snippet.thumbnails.high.url
+    console.log('FREDdy track=');
+    console.log('FREDdy track='+JSON.stringify(playlist));
+    console.log('FREDdy track=');
+    for(let i = 0; i < playlist.tracks.length; i++) {
+      let track = playlist.tracks[i];
+      console.log('FRED track='+JSON.stringify(track));
+      tracks.push({
+        artist: track.label_name,
+        title: track.title,
+        streamUrl: track.stream_url,
+        artwork: track.artwork_url
       });
     }
 
     this.setState({
-      data: videos,
+      data: tracks,
       loading: false,
       refreshing: false
     });
@@ -52,7 +53,7 @@ export default class SoundCloudPlaylistFlatList extends BobFlatList {
 
   renderItem = ( {item, index} ) => {
     return (
-      <TouchableHighlight onPress={() => this.play(item.videoId, item.artwork, item.title)}>
+      <TouchableHighlight onPress={() => this.play(item.streamUrl, item.artwork, item.title)}>
       <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
         <Image source={{uri: item.artwork}} style={{width:50, height:50}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
@@ -65,19 +66,9 @@ export default class SoundCloudPlaylistFlatList extends BobFlatList {
     );
     }
 
-    play = async (videoId, artwork, title) => {
-      const videoFile = `${rnfetchblob.fs.dirs.MusicDir}/${videoId}.flac`;
-      console.log(`Checkig if file '${videoFile} exists`);
-      //let exists = await rnfetchblob.fs.exists(videoFile);
-      //if(exists) {
-        //let videoUrl = `file:///${videoFile}`;
-        let port = await ReactNode.getPortAsync();
-        let videoUrl = `http://localhost:${port}/${videoId}`;
-        console.log(`videoUrl=${videoUrl}`);
-        this.props.navigation.navigate('TrackPlayerScreen', { videoId: videoId, videoUrl: videoUrl, artwork: artwork, title: title });
-      //} else {
-       // this.props.navigation.navigate('ReactNode', { videoId: videoId });
-      //}
+    play = async (streamUrl, artwork, title) => {
+        console.log(`streamUrl=${streamUrl}`);
+        this.props.navigation.navigate('TrackPlayerScreen', { streamUrl: streamUrl, artwork: artwork, title: title });
     };
 }
 
