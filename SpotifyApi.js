@@ -116,7 +116,8 @@ export default class SpotifyApi {
                     'Authorization': 'Bearer ' + access_token
                 }
             });
-            temp = handleResponse(response);
+            temp = await handleResponse(response);
+            //console.log('Remaining items: ' + JSON.stringify(temp));
             Array.prototype.push.apply(result.items, temp.items);
         }
         return result;
