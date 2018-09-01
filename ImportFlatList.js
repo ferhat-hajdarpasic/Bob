@@ -33,15 +33,15 @@ export default class ImportFlatList extends BobFlatList {
     this.setState({
       data: [
         {
-          url: this.state.recentlyPlayed.items[0].track.album.images[0].url,
+          image: this.uriImageSource(this.state.recentlyPlayed.items[0].track.album.images[0].url),
           name: 'recently played'
         },
         {
-          url: this.state.playlists.items[0].images[0].url,
+          image: this.playlistsImageSource(this.state.playlists),
           name: 'playlists'
         },
         {
-          url: this.state.albums.items[0].album.images[0].url,
+          image: this.uriImageSource(this.state.albums.items[0].album.images[0].url),
           name: 'albums'
         }
       ],
@@ -50,6 +50,27 @@ export default class ImportFlatList extends BobFlatList {
     });
   };
 
+  playlistsImageSource = (playlists) => {
+    let temp = this.findFirstPlaylistWithImage(playlists);
+    if(temp) {
+      return this.uriImageSource(temp.images[0].url);
+    } else {
+      return this.emptyPlaylistImage();
+    }
+  }
+
+  findFirstPlaylistWithImage = (playlists) => {
+    const result = playlists.items.find( item => item.images.length > 0 );
+    return result;
+  }
+
+  uriImageSource = (imageUri) => {
+    return {uri: imageUri};
+  }
+
+  emptyPlaylistImage = () => {
+    return require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png');
+  }
 
   renderSeparator = () => {
     return (
@@ -63,7 +84,7 @@ export default class ImportFlatList extends BobFlatList {
     return (
       <TouchableHighlight onPress={() => this.goToNextScreen(item.name)}>
         <View style={{ flex: 1, width : '100%', flexDirection: 'row', alignContent: 'space-between' }}>
-          <Image source={{ uri: item.url }} style={{ width: 100, height: 100 }} />
+          <Image source={item.image} style={{ width: 100, height: 100 }} />
           <View style={{ flex: 1, width : '100%', flexDirection: 'column', justifyContent: 'space-around', paddingLeft: 15 }}>
             <Text style={styles.titleText}>{item.name} </Text>
             <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
