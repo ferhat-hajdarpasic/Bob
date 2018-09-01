@@ -102,10 +102,10 @@ export default class SpotifyApi {
                 'Authorization': 'Bearer ' + access_token
             }
         });
-        return await this.handleNext(playlistsResponse, access_token);
+        return await this.handleNextPlaylists(playlistsResponse, access_token);
     }
 
-    async handleNext(playlistsResponse, access_token) {
+    async handleNextPlaylists(playlistsResponse, access_token) {
         let result = await handleResponse(playlistsResponse);
         let temp = result;
         while (temp.next) {
@@ -124,14 +124,32 @@ export default class SpotifyApi {
     }
 
     async playlist(access_token, playlist_href) {
-        console.log(playlist_href);
+        console.log('playlist_href=' + playlist_href);
         let playlistResponse = await fetch(playlist_href, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + access_token
             }
         });
-         await handleResponse(playlistResponse);
+        return await this.handleNextPlaylist(playlistResponse, access_token);
+    }
+
+    async handleNextPlaylist(initialResponse, access_token) {
+        let result = await handleResponse(initialResponse);
+        let next = result.tracks.next;
+        while (next) {
+            console.log('next=' + next);
+            let nextResponse = await fetch(next, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + access_token
+                }
+            });
+            temp = await handleResponse(nextResponse);
+            Array.prototype.push.apply(result.tracks.items, temp.items);
+            next = temp.next;
+        }
+        return result;
     }
 
     async albums(access_token) {

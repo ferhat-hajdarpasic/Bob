@@ -43,7 +43,7 @@ export default class PlayerScreen extends Component {
 		};
 
 		this.spotifyLogoutButtonWasPressed = this.spotifyLogoutButtonWasPressed.bind(this);
-		console.log('state=' + JSON.stringify(this.state));
+		//console.log('state=' + JSON.stringify(this.state));
 	}
 
 	componentWillUnmount() {

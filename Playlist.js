@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform } from 'react-native';
-import BKD from './BobBackground'
+import BKD from './screens/BobBackground'
 import PlaylistFlatList from './PlaylistFlatList'
 import SpotifyApi from './SpotifyApi'
 import Spotify from 'rn-spotify-sdk';

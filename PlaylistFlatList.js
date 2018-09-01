@@ -5,15 +5,17 @@ import { List, ListItem, SearchBar } from "react-native-elements";
 import BobFlatList from './BobFlatList';
 import Spotify from 'rn-spotify-sdk';
 import SpotifyApi from './SpotifyApi';
+import SpotifyHelper from "./SpotifyHelper";
 let api = new SpotifyApi();
 
 export default class PlaylistFlatList extends BobFlatList {
   constructor(props) {
     super(props);
-    
+    console.log('PlaylistFlatList constructor()');    
   }
 
   async makeRemoteRequest() {
+    console.log('PlaylistFlatList makeRemoteRequest()');
     let auth = Spotify.getAuth();
     let playlist = await api.playlist(auth.accessToken, this.props.playlistHref);
     let tracks = [];
@@ -28,9 +30,10 @@ export default class PlaylistFlatList extends BobFlatList {
       }
       let artistName = artists.join(' and ');
       tracks.push({
-        artist: artistName,
+        artist: `${i}` + artistName,
         track: track,
-        album: track.album
+        album: track.album,
+        key: track.album.id
       });
     }
 
@@ -54,7 +57,7 @@ export default class PlaylistFlatList extends BobFlatList {
     return (
       <TouchableHighlight onPress={() => this.play(item.track, item.album)}>
       <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
-        <Image source={{uri: item.album.images[0].url}} style={{width:50, height:50}}/>
+        <Image source={SpotifyHelper.albumImageSource(item.album)} style={{width:50, height:50}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
           <Text style={styles.albumText}>{item.track.name} </Text>
           <Text style={styles.artistText}>{item.artist} </Text>

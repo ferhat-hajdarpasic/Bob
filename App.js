@@ -15,7 +15,7 @@ import InitialScreen from './InitialScreen'
 
 import ImportFromSpotify from './ImportFromSpotify'
 import Playlists from './Playlists'
-//import Playlist from './Playlist'
+import Playlist from './Playlist'
 import RecentlyPlayed from './RecentlyPlayed'
 import Albums from './Albums'
 import PlayerScreen from "./PlayerScreen.js"
@@ -51,7 +51,7 @@ export default StackNavigator(
     YouTubePlaylist: {screen: YouTubePlaylist},
     SoundCloudPlaylist: {screen: SoundCloudPlaylist},
     Playlists: {screen: Playlists},
-    //Playlist: {screen: Playlist},
+    Playlist: {screen: Playlist},
     RecentlyPlayed: {screen: RecentlyPlayed},
     Albums: {screen: Albums},
     Album: {screen: Album},

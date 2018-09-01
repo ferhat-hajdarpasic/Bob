@@ -76,7 +76,7 @@ export default class BobFlatList extends Component {
       <FlatList
         data={this.state.data}
         renderItem={this.renderItem}
-        keyExtractor={item => item.name}
+        keyExtractor={item => item.key || item.name}
         ItemSeparatorComponent={this.renderSeparator}
         ListFooterComponent={this.renderFooter}
         onRefresh={this.handleRefresh}
