@@ -96,14 +96,30 @@ export default class SpotifyApi {
 
     async playlists(access_token) {
         console.log('playlists:'+ access_token);
-        //var access_token = await getAccessToken(access_token);
-        let meResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
+        let playlistsResponse = await fetch('https://api.spotify.com/v1/me/playlists', {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + access_token
             }
         });
-        return await handleResponse(meResponse);
+        return await this.handleNext(playlistsResponse, access_token);
+    }
+
+    async handleNext(playlistsResponse, access_token) {
+        let result = await handleResponse(playlistsResponse);
+        let temp = result;
+        while (temp.next) {
+            console.log('next=' + temp.next);
+            let response = await fetch(temp.next, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + access_token
+                }
+            });
+            temp = handleResponse(response);
+            Array.prototype.push.apply(result.items, temp.items);
+        }
+        return result;
     }
 
     async playlist(access_token, playlist_href) {
@@ -114,7 +130,7 @@ export default class SpotifyApi {
                 'Authorization': 'Bearer ' + access_token
             }
         });
-        return await handleResponse(playlistResponse);
+         await handleResponse(playlistResponse);
     }
 
     async albums(access_token) {
