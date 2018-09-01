@@ -26,7 +26,7 @@ export default class SoundCloudPlaylistFlatList extends BobFlatList {
     console.log('FREDdy track=');
     for(let i = 0; i < playlist.tracks.length; i++) {
       let track = playlist.tracks[i];
-      console.log('FRED track='+JSON.stringify(track));
+      //console.log('FRED track='+JSON.stringify(track));
       tracks.push({
         artist: track.label_name,
         title: track.title,

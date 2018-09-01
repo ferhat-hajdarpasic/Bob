@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
 
@@ -20,26 +20,11 @@ export default class BobFlatList extends Component {
   }
 
   handleRefresh = () => {
-    console.log('handleRefresh');
-    this.setState(
-      {
-        refreshing: true
-      },
-      async () => {
-        await this.makeRemoteRequest();
-      }
-    );
+    console.log('Maybe implement handleRefresh later');
   };
 
   handleLoadMore = () => {
-    console.log('handleLoadMore');
-    this.setState(
-      {
-      },
-      async () => {
-        await this.makeRemoteRequest();
-      }
-    );
+    console.log('Maybe implement handleLoadMore later');
   };
 
   renderSeparator = () => {
@@ -82,7 +67,7 @@ export default class BobFlatList extends Component {
         onRefresh={this.handleRefresh}
         refreshing={this.state.refreshing}
         onEndReached={this.handleLoadMore}
-        onEndReachedThreshold={50}
+        onEndReachedThreshold={1500}
       />
     );
   }

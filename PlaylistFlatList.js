@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
 
@@ -7,11 +7,32 @@ import Spotify from 'rn-spotify-sdk';
 import SpotifyApi from './SpotifyApi';
 import SpotifyHelper from "./SpotifyHelper";
 let api = new SpotifyApi();
+class PlaylistItem extends Component {
 
+  constructor(props) {
+    super(props);
+    console.log('PlaylistItem constructor()');    
+  }
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return false;
+  }
+  render() {
+    let item = this.props.item;
+    return (
+      <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
+        <Image source={SpotifyHelper.albumImageSource(item.album)} style={{width:50, height:50}}/>
+        <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
+          <Text style={styles.albumText}>{item.track.name} </Text>
+          <Text style={styles.artistText}>{item.artist} </Text>
+        </View>
+        <Image source={require('./Resources/ICONS/PLAY.png')} style={styles.titleImage} />
+      </View>
+    );
+  }
+}
 export default class PlaylistFlatList extends BobFlatList {
   constructor(props) {
     super(props);
-    console.log('PlaylistFlatList constructor()');    
   }
 
   async makeRemoteRequest() {
@@ -20,15 +41,23 @@ export default class PlaylistFlatList extends BobFlatList {
     let playlist = await api.playlist(auth.accessToken, this.props.playlistHref);
     let tracks = [];
 
+    const duplicates = new Set();
     for(let i = 0; i < playlist.tracks.items.length; i++) {
       let track = playlist.tracks.items[i].track;
-      console.log('FRED track='+JSON.stringify(track));
+      if(duplicates.has(track.album.id)) {
+        console.log('Duplicate Track: ' + JSON.stringify(track));
+        continue;
+      }
+      duplicates.add(track.album.id);
+      //console.log('FRED track='+JSON.stringify(track));
       let artists = [];
 
       for(let j = 0; j < track.artists.length; j++) {
         artists.push(track.artists[j].name);
       }
       let artistName = artists.join(' and ');
+      console.log(`track.album.id=${track.album.id}`);
+
       tracks.push({
         artist: `${i}` + artistName,
         track: track,
@@ -55,17 +84,10 @@ export default class PlaylistFlatList extends BobFlatList {
 
   renderItem = ( {item, index} ) => {
     return (
-      <TouchableHighlight onPress={() => this.play(item.track, item.album)}>
-      <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
-        <Image source={SpotifyHelper.albumImageSource(item.album)} style={{width:50, height:50}}/>
-        <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:5}}>
-          <Text style={styles.albumText}>{item.track.name} </Text>
-          <Text style={styles.artistText}>{item.artist} </Text>
-        </View>
-        <Image source={require('./Resources/ICONS/PLAY.png')} style={styles.titleImage} />
-      </View>
-      </TouchableHighlight>
-    );
+        <TouchableHighlight onPress={() => this.play(item.track, item.album)}>
+          <PlaylistItem item={item}></PlaylistItem>
+        </TouchableHighlight>
+      );
     }
 
     play = (track, album) => {
