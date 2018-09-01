@@ -14,6 +14,7 @@ export default class Playlists extends Component {
   render() {
     const { params } = this.props.navigation.state;
     this.state.code = params.code;
+    this.state.playlists = params.playlists;
     return (
         <BKD title='spotify playlists'>
         <View style={{
