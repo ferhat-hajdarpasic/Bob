@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
 
-import BobFlatList from './BobFlatList'
-import SpotifyApi from './SpotifyApi'
+import BobFlatList from './BobFlatList';
+import SpotifyApi from './SpotifyApi';
+import SpotifyHelper from './SpotifyHelper';
 import Spotify from 'rn-spotify-sdk';
 
 let api = new SpotifyApi();
@@ -33,15 +34,15 @@ export default class ImportFlatList extends BobFlatList {
     this.setState({
       data: [
         {
-          image: this.uriImageSource(this.state.recentlyPlayed.items[0].track.album.images[0].url),
+          image: SpotifyHelper.uriImageSource(this.state.recentlyPlayed.items[0].track.album.images[0].url),
           name: 'recently played'
         },
         {
-          image: this.playlistsImageSource(this.state.playlists),
+          image: SpotifyHelper.playlistsImageSource(this.state.playlists),
           name: 'playlists'
         },
         {
-          image: this.uriImageSource(this.state.albums.items[0].album.images[0].url),
+          image: SpotifyHelper.uriImageSource(this.state.albums.items[0].album.images[0].url),
           name: 'albums'
         }
       ],
@@ -49,28 +50,6 @@ export default class ImportFlatList extends BobFlatList {
       refreshing: false
     });
   };
-
-  playlistsImageSource = (playlists) => {
-    let temp = this.findFirstPlaylistWithImage(playlists);
-    if(temp) {
-      return this.uriImageSource(temp.images[0].url);
-    } else {
-      return this.emptyPlaylistImage();
-    }
-  }
-
-  findFirstPlaylistWithImage = (playlists) => {
-    const result = playlists.items.find( item => item.images.length > 0 );
-    return result;
-  }
-
-  uriImageSource = (imageUri) => {
-    return {uri: imageUri};
-  }
-
-  emptyPlaylistImage = () => {
-    return require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png');
-  }
 
   renderSeparator = () => {
     return (
