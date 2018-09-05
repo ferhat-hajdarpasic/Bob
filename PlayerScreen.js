@@ -36,14 +36,15 @@ class _PlayerScreen extends Component {
 		let track = params.track;
 		let album = params.album;
 
-
 		this.state = {
 			duration: track.duration_ms / 1000,
 			position: 0,
 			track: track,
 			album: album,
-			pausedImage: require('./Resources/ICONS/PAUSE.png')
+			pausedImage: require('./Resources/ICONS/PAUSE.png'),
+			albumImageUri: (track.album) ? track.album.images[0].url : album.images[0].url
 		};
+		console.log(`albumImageUri = ${this.state.albumImageUri}`);
 
 		this.spotifyLogoutButtonWasPressed = this.spotifyLogoutButtonWasPressed.bind(this);
 	}
@@ -132,13 +133,19 @@ class _PlayerScreen extends Component {
 		}
 	}
 
-	render() {
-		let track = this.state.track;
-		let album = this.state.album;
-		let albumImageUri = (track.album) ? track.album.images[0].url : album.images[0].url;
+	playNext() {
+		let albumImageSample1 = 'https://i.scdn.co/image/c5484d389b17edbf5ff51751e63ee87801270b97';
+		this.setState({albumImageUri: albumImageSample1});
+	}
 
+	playPrevious() {
+		let albumImageSample2 = 'https://i.scdn.co/image/22bcdcc2c2e514e475abc4d4af336d8b2073be93';
+		this.setState({albumImageUri: albumImageSample2});
+	}
+
+	render() {
 		return (
-			<PlayerBackground artwork={albumImageUri}>
+			<PlayerBackground artwork={this.state.albumImageUri}>
 				<View style={{ flex: 1, flexDirection: 'column' }}>
 					<View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
 						<Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_WHITE.png')} style={styles.homeImage} />
@@ -148,18 +155,22 @@ class _PlayerScreen extends Component {
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '10%', marginRight: '10%' }}>
 							<Image source={require('./Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
 							<View style={{ flexDirection: 'column', flex: 1, alignItems: 'center' }}>
-								<Text style={styles.trackName}>{track.name}</Text>
-								<Text style={styles.artistName}>{track.artists[0].name}</Text>
+								<Text style={styles.trackName}>{this.state.track.name}</Text>
+								<Text style={styles.artistName}>{this.state.track.artists[0].name}</Text>
 							</View>
 							<Image source={require('./Resources/ICONS/ACTION_MENU.png')} style={{ width: 20, height: (209 / 783) * 20 }} />
 						</View>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '5%', marginRight: '5%' }}>
 							<Image source={require('./Resources/ICONS/SHUFFLE_UNSELECTED.png')} style={{ width: 30, height: (565 / 719) * 30 }} />
-							<Image source={require('./Resources/ICONS/BACK.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							<TouchableHighlight onPress={() => this.playPrevious()}>
+								<Image source={require('./Resources/ICONS/BACK.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							</TouchableHighlight>
 							<TouchableHighlight onPress={() => this.pause()}>
 								<Image source={this.state.pausedImage} style={{ width: 20, height: (643 / 546) * 20 }} />
 							</TouchableHighlight>
-							<Image source={require('./Resources/ICONS/FORWARD.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							<TouchableHighlight onPress={() => this.playNext()}>
+								<Image source={require('./Resources/ICONS/FORWARD.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							</TouchableHighlight>
 							<Image source={require('./Resources/ICONS/REPEAT_UNSELECTED.png')} style={{ width: 30, height: (686 / 638) * 30 }} />
 						</View>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '15%', marginRight: '15%' }}>
