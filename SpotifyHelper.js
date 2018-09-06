@@ -1,7 +1,7 @@
 export default class SpotifyHelper {
     static albumImageSource = (album) => {
       if(album.images.length > 0) {
-        return SpotifyHelper.uriImageSource(album.images[0].url);
+        return SpotifyHelper.uriImageSource(album.images[2].url);
       } else {
         return SpotifyHelper.emptyPlaylistImage();
       }

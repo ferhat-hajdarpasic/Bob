@@ -67,7 +67,7 @@ export default class BobFlatList extends Component {
         onRefresh={this.handleRefresh}
         refreshing={this.state.refreshing}
         onEndReached={this.handleLoadMore}
-        onEndReachedThreshold={1500}
+        onEndReachedThreshold={50}
       />
     );
   }
