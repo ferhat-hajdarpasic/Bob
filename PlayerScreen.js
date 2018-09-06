@@ -47,10 +47,13 @@ export default class PlayerScreen extends Component {
 	}
 
 	componentWillUnmount() {
+		this.mounted = false;
+		console.log('Player will unmount. Clear timeout.');
 		timer.clearTimeout(this);
 	}
 
 	async componentDidMount() {
+		this.mounted = true;
 		let loggedIn = await api.login();
 		if (!loggedIn) {
 			console.log("Strange Spotify not logged in. Not trying to play");
@@ -59,10 +62,10 @@ export default class PlayerScreen extends Component {
 			await Spotify.playURI(this.state.track.uri, 0, 0);
 			timer.setInterval(
 				this, 'updateProgress', () => {
-					let playbackState = Spotify.getPlaybackState();
-					this.setState({
-						position: playbackState.position,
-					});
+					if(this.mounted) {
+						let playbackState = Spotify.getPlaybackState();
+						this.setState({position: playbackState.position});
+					}
 				}, 1000
 			);
 		}
