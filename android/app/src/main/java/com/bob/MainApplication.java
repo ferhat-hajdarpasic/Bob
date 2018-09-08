@@ -3,6 +3,7 @@ package com.bob;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.tavernari.volumecontroller.ReactNativeVolumeControllerPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.janeasystems.rn_nodejs_mobile.RNNodeJsMobilePackage;
 import com.lufinkey.react.spotify.RNSpotifyPackage;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeVolumeControllerPackage(),
             new RNGoogleSigninPackage(),
             new RNNodeJsMobilePackage(),
             new RNSpotifyPackage(),

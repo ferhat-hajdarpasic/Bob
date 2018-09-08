@@ -22,6 +22,7 @@
 		"react-native-timer": "^1.3.3",
 		"react-native-track-player": "^0.2.4",
 		"react-native-vector-icons": "^4.6.0",
+		"react-native-volume-controller": "^1.2.1",
 		"react-navigation": "^1.5.11",
 		"redux": "^4.0.0",
 		"rn-spotify-sdk": "^1.1.0"

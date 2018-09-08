@@ -7,7 +7,8 @@ import {
 	TouchableHighlight,
 	View,
 	Image,
-	Slider
+	Slider,
+	NativeModules
 } from 'react-native';
 
 import timer from 'react-native-timer';
@@ -18,6 +19,7 @@ import { NavigationActions } from 'react-navigation';
 import Spotify from 'rn-spotify-sdk';
 import SpotifyApi from './SpotifyApi';
 let api = new SpotifyApi();
+const ReactNativeVolumeController = NativeModules.ReactNativeVolumeController;
 
 export default class PlayerScreen extends Component {
 	static navigationOptions = {
@@ -37,6 +39,7 @@ export default class PlayerScreen extends Component {
 			spotifyUserName: null,
 			duration: track.duration_ms / 1000,
 			position: 0,
+			volume: 30,
 			track: track,
 			album: album,
 			pausedImage: require('./Resources/ICONS/PAUSE.png')
@@ -69,29 +72,6 @@ export default class PlayerScreen extends Component {
 				}, 1000
 			);
 		}
-
-
-		// const { params } = this.props.navigation.state;
-		// let track = params.track;
-
-		// console.log('send api request to get user info');
-		// Spotify.getMe().then((result) => {
-		// 	console.log("GETTING freaking *****result=" + JSON.stringify(result));
-		// 	try {
-		// 		let auth = Spotify.getAuth();
-		// 		let access_code = JSON.stringify(auth)
-		// 		console.log("FREDDY : access_token=" + access_code);
-		// 	} catch (e) {
-		// 		console.log("Error", e.message);
-		// 	}
-		// 	this.setState({ spotifyUserName: result.display_name });
-		// 	return Spotify.playURI(track.uri, 0, 0);
-		// }).then(() => {
-		// 	console.log('Started playing track: ' + JSON.stringify(track));
-		// }).catch((error) => {
-		// 	console.log('Failed to play track: ' + JSON.stringify(track));
-		// 	console.log("Error", error.message);
-		// });
 	}
 
 	async positionSlidingComplete(value) {
@@ -100,7 +80,30 @@ export default class PlayerScreen extends Component {
 	}
 
 	async volumeSlidingComplete(value) {
+		this.setVolume(value);
+	}
+
+	volumeUp() {
+		let newVolume = this.state.volume + 5;
+		if(newVolume > 100) {
+			newVolume = 100;
+		}
+		this.setVolume(newVolume);
+	}
+
+	volumeDown() {
+		let newVolume = this.state.volume - 5;
+		if(newVolume < 0) {
+			newVolume = 0;
+		}
+		this.setVolume(newVolume);
+	}
+
+	setVolume(value) {
 		console.log('Value=' + value);
+		ReactNativeVolumeController.change(value/100);
+		ReactNativeVolumeController.update();
+		this.setState({volume: value});
 	}
 
 	goToInitialScreen() {
@@ -168,9 +171,13 @@ export default class PlayerScreen extends Component {
 							<Image source={require('./Resources/ICONS/REPEAT_UNSELECTED.png')} style={{ width: 30, height: (686 / 638) * 30 }} />
 						</View>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '15%', marginRight: '15%' }}>
-							<Image source={require('./Resources/ICONS/VOLUME_DOWN.png')} style={{ width: 20, height: (1560 / 1058) * 20 }} />
-							<Slider step={1} maximumValue={100} onValueChange={this.volumeSlidingComplete.bind(this)} value={30} style={{ width: '80%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
-							<Image source={require('./Resources/ICONS/VOLUME_UP.png')} style={{ width: 20, height: (1550 / 1560) * 20 }} />
+							<TouchableHighlight onPress={() => this.volumeDown()}>
+								<Image source={require('./Resources/ICONS/VOLUME_DOWN.png')} style={{ width: 20, height: (1560 / 1058) * 20 }} />
+							</TouchableHighlight>
+							<Slider step={1} maximumValue={100} onValueChange={this.volumeSlidingComplete.bind(this)} value={this.state.volume} style={{ width: '80%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
+							<TouchableHighlight onPress={() => this.volumeUp()}>
+								<Image source={require('./Resources/ICONS/VOLUME_UP.png')} style={{ width: 20, height: (1550 / 1560) * 20 }} />
+							</TouchableHighlight>
 						</View>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '25%', marginRight: '25%', height: '10%' }}>
 							<Image source={require('./Resources/ICONS/DOWNLOAD_AVAILABLE.png')} style={{ width: 30, height: (561 / 842) * 30 }} />
