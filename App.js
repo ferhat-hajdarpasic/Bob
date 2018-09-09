@@ -34,7 +34,11 @@ import SoundCloudPlaylists from './soundcloud/SoundCloudPlaylists';
 import YouTubePlaylist from './screens/YouTubePlaylist';
 import SoundCloudPlaylist from './soundcloud/SoundCloudPlaylist';
 
-export default StackNavigator(
+import { createStore } from 'redux';
+import { Provider, connect } from 'react-redux'
+import reducer from './store/reducer';
+
+const BobNavigator =  StackNavigator(
   {
     Main: { screen: AddFavourites },
     TrackPlayerScreen: { screen: TrackPlayerScreen },
@@ -89,3 +93,9 @@ export default StackNavigator(
     }),
   }
 );
+
+export default class App extends React.Component {
+  render() {
+    return <BobNavigator />;
+  }
+}
