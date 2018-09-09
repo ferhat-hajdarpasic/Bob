@@ -18,10 +18,13 @@ import PlayerBackground from './screens/PlayerBackground'
 import { NavigationActions } from 'react-navigation';
 import Spotify from 'rn-spotify-sdk';
 import SpotifyApi from './SpotifyApi';
+
+import { connect } from "react-redux";
+
 let api = new SpotifyApi();
 const ReactNativeVolumeController = NativeModules.ReactNativeVolumeController;
 
-export default class PlayerScreen extends Component {
+class _PlayerScreen extends Component {
 	static navigationOptions = {
 		title: 'Player',
 	};
@@ -36,17 +39,14 @@ export default class PlayerScreen extends Component {
 
 
 		this.state = {
-			spotifyUserName: null,
 			duration: track.duration_ms / 1000,
 			position: 0,
-			volume: 30,
 			track: track,
 			album: album,
 			pausedImage: require('./Resources/ICONS/PAUSE.png')
 		};
 
 		this.spotifyLogoutButtonWasPressed = this.spotifyLogoutButtonWasPressed.bind(this);
-		//console.log('state=' + JSON.stringify(this.state));
 	}
 
 	componentWillUnmount() {
@@ -72,6 +72,7 @@ export default class PlayerScreen extends Component {
 				}, 1000
 			);
 		}
+		this.props.setVolume(this.props.volume);
 	}
 
 	async positionSlidingComplete(value) {
@@ -84,7 +85,7 @@ export default class PlayerScreen extends Component {
 	}
 
 	volumeUp() {
-		let newVolume = this.state.volume + 5;
+		let newVolume = this.props.volume + 5;
 		if(newVolume > 100) {
 			newVolume = 100;
 		}
@@ -92,7 +93,7 @@ export default class PlayerScreen extends Component {
 	}
 
 	volumeDown() {
-		let newVolume = this.state.volume - 5;
+		let newVolume = this.props.volume - 5;
 		if(newVolume < 0) {
 			newVolume = 0;
 		}
@@ -100,10 +101,9 @@ export default class PlayerScreen extends Component {
 	}
 
 	setVolume(value) {
-		console.log('Value=' + value);
 		ReactNativeVolumeController.change(value/100);
 		ReactNativeVolumeController.update();
-		this.setState({volume: value});
+		this.props.setVolume(value);
 	}
 
 	goToInitialScreen() {
@@ -174,7 +174,7 @@ export default class PlayerScreen extends Component {
 							<TouchableHighlight onPress={() => this.volumeDown()}>
 								<Image source={require('./Resources/ICONS/VOLUME_DOWN.png')} style={{ width: 20, height: (1560 / 1058) * 20 }} />
 							</TouchableHighlight>
-							<Slider step={1} maximumValue={100} onValueChange={this.volumeSlidingComplete.bind(this)} value={this.state.volume} style={{ width: '80%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
+							<Slider step={1} maximumValue={100} onValueChange={this.volumeSlidingComplete.bind(this)} value={this.props.volume} style={{ width: '80%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
 							<TouchableHighlight onPress={() => this.volumeUp()}>
 								<Image source={require('./Resources/ICONS/VOLUME_UP.png')} style={{ width: 20, height: (1550 / 1560) * 20 }} />
 							</TouchableHighlight>
@@ -190,6 +190,18 @@ export default class PlayerScreen extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	volume: state.volume
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	setVolume: (value) => { 
+		dispatch({ type: 'SET_VOLUME', value: value });
+	}
+})
+
+export default PlayerScreen = connect(mapStateToProps, mapDispatchToProps)(_PlayerScreen);
 
 const styles = StyleSheet.create({
 	spotify: { width: 40, height: 40 * (1065 / 1045) },
