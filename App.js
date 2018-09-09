@@ -38,6 +38,8 @@ import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux'
 import reducer from './store/reducer';
 
+const store = createStore(reducer);
+
 const BobNavigator =  StackNavigator(
   {
     Main: { screen: AddFavourites },
@@ -96,6 +98,9 @@ const BobNavigator =  StackNavigator(
 
 export default class App extends React.Component {
   render() {
-    return <BobNavigator />;
+    return (
+    <Provider store={store}>
+      <BobNavigator />
+    </Provider>)
   }
 }
