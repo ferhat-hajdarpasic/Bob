@@ -41,32 +41,51 @@ export default class PlaylistFlatList extends Component {
     this.state = {
       loading: false,
       data: [],
-      page: 1,
-      seed: 1,
       error: null,
       refreshing: false,
-      duplicates: new Set()
+      duplicates: new Set(),
+      next: null
     };
   }
 
-  componentDidMount() {
-    this.makeRemoteRequest();
+  async componentDidMount() {
+    await this.loadFirstPage();
   }
 
-  async makeRemoteRequest() {
-    console.log('PlaylistFlatList makeRemoteRequest()');
-    this.setState({ loading: true });
-    let auth = Spotify.getAuth();
-    let playlist = await api.playlist(auth.accessToken, this.props.playlistHref);
+  loadFirstPage = async () => {
+    console.log('PlaylistFlatList loadFirstPage()');
+    this.setState({ data: [], next: `${this.props.playlistHref}/tracks?offset=0&limit=100`}, async () => {
+      await this.loadNextPage();  
+    });
+  }
+
+  loadNextPage = async () => {
+    console.log(`this.state.next = ${this.state.next}`);
+    if(this.state.next) {
+      this.setState({loading: false});
+      let auth = Spotify.getAuth();
+      let page = await api.playlist(auth.accessToken, this.state.next);
+      const tracks = this.extractTracks(page);
+
+      this.setState({
+        next: page.next,
+        data: [...this.state.data, ...tracks],
+        loading: false
+      });
+    }
+  }
+
+  extractTracks = (playlist) => {
     let tracks = [];
 
-    for(let i = 0; i < playlist.tracks.items.length; i++) {
-      let track = playlist.tracks.items[i].track;
+    const index = this.state.data.length;
+    for(let i = 0; i < playlist.items.length; i++) {
+      let track = playlist.items[i].track;
       if(this.state.duplicates.has(track.album.id)) {
-        console.log(`Ignoring duplicate track.album.id=${track.album.id}`);
+        //console.log(`Ignoring duplicate track.album.id=${track.album.id}`);
         continue;
       }
-      console.log(`Adding track.album.id=${track.album.id}`);
+      //console.log(`Adding track.album.id=${track.album.id}`);
       this.state.duplicates.add(track.album.id);
       let artists = [];
 
@@ -76,78 +95,22 @@ export default class PlaylistFlatList extends Component {
       let artistName = artists.join(' and ');
 
       tracks.push({
-        artist: `${i}` + artistName,
+        artist: `${index + i}` + artistName,
         track: track,
         album: track.album,
         key: track.album.id
       });
     }
-
-    this.setState({
-      data: [...this.state.data, ...tracks],
-      loading: false,
-      refreshing: false
-    });
-
+    return tracks;
   }
 
-  handleRefresh = () => {
-    this.setState(
-      {
-        page: 1,
-        seed: this.state.seed + 1,
-        refreshing: true
-      },
-      () => {
-        this.makeRemoteRequest();
-      }
-    );
+  handleRefresh = async () => {
+    await this.loadFirstPage();
   };
 
-  handleLoadMore = () => {
-    this.setState(
-      {
-        page: this.state.page + 1
-      },
-      () => {
-        this.makeRemoteRequest();
-      }
-    );
+  handleLoadMore = async () => {
+    await this.loadNextPage();
   };
-
-  // renderSeparator = () => {
-  //   return (
-  //     <View
-  //       style={{
-  //         height: 1,
-  //         width: "86%",
-  //         backgroundColor: "#CED0CE",
-  //         marginLeft: "14%"
-  //       }}
-  //     />
-  //   );
-  // };
-
-  // renderHeader = () => {
-  //   return <SearchBar placeholder="Type Here..." lightTheme round />;
-  // };
-
-  // renderFooter = () => {
-  //   if (!this.state.loading) return null;
-
-  //   return (
-  //     <View
-  //       style={{
-  //         paddingVertical: 20,
-  //         borderTopWidth: 1,
-  //         borderColor: "#CED0CE"
-  //       }}
-  //     >
-  //       <ActivityIndicator animating size="large" />
-  //     </View>
-  //   );
-  // };
-
 
   renderSeparator = () => {
     return (
@@ -181,7 +144,7 @@ export default class PlaylistFlatList extends Component {
           onRefresh={this.handleRefresh}
           refreshing={this.state.refreshing}
           onEndReached={this.handleLoadMore}
-          onEndReachedThreshold={50}
+          onEndReachedThreshold={20}
         />
     );
   }
