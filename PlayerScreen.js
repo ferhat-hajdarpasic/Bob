@@ -31,20 +31,10 @@ class _PlayerScreen extends Component {
 
 	constructor(props) {
 		super(props);
-
-		const { params } = this.props.navigation.state;
-		let track = params.track;
-		let album = params.album;
-
 		this.state = {
-			duration: track.duration_ms / 1000,
 			position: 0,
-			track: track,
-			album: album,
-			pausedImage: require('./Resources/ICONS/PAUSE.png'),
-			albumImageUri: (track.album) ? track.album.images[0].url : album.images[0].url
+			pausedImage: require('./Resources/ICONS/PAUSE.png')
 		};
-		console.log(`albumImageUri = ${this.state.albumImageUri}`);
 
 		this.spotifyLogoutButtonWasPressed = this.spotifyLogoutButtonWasPressed.bind(this);
 	}
@@ -61,8 +51,8 @@ class _PlayerScreen extends Component {
 		if (!loggedIn) {
 			console.log("Strange Spotify not logged in. Not trying to play");
 		} else {
-			console.log("Playing: " + this.state.track.uri);
-			await Spotify.playURI(this.state.track.uri, 0, 0);
+			console.log("Playing: " + this.props.track.uri);
+			await Spotify.playURI(this.props.track.uri, 0, 0);
 			timer.setInterval(
 				this, 'updateProgress', () => {
 					if(this.mounted) {
@@ -133,42 +123,34 @@ class _PlayerScreen extends Component {
 		}
 	}
 
-	playNext() {
-		let albumImageSample1 = 'https://i.scdn.co/image/c5484d389b17edbf5ff51751e63ee87801270b97';
-		this.setState({albumImageUri: albumImageSample1});
-	}
-
-	playPrevious() {
-		let albumImageSample2 = 'https://i.scdn.co/image/22bcdcc2c2e514e475abc4d4af336d8b2073be93';
-		this.setState({albumImageUri: albumImageSample2});
-	}
-
 	render() {
+		console.log(`albumImageUri = ${this.props.albumImageUri}`);
+		console.log(JSON.stringify(this.props.track.name));
 		return (
-			<PlayerBackground artwork={this.state.albumImageUri}>
+			<PlayerBackground artwork={this.props.albumImageUri}>
 				<View style={{ flex: 1, flexDirection: 'column' }}>
 					<View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
 						<Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_WHITE.png')} style={styles.homeImage} />
 					</View>
-					<Slider step={1} maximumValue={this.state.duration} onSlidingComplete={this.positionSlidingComplete.bind(this)} value={this.state.position} style={{ width: '100%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
+					<Slider step={1} maximumValue={this.props.duration} onSlidingComplete={this.positionSlidingComplete.bind(this)} value={this.state.position} style={{ width: '100%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
 					<View style={{ flex: 1 }}>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '10%', marginRight: '10%' }}>
 							<Image source={require('./Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
 							<View style={{ flexDirection: 'column', flex: 1, alignItems: 'center' }}>
-								<Text style={styles.trackName}>{this.state.track.name}</Text>
-								<Text style={styles.artistName}>{this.state.track.artists[0].name}</Text>
+								<Text style={styles.trackName}>{this.props.track.name}</Text>
+								<Text style={styles.artistName}>{this.props.track.artists[0].name}</Text>
 							</View>
 							<Image source={require('./Resources/ICONS/ACTION_MENU.png')} style={{ width: 20, height: (209 / 783) * 20 }} />
 						</View>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '5%', marginRight: '5%' }}>
 							<Image source={require('./Resources/ICONS/SHUFFLE_UNSELECTED.png')} style={{ width: 30, height: (565 / 719) * 30 }} />
-							<TouchableHighlight onPress={() => this.playPrevious()}>
+							<TouchableHighlight onPress={() => this.props.playPrevious()}>
 								<Image source={require('./Resources/ICONS/BACK.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
 							</TouchableHighlight>
 							<TouchableHighlight onPress={() => this.pause()}>
 								<Image source={this.state.pausedImage} style={{ width: 20, height: (643 / 546) * 20 }} />
 							</TouchableHighlight>
-							<TouchableHighlight onPress={() => this.playNext()}>
+							<TouchableHighlight onPress={() => this.props.playNext()}>
 								<Image source={require('./Resources/ICONS/FORWARD.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
 							</TouchableHighlight>
 							<Image source={require('./Resources/ICONS/REPEAT_UNSELECTED.png')} style={{ width: 30, height: (686 / 638) * 30 }} />
@@ -195,7 +177,11 @@ class _PlayerScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-	volume: state.volume
+	volume: state.volume,
+	track: state.track,
+	album: state.album,
+	albumImageUri: (state.track.album) ? state.track.album.images[0].url : state.album.images[0].url,
+	duration: state.track.duration_ms / 1000,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -203,6 +189,12 @@ const mapDispatchToProps = (dispatch) => ({
 		ReactNativeVolumeController.change(value/100);
 		ReactNativeVolumeController.update();
 		dispatch({ type: 'SET_VOLUME', value: value });
+	},
+	playNext: () => {
+		dispatch({ type: 'PLAY_NEXT'});
+	},
+	playPrevious: () => {
+		dispatch({ type: 'PLAY_PREVIOUS'});
 	}
 })
 

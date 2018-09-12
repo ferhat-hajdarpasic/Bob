@@ -6,6 +6,7 @@ import BobFlatList from './BobFlatList';
 import Spotify from 'rn-spotify-sdk';
 import SpotifyApi from './SpotifyApi';
 import SpotifyHelper from "./SpotifyHelper";
+import { connect } from "react-redux";
 
 let playIcon = require('./Resources/ICONS/PLAY.png');
 
@@ -34,7 +35,7 @@ class PlaylistItem extends Component {
   }
 }
 
-export default class PlaylistFlatList extends Component {
+class _PlaylistFlatList extends Component {
   constructor(props) {
     super(props);
 
@@ -72,6 +73,8 @@ export default class PlaylistFlatList extends Component {
         data: [...this.state.data, ...tracks],
         loading: false
       });
+
+      this.props.setTracks([...this.props.tracks, ...tracks]);
     }
   }
 
@@ -122,14 +125,15 @@ export default class PlaylistFlatList extends Component {
 
   renderItem = ( {item, index} ) => {
     return (
-      <TouchableHighlight onPress={() => this.play(item.track, item.album)}>
+      <TouchableHighlight onPress={() => this.play(index, item.track, item.album)}>
         <PlaylistItem item={item}></PlaylistItem>
       </TouchableHighlight>
     );
   }
 
-  play = (track, album) => {
-    this.props.navigation.navigate('player', { track: track, album: album });
+  play = (index, track, album) => {
+    this.props.playTrack(index, track, album);
+    this.props.navigation.navigate('player', { });
   };
 
   render() {
@@ -149,6 +153,21 @@ export default class PlaylistFlatList extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  tracks: state.tracks
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	playTrack: (index, track, album) => { 
+	  dispatch({ type: 'PLAY_TRACK', index: index, track: track, album: album });
+	},
+	setTracks: (tracks) => { 
+	  dispatch({ type: 'SET_TRACKS', tracks: tracks });
+	}
+})
+
+export default PlaylistFlatList = connect(mapStateToProps, mapDispatchToProps)(_PlaylistFlatList);
 
 const styles = StyleSheet.create({
   titleImage: {
