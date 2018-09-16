@@ -6,10 +6,11 @@ import BobFlatList from './BobFlatList'
 import SpotifyApi from './SpotifyApi'
 import Spotify from 'rn-spotify-sdk';
 import SpotifyHelper from "./SpotifyHelper";
+import { connect } from "react-redux";
 
 let api = new SpotifyApi();
 
-export default class PlaylistsFlatList extends BobFlatList {
+class _PlaylistsFlatList extends BobFlatList {
   constructor(props) {
     super(props);
     
@@ -66,9 +67,21 @@ export default class PlaylistsFlatList extends BobFlatList {
   
       play = (item) => {
         console.log('item=' + JSON.stringify(item));
+        this.props.clearTracks();
         this.props.navigation.navigate('Playlist', { href: item.playlistHref, name: item.name });
       };
   }
+  
+  const mapStateToProps = state => ({
+  })
+  
+  const mapDispatchToProps = (dispatch) => ({
+    clearTracks: () => { 
+      dispatch({ type: 'CLEAR_TRACKS' });
+    }
+  })
+  
+  export default PlaylistsFlatList = connect(mapStateToProps, mapDispatchToProps)(_PlaylistsFlatList);
   
   const styles = StyleSheet.create({
     titleImage: {

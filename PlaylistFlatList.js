@@ -164,6 +164,9 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	setTracks: (tracks) => { 
 	  dispatch({ type: 'SET_TRACKS', tracks: tracks });
+	},
+	clearTracks: () => { 
+	  dispatch({ type: 'CLEAR_TRACKS' });
 	}
 })
 
