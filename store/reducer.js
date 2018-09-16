@@ -20,13 +20,21 @@ export default function reducer(state = initialState, action) {
             return { ...state, playIndex: 1*action.index, track: action.track, album: action.album };
         case 'PLAY_NEXT':
             nextIndex = 1*state.playIndex  + 1;
-            console.log('REDUX: track at position ' + JSON.stringify(state.tracks[nextIndex]));
-            return { ...state, playIndex: nextIndex, track: state.tracks[nextIndex].track, album: state.tracks[nextIndex].album};
+            if(nextIndex < state.tracks.length) {
+                console.log('REDUX: track at position ' + JSON.stringify(state.tracks[nextIndex]));
+                return { ...state, playIndex: nextIndex, track: state.tracks[nextIndex].track, album: state.tracks[nextIndex].album};
+            } else {
+                return state;
+            }
         case 'PLAY_PREVIOUS':
             nextIndex = 1*state.playIndex  - 1;
-            console.log("REDUX: PLAY_PREVIOUS at index = " + nextIndex );
-            console.log('REDUX: track at position ' + JSON.stringify(state.tracks[nextIndex]));
-            return { ...state, playIndex: nextIndex, track: state.tracks[nextIndex].track, album: state.tracks[nextIndex].album};
+            if(nextIndex >= 0) {
+                console.log("REDUX: PLAY_PREVIOUS at index = " + nextIndex );
+                console.log('REDUX: track at position ' + JSON.stringify(state.tracks[nextIndex]));
+                return { ...state, playIndex: nextIndex, track: state.tracks[nextIndex].track, album: state.tracks[nextIndex].album};
+            } else {
+                return state;
+            }
         default:
             return state;
     }

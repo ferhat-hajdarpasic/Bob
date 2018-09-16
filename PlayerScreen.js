@@ -32,6 +32,7 @@ class _PlayerScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			playingUri: null,
 			position: 0,
 			pausedImage: require('./Resources/ICONS/PAUSE.png')
 		};
@@ -51,18 +52,16 @@ class _PlayerScreen extends Component {
 		if (!loggedIn) {
 			console.log("Strange Spotify not logged in. Not trying to play");
 		} else {
-			console.log("Playing: " + this.props.track.uri);
-			await Spotify.playURI(this.props.track.uri, 0, 0);
-			timer.setInterval(
-				this, 'updateProgress', () => {
-					if(this.mounted) {
-						let playbackState = Spotify.getPlaybackState();
-						this.setState({position: playbackState.position});
-					}
-				}, 1000
-			);
+			this.playNewSong(this.props.track.uri);
 		}
 		this.props.setVolume(this.props.volume);
+	}
+
+	async componentWillReceiveProps(nextProps) {
+		console.log(`componentWillReceiveProps = ${JSON.stringify(nextProps)}`);
+		if(nextProps.track && nextProps.track.uri && (nextProps.track.uri != this.state.playingUri) ) {
+			await this.playNewSong(nextProps.track.uri);
+		}
 	}
 
 	async positionSlidingComplete(value) {
@@ -104,6 +103,19 @@ class _PlayerScreen extends Component {
 		Spotify.logout().finally(() => {
 			this.goToInitialScreen();
 		});
+	}
+
+	playNewSong = async (uri) => {
+		console.log("Playing: " + uri);
+		await Spotify.playURI(uri, 0, 0);
+		timer.setInterval(
+			this, 'updateProgress', () => {
+				if(this.mounted) {
+					let playbackState = Spotify.getPlaybackState();
+					this.setState({position: playbackState.position});
+				}
+			}, 1000
+		);
 	}
 
 	pause() {
