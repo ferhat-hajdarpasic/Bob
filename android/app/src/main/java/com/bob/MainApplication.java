@@ -7,7 +7,6 @@ import com.tavernari.volumecontroller.ReactNativeVolumeControllerPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.janeasystems.rn_nodejs_mobile.RNNodeJsMobilePackage;
 import com.lufinkey.react.spotify.RNSpotifyPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.lufinkey.react.eventemitter.RNEventEmitterPackage;
@@ -39,7 +38,6 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGoogleSigninPackage(),
             new RNNodeJsMobilePackage(),
             new RNSpotifyPackage(),
-            new VectorIconsPackage(),
             new LinearGradientPackage(),
             new RNFetchBlobPackage(),
             new RNEventEmitterPackage(),

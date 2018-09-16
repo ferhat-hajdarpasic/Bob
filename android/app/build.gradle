@@ -160,7 +160,7 @@ dependencies {
     compile project(':react-native-google-signin')
     compile project(':nodejs-mobile-react-native')
     compile project(':rn-spotify-sdk')
-    compile project(':react-native-vector-icons')
+    //compile project(':react-native-vector-icons')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-fetch-blob')
 	compile project(':react-native-events')
