@@ -123,6 +123,17 @@ export default class SpotifyApi {
         return result;
     }
 
+    async next(access_token, next) {
+        console.log('next=' + next);
+        let response = await fetch(next, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            }
+        });
+        return await handleResponse(response);
+    }
+
     async playlist(access_token, playlist_href) {
         console.log('playlist_href=' + playlist_href);
         let playlistResponse = await fetch(playlist_href, {

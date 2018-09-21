@@ -2,7 +2,6 @@ import React, { Component, PureComponent } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
 
-import BobFlatList from './BobFlatList';
 import Spotify from 'rn-spotify-sdk';
 import SpotifyApi from './SpotifyApi';
 import SpotifyHelper from "./SpotifyHelper";
@@ -164,9 +163,6 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	setTracks: (tracks) => { 
 	  dispatch({ type: 'SET_TRACKS', tracks: tracks });
-	},
-	clearTracks: () => { 
-	  dispatch({ type: 'CLEAR_TRACKS' });
 	}
 })
 

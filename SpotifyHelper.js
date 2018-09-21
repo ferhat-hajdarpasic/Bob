@@ -25,6 +25,6 @@ export default class SpotifyHelper {
     }
   
     static emptyPlaylistImage = () => {
-      return require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png');
+      return require('./Resources/ICONS/PAUSE.png');
     }    
 }
