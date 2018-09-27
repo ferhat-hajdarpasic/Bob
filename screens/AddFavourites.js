@@ -60,6 +60,10 @@ export default class BobLogin extends Component {
 		this.props.navigation.navigate('LoginToSoundCloud', {});
 	}
 
+	tidalButtonPressed = () => {
+		this.props.navigation.navigate('LoginToTidal', {});
+	}
+
 	async youtubeButtonPressed() {
 		try {
 			await GoogleSignin.hasPlayServices({ autoResolve: true })
@@ -107,7 +111,7 @@ export default class BobLogin extends Component {
 							<TouchableHighlight onPress={this.spotifyButtonPressed}>
 								<Image source={require('../Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
 							</TouchableHighlight>
-							<TouchableHighlight>
+							<TouchableHighlight onPress={this.tidalButtonPressed}>
 								<Image source={require('../Resources/3RD_PARTY_LOGOS/TIDAL.png')} style={styles.tidal} />
 							</TouchableHighlight>
 						</View>
