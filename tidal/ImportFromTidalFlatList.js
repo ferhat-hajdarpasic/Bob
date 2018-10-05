@@ -3,6 +3,7 @@ import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHi
 import { List, ListItem, SearchBar } from "react-native-elements";
 
 import BobFlatList from '../BobFlatList';
+import {TidalApi} from './TidalApi'
 
 export default class ImportFromTidalFlatList extends BobFlatList {
   constructor(props) {
@@ -13,24 +14,25 @@ export default class ImportFromTidalFlatList extends BobFlatList {
   makeRemoteRequest = async () => {
     this.setState({ loading: true });
 
-    this.state.playlists = await api.playlists(auth.accessToken);
-    this.state.recentlyPlayed = await api.recentlyPlayed(auth.accessToken);
-    this.state.albums = await api.albums(auth.accessToken);
+    let playlists = await TidalApi.playlists(this.props.userId, this.props.access_token);
+    let albums = await TidalApi.albums(this.props.userId, this.props.access_token);
+    //this.state.recentlyPlayed = await api.recentlyPlayed(auth.accessToken);
+    //this.state.albums = await api.albums(auth.accessToken);
 
     this.setState({
       data: [
-        {
-          image: SpotifyHelper.uriImageSource(this.state.recentlyPlayed.items[0].track.album.images[0].url),
-          name: 'recently played'
-        },
-        {
-          image: SpotifyHelper.playlistsImageSource(this.state.playlists),
-          name: 'playlists'
-        },
-        {
-          image: SpotifyHelper.uriImageSource(this.state.albums.items[0].album.images[0].url),
-          name: 'albums'
-        }
+         {
+        //   image: SpotifyHelper.uriImageSource(this.state.recentlyPlayed.items[0].track.album.images[0].url),
+        //   name: 'recently played'
+        // },
+        // {
+           image: {uri: `https://resources.tidal.com/images/${playlists.items[0].image.replace(/-/gi, '/')}/160x107.jpg`},
+           name: 'playlists'
+        // },
+        // {
+        //   image: SpotifyHelper.uriImageSource(this.state.albums.items[0].album.images[0].url),
+        //   name: 'albums'
+         }
       ],
       loading: false,
       refreshing: false

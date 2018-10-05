@@ -5,6 +5,7 @@ import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 import { StyleSheet, WebView, Platform } from 'react-native';
 import BKD from '../screens/BobBackground'
 import ImportFlatList from './ImportFromTidalFlatList'
+import ImportFromTidalFlatList from './ImportFromTidalFlatList';
 
 export default class ImportFromTidal extends Component {
   constructor(props) {
@@ -12,15 +13,14 @@ export default class ImportFromTidal extends Component {
     this.state = { access_token: '', userId: '' };
   }
   
-  componentDidMount() {
-    const { params } = this.props.navigation.state;
-    this.setState({access_token: params.oauth.access_token, userId: params.oauth.user.userId});
-    console.log('params=' + JSON.stringify(params));
-  }
-  
   render() {
-      return (
-        <BKD title='spotify import'>
+    const { params } = this.props.navigation.state;
+    let access_token = params.oauth.access_token;
+    let userId = params.oauth.user.userId;
+    console.log(`userId=${userId}, access_toke=${access_token}`);
+    console.log('params=' + JSON.stringify(params));
+    return (
+        <BKD title='tidal import'>
         <View style={{
           flex: 1,
           flexDirection: 'column',
@@ -31,6 +31,7 @@ export default class ImportFromTidal extends Component {
             <Image source={require('../Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
+            <ImportFromTidalFlatList access_token={access_token} userId={userId}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />

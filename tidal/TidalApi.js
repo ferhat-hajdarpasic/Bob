@@ -50,7 +50,8 @@ export class TidalApi {
     }
 
     static playlists = async (userId, accessToken) => {
-        const url = `https://api.tidal.com/v1/users/${userId}/favorites/playlists?order=NAME&orderDirection=ASC&countryCode=AU`
+        const url = `https://api.tidal.com/v1/users/${userId}/playlists?countryCode=AU`
+        console.log(`Playlists url = ${url}`);
         let response = await fetch(url, {method: 'GET', headers: {'Authorization': `Bearer ${accessToken}`}});
         if(response.ok) {
             let responseJson = await response.json();
@@ -58,6 +59,19 @@ export class TidalApi {
             return responseJson;
         } else {
             throw new Error('Playlists call api failed.' + response.status);
+        }
+    }
+
+    static albums = async (userId, accessToken) => {
+        const url = `https://api.tidal.com/v1/users/${userId}/albums?countryCode=AU`
+        console.log(`Albums url = ${url}`);
+        let response = await fetch(url, {method: 'GET', headers: {'Authorization': `Bearer ${accessToken}`}});
+        if(response.ok) {
+            let responseJson = await response.json();
+            console.log(`Tidal albums data:${JSON.stringify(responseJson)}`);
+            return responseJson;
+        } else {
+            throw new Error('Albums call api failed.' + response.status);
         }
     }
 
