@@ -24,6 +24,7 @@ import ReactNode from "./ReactNode.js"
 import LoginToYoutube from "./LoginToYoutube.js"
 import LoginToSoundCloud from "./LoginToSoundCloud.js"
 import LoginToTidal from "./tidal/LoginToTidal.js"
+import ImportFromTidal from "./tidal/ImportFromTidal.js"
 
 import LandingScreen from './player/screens/LandingScreen';
 import TrackPlayerScreen from './player/screens/TrackPlayerScreen';
@@ -52,6 +53,7 @@ const BobNavigator =  StackNavigator(
     LoginToTidal: {screen: LoginToTidal },
     InitialScreen: {screen: InitialScreen},        
     ImportFromSpotify: {screen: ImportFromSpotify},
+    ImportFromTidal: {screen: ImportFromTidal},
     ImportFromYoutube: {screen: ImportFromYoutube},
     ImportFromSoundCloud: {screen: ImportFromSoundCloud},
     YouTubePlaylists: {screen: YouTubePlaylists},

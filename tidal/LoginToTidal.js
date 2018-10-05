@@ -5,7 +5,7 @@ import { Linking, View, TextInput, Image, ImageBackground } from 'react-native';
 import { StyleSheet, WebView, Platform} from 'react-native';
 import {TidalApi, redirect_url} from './TidalApi'
 
-export default class LoginToSoundCloud extends Component {
+export default class LoginToTidal extends Component {
   constructor(props) {
     super(props);
     this.state = { access_token: '' };
@@ -19,15 +19,15 @@ export default class LoginToSoundCloud extends Component {
     console.log('Removed event listener');
     Linking.removeEventListener('url', this.handleLoginCallback);
   }
-  async handleLoginCallback(event) {
-    console.log('bob,usic://callback=' + event.url);
+  handleLoginCallback = async (event) => {
+    console.log('bobmusic://callback=' + event.url);
     const code = TidalApi.getCodeFromCallbackUrl(event);
     if(code) {
       console.log('User code is: ' + code);
-      const access_token = await TidalApi.oauth(code);
-      console.log('access_token is: ' + JSON.stringify(access_token));
-      //this.setState({ access_token: access_token })
-      //this.props.navigation.navigate('ImportFromTidal', { access_token: access_token })
+      const oauth = await TidalApi.oauth(code);
+      console.log(`access_token is: ${oauth.access_token}`);
+      console.log(`userid is: ${oauth.user.userId}`)
+      this.props.navigation.navigate('ImportFromTidal', { oauth: oauth })
     }
 }
   render() {

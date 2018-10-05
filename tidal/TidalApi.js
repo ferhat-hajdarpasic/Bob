@@ -1,7 +1,7 @@
 import Config from 'react-native-config'
 
-export const login_url = 'https://login.stage.tidal.com/authorize';
-export const oauth_url = 'https://auth.stage.tidal.com/v1/oauth2/token';
+export const login_url = 'https://login.tidal.com/authorize';
+export const oauth_url = 'https://auth.tidal.com/v1/oauth2/token';
 export const redirect_url = 'bobmusic://callback';
 export const client_id = Config.CLIENT_ID;
 export const client_unique_key=Config.CLIENT_UNIQUE_KEY
@@ -10,7 +10,8 @@ export const code_challenge_method='plain';
 
 export class TidalApi {
     static loginUrl = () => {
-        let loginUrl = `${login_url}?lang=en&response_type=code&redirect_uri=${redirect_url}&client_id=${client_id}&code_challenge=${code_challenge}&code_challenge_method=${code_challenge_method}&client_unique_key=${client_unique_key}`;    
+        let loginUrl = `${login_url}?client_id=${client_id}&redirect_uri=${redirect_url}&scope=r_usr&&response_type=code&code_challenge=${code_challenge}&code_challenge_method=${code_challenge_method}`
+        console.log(`login url = ${loginUrl}`);
         return loginUrl;
     }
     static getCodeFromCallbackUrl(event) {
@@ -20,16 +21,14 @@ export class TidalApi {
             return code;
         }
     }
+
     static oauth = async (code) => {
         var details = {
-            grant_type:'authorization_code',
-            client_id:client_id,
-            client_secret:client_unique_key,
             code:code,
-            code_verifier:code_challenge,
-            scope:'t_usr',
+            client_id:client_id,
             redirect_uri:redirect_url,
-            client_unique_key:client_unique_key
+            grant_type:'authorization_code',
+            code_verifier:code_challenge
         };
         
         var formBody = [];
@@ -40,13 +39,33 @@ export class TidalApi {
         }
         formBody = formBody.join("&");
         
-        let response = await fetch(oauth_url, {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}, body: formBody});
+        let response = await fetch(oauth_url, {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: formBody});
         if(response.ok) {
             let responseJson = await response.json();
-            let access_token = responseJson.access_token;
-            return access_token;
+            console.log(`Tidal oauth data:${JSON.stringify(responseJson)}`);
+            return responseJson;
         } else {
             throw new Error('Call api failed.' + response.status);
         }
+    }
+
+    static playlists = async (userId, accessToken) => {
+        const url = `https://api.tidal.com/v1/users/${userId}/favorites/playlists?order=NAME&orderDirection=ASC&countryCode=AU`
+        let response = await fetch(url, {method: 'GET', headers: {'Authorization': `Bearer ${accessToken}`}});
+        if(response.ok) {
+            let responseJson = await response.json();
+            console.log(`Tidal playlist data:${JSON.stringify(responseJson)}`);
+            return responseJson;
+        } else {
+            throw new Error('Playlists call api failed.' + response.status);
+        }
+    }
+
+    static recentlyPlayed = async (userId, accessToken) => {
+
+    }
+
+    static albums = async (userID, accessToken) => {
+
     }
 }
