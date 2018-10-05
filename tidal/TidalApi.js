@@ -63,7 +63,7 @@ export class TidalApi {
     }
 
     static albums = async (userId, accessToken) => {
-        const url = `https://api.tidal.com/v1/users/${userId}/albums?countryCode=AU`
+        const url = `https://api.tidal.com/v1/users/${userId}/favorites/albums?order=NAME&orderDirection=ASC&countryCode=AU`;
         console.log(`Albums url = ${url}`);
         let response = await fetch(url, {method: 'GET', headers: {'Authorization': `Bearer ${accessToken}`}});
         if(response.ok) {
@@ -75,11 +75,33 @@ export class TidalApi {
         }
     }
 
-    static recentlyPlayed = async (userId, accessToken) => {
-
+    static tracks = async (userId, accessToken) => {
+        const url = `https://api.tidal.com/v1/users/${userId}/favorites/tracks?order=NAME&orderDirection=ASC&countryCode=AU`;
+        console.log(`Tracks url = ${url}`);
+        let response = await fetch(url, {method: 'GET', headers: {'Authorization': `Bearer ${accessToken}`}});
+        if(response.ok) {
+            let responseJson = await response.json();
+            console.log(`Tidal tracks data:${JSON.stringify(responseJson)}`);
+            return responseJson;
+        } else {
+            throw new Error('Tracks call api failed.' + response.status);
+        }
     }
 
-    static albums = async (userID, accessToken) => {
+    static artists = async (userId, accessToken) => {
+        const url = `https://api.tidal.com/v1/users/${userId}/favorites/artists?order=NAME&orderDirection=ASC&countryCode=AU`;
+        console.log(`Artists url = ${url}`);
+        let response = await fetch(url, {method: 'GET', headers: {'Authorization': `Bearer ${accessToken}`}});
+        if(response.ok) {
+            let responseJson = await response.json();
+            console.log(`Tidal artists data:${JSON.stringify(responseJson)}`);
+            return responseJson;
+        } else {
+            throw new Error('Artists call api failed.' + response.status);
+        }
+    }
+
+    static recentlyPlayed = async (userId, accessToken) => {
 
     }
 }

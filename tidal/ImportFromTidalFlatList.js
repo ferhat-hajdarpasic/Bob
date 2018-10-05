@@ -3,7 +3,7 @@ import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHi
 import { List, ListItem, SearchBar } from "react-native-elements";
 
 import BobFlatList from '../BobFlatList';
-import {TidalApi} from './TidalApi'
+import { TidalApi } from './TidalApi'
 
 export default class ImportFromTidalFlatList extends BobFlatList {
   constructor(props) {
@@ -16,23 +16,30 @@ export default class ImportFromTidalFlatList extends BobFlatList {
 
     let playlists = await TidalApi.playlists(this.props.userId, this.props.access_token);
     let albums = await TidalApi.albums(this.props.userId, this.props.access_token);
+    let tracks = await TidalApi.tracks(this.props.userId, this.props.access_token);
+    let artists = await TidalApi.artists(this.props.userId, this.props.access_token);
     //this.state.recentlyPlayed = await api.recentlyPlayed(auth.accessToken);
     //this.state.albums = await api.albums(auth.accessToken);
 
     this.setState({
       data: [
-         {
-        //   image: SpotifyHelper.uriImageSource(this.state.recentlyPlayed.items[0].track.album.images[0].url),
-        //   name: 'recently played'
-        // },
-        // {
-           image: {uri: `https://resources.tidal.com/images/${playlists.items[0].image.replace(/-/gi, '/')}/160x107.jpg`},
-           name: 'playlists'
-        // },
-        // {
-        //   image: SpotifyHelper.uriImageSource(this.state.albums.items[0].album.images[0].url),
-        //   name: 'albums'
-         }
+        {
+          image: { uri: `https://resources.tidal.com/images/${playlists.items[0].image.replace(/-/gi, '/')}/160x107.jpg` },
+          name: 'playlists'
+        },
+        {
+          image: { uri: `https://resources.tidal.com/images/${albums.items[0].item.cover.replace(/-/gi, '/')}/160x160.jpg` },
+          name: 'albums'
+        },
+        {
+          image: { uri: `https://resources.tidal.com/images/${tracks.items[0].item.album.cover.replace(/-/gi, '/')}/160x160.jpg` },
+          name: 'tracks'
+
+        },
+        {
+          image: { uri: `https://resources.tidal.com/images/${artists.items[0].item.picture.replace(/-/gi, '/')}/160x160.jpg` },
+          name: 'artists'
+        }
       ],
       loading: false,
       refreshing: false
@@ -67,7 +74,7 @@ export default class ImportFromTidalFlatList extends BobFlatList {
 
     console.log('this.state.accessToken:' + this.state.accessToken);
     const accessToken = this.state.accessToken;
-    switch(name) {
+    switch (name) {
       case 'albums':
         this.props.navigation.navigate('Albums', { accessToken: accessToken, albums: this.state.albums });
         break;
