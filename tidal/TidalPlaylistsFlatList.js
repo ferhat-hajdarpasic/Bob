@@ -2,12 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
 
-import SpotifyApi from './SpotifyApi'
-import Spotify from 'rn-spotify-sdk';
 import SpotifyHelper from "./SpotifyHelper";
 import { connect } from "react-redux";
-
-let api = new SpotifyApi();
 
 class TidalPlaylistsItem extends Component {
 
@@ -63,8 +59,7 @@ class _TidalPlaylistsFlatList extends Component {
     if(this.state.next) {
       console.log(`this.state.next = ${this.state.next}`);
       this.setState({loading: false});
-      let auth = Spotify.getAuth();
-      let page = await api.next(auth.accessToken, this.state.next);
+      let page = await api.next(this.props.userId, this.props.access_token, this.state.next);
       const playlists = this.extractPlaylists(page);
 
       this.setState({
@@ -72,8 +67,6 @@ class _TidalPlaylistsFlatList extends Component {
         data: [...this.state.data, ...playlists],
         loading: false
       });
-
-      //this.props.setPlaylists([...this.props.playlists, ...playlists]);
     }
   } 
   

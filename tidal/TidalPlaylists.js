@@ -6,7 +6,7 @@ import { StyleSheet, WebView, Platform } from 'react-native';
 import BKD from '../screens/BobBackground'
 import TidalPlaylistsFlatList from './TidalPlaylistsFlatList'
 
-export default class Playlists extends Component {
+export default class TidalPlaylists extends Component {
   constructor(props) {
     super(props);
     this.state = { code: '' };
@@ -24,7 +24,7 @@ export default class Playlists extends Component {
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5 }}>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
-            <PlaylistsFlatList code={this.state.code} playlists={this.state.playlists} navigation={this.props.navigation}/>
+            <TidalPlaylistsFlatList code={this.state.code} playlists={this.state.playlists} navigation={this.props.navigation}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
