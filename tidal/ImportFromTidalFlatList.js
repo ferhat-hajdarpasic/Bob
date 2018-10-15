@@ -4,7 +4,6 @@ import { List, ListItem, SearchBar } from "react-native-elements";
 
 import BobFlatList from '../BobFlatList';
 import { TidalApi } from './TidalApi'
-
 export default class ImportFromTidalFlatList extends BobFlatList {
   constructor(props) {
     super(props);
@@ -22,6 +21,10 @@ export default class ImportFromTidalFlatList extends BobFlatList {
     //this.state.albums = await api.albums(auth.accessToken);
 
     this.setState({
+      playlists: playlists,
+      albums: albums,
+      tracks: tracks,
+      artists: artists,
       data: [
         {
           image: { uri: `https://resources.tidal.com/images/${playlists.items[0].image.replace(/-/gi, '/')}/160x107.jpg` },
@@ -75,14 +78,17 @@ export default class ImportFromTidalFlatList extends BobFlatList {
     console.log('this.state.accessToken:' + this.state.accessToken);
     const accessToken = this.state.accessToken;
     switch (name) {
-      case 'albums':
-        this.props.navigation.navigate('Albums', { accessToken: accessToken, albums: this.state.albums });
-        break;
       case 'playlists':
-        this.props.navigation.navigate('Playlists', { accessToken: accessToken, playlists: this.state.playlists });
+        this.props.navigation.navigate('TidalPlaylists', { playlists: this.state.playlists, userId: this.props.userId, access_token: this.props.access_token });
         break;
-      case 'recently played':
-        this.props.navigation.navigate('RecentlyPlayed', { accessToken: accessToken, recentlyPlayed: this.state.recentlyPlayed });
+      case 'albums':
+        this.props.navigation.navigate('TidalAlbums', { albums: this.state.albums, userId: this.props.userId, access_token: this.props.access_token });
+        break;
+      case 'tracks':
+        this.props.navigation.navigate('TidalTracks', { tracks: this.state.tracks, userId: this.props.userId, access_token: this.props.access_token });
+        break;
+      case 'artists':
+        this.props.navigation.navigate('TidalArtists', { artists: this.state.artists, userId: this.props.userId, access_token: this.props.access_token });
         break;
     }
   };
