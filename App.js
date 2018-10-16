@@ -35,6 +35,8 @@ import YouTubePlaylists from './screens/YouTubePlaylists';
 import SoundCloudPlaylists from './soundcloud/SoundCloudPlaylists';
 import YouTubePlaylist from './screens/YouTubePlaylist';
 import SoundCloudPlaylist from './soundcloud/SoundCloudPlaylist';
+import TidalPlaylists from './tidal/TidalPlaylists';
+import TidalPlaylist from './tidal/TidalPlaylist';
 
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux'
@@ -60,6 +62,8 @@ const BobNavigator =  StackNavigator(
     SoundCloudPlaylists: {screen: SoundCloudPlaylists},
     YouTubePlaylist: {screen: YouTubePlaylist},
     SoundCloudPlaylist: {screen: SoundCloudPlaylist},
+    TidalPlaylists: {screen: TidalPlaylists},
+    TidalPlaylist: {screen: TidalPlaylist},
     Playlists: {screen: Playlists},
     Playlist: {screen: Playlist},
     RecentlyPlayed: {screen: RecentlyPlayed},

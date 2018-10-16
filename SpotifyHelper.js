@@ -26,5 +26,9 @@ export default class SpotifyHelper {
   
     static emptyPlaylistImage = () => {
       return require('./Resources/ICONS/PAUSE.png');
-    }    
+    }
+
+    static tidalImage(imageId) {
+      return {uri: `https://resources.tidal.com/images/${imageId.replace(/-/gi, '/')}/160x107.jpg`};
+    }
 }

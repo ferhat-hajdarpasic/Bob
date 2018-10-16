@@ -9,14 +9,11 @@ import TidalPlaylistsFlatList from './TidalPlaylistsFlatList'
 export default class TidalPlaylists extends Component {
   constructor(props) {
     super(props);
-    this.state = { code: '' };
   }
   render() {
     const { params } = this.props.navigation.state;
-    this.state.code = params.code;
-    this.state.playlists = params.playlists;
     return (
-        <BKD title='spotify playlists'>
+        <BKD title='tidal playlists'>
         <View style={{
           flex: 1,
           flexDirection: 'column',
@@ -24,10 +21,10 @@ export default class TidalPlaylists extends Component {
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5 }}>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
-            <TidalPlaylistsFlatList code={this.state.code} playlists={this.state.playlists} navigation={this.props.navigation}/>
+            <TidalPlaylistsFlatList access_token={params.access_token} userId={params.userId} playlists={params.playlists} navigation={this.props.navigation}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
-            <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
+            <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
             <Text style={styles.titleText}>import all to bob</Text>
           </View>
         </View>

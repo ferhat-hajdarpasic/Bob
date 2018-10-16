@@ -75,8 +75,9 @@ export default class ImportFromTidalFlatList extends BobFlatList {
     console.log('You touched:' + name);
     //this.props.navigation.navigate('player', {});
 
-    console.log('this.state.accessToken:' + this.state.accessToken);
-    const accessToken = this.state.accessToken;
+    console.log('this.state.accessToken:' + this.props.access_token);
+    console.log('this.props.userId:' + this.props.userId);
+    console.log('this.state.playlists:' + this.state.playlists);
     switch (name) {
       case 'playlists':
         this.props.navigation.navigate('TidalPlaylists', { playlists: this.state.playlists, userId: this.props.userId, access_token: this.props.access_token });

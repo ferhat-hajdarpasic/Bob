@@ -104,4 +104,19 @@ export class TidalApi {
     static recentlyPlayed = async (userId, accessToken) => {
 
     }
+
+    static async next(accessToken, next) {
+        console.log('next=' + next);
+        let response = await fetch(next, {
+            method: 'GET',
+            headers: {'Authorization': 'Bearer ' + accessToken}});
+        if(response.ok) {
+            let responseJson = await response.json();
+            console.log(`Tidal next data: ${JSON.stringify(responseJson)}`);
+            return responseJson;
+        } else {
+            throw new Error('Tidal next call failed.' + response.status);
+        }
+    }
+
 }

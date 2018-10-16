@@ -3,12 +3,12 @@ import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHi
 import { List, ListItem, SearchBar } from "react-native-elements";
 
 import { TidalApi } from './TidalApi'
-import SpotifyHelper from "./SpotifyHelper";
+import SpotifyHelper from "../SpotifyHelper";
 import { connect } from "react-redux";
 
 import styles from "../styles/styles"
 
-let playIcon = require('./Resources/ICONS/PLAY.png');
+let playIcon = require('../Resources/ICONS/PLAY.png');
 
 class PlaylistItem extends Component {
 

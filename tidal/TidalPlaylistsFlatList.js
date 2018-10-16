@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
-import { List, ListItem, SearchBar } from "react-native-elements";
 
-import SpotifyHelper from "./SpotifyHelper";
+import SpotifyHelper from "../SpotifyHelper";
 import { connect } from "react-redux";
+import { TidalApi } from './TidalApi'
 
 class TidalPlaylistsItem extends Component {
 
@@ -21,8 +21,8 @@ class TidalPlaylistsItem extends Component {
         <Image source={item.image} style={{width:100, height:100}}/>
         <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:20}}>
           <Text style={styles.albumText}>{item.name} </Text>
-          <Text style={styles.artistText}>spotify</Text>
-          <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
+          <Text style={styles.artistText}>tidal</Text>
+          <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
         </View>
       </View>
     );
@@ -49,8 +49,9 @@ class _TidalPlaylistsFlatList extends Component {
   }
 
   loadFirstPage = async () => {
-    console.log('TidalPlaylistsFlatList loadFirstPage()');
-    this.setState({ data: [], next: 'https://api.spotify.com/v1/me/playlists'}, async () => {
+    let next = `https://api.tidal.com/v1/users/${this.props.userId}/playlists?countryCode=AU`;
+    console.log('TidalPlaylistsFlatList loadFirstPage(), ' + next);
+    this.setState({ data: [], next: next}, async () => {
       await this.loadNextPage();  
     });
   }
@@ -59,7 +60,7 @@ class _TidalPlaylistsFlatList extends Component {
     if(this.state.next) {
       console.log(`this.state.next = ${this.state.next}`);
       this.setState({loading: false});
-      let page = await api.next(this.props.userId, this.props.access_token, this.state.next);
+      let page = await TidalApi.next(this.props.access_token, this.state.next);
       const playlists = this.extractPlaylists(page);
 
       this.setState({
@@ -76,18 +77,18 @@ class _TidalPlaylistsFlatList extends Component {
     const index = this.state.data.length;
     for(let i = 0; i < page.items.length; i++) {
       let item = page.items[i];
-      if(this.state.duplicates.has(item.id)) {
-        console.log(`Ignoring duplicate playlist id = ${item.id}`);
+      if(this.state.duplicates.has(item.uuid)) {
+        console.log(`Ignoring duplicate playlist id = ${item.uuid}`);
         continue;
       }
-      this.state.duplicates.add(item.id);
-      console.log(`Added playlist id = ${item.id}`);
+      this.state.duplicates.add(item.uuid);
+      console.log(`Added playlist id = ${item.uuid}`);
 
       playlists.push({
-        id: item.id,
-        name: item.name,
-        image: item.images.length > 0 ? SpotifyHelper.uriImageSource(item.images[0].url) : SpotifyHelper.emptyPlaylistImage(),
-        playlistHref: item.href
+        id: item.uuid,
+        name: item.title,
+        image: SpotifyHelper.tidalImage(item.image),
+        uuid: item.uuid
       });
     }
     return playlists;
@@ -122,7 +123,7 @@ class _TidalPlaylistsFlatList extends Component {
   play = (item) => {
     console.log('item=' + JSON.stringify(item));
     this.props.clearTracks();
-    this.props.navigation.navigate('Playlist', { href: item.playlistHref, name: item.name });
+    this.props.navigation.navigate('TidalPlaylist', { href: item.uuid, name: item.name });
   }
 
   render() {

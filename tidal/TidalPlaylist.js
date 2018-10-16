@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform } from 'react-native';
-import BKD from './screens/BobBackground'
+import BKD from '../screens/BobBackground'
 import PlaylistFlatList from './TidalPlaylistFlatList'
 
 export default class TidalPlaylist extends Component {
@@ -22,13 +22,13 @@ export default class TidalPlaylist extends Component {
           flexDirection: 'column',
         }}>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5,  justifyContent: 'flex-end', alignItems: 'center'}}>
-            <Image source={require('./Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.tidal} />
+            <Image source={require('../Resources/3RD_PARTY_LOGOS/TIDAL.png')} style={styles.tidal} />
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 7, marginLeft:'10%' }}>
             <PlaylistFlatList playlistHref={playlistHref} navigation={this.props.navigation}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
-            <Image source={require('./Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
+            <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
             <Text style={styles.titleText}>import all to bob</Text>
           </View>
         </View>
