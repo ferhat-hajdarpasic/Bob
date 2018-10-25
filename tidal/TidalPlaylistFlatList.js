@@ -44,7 +44,8 @@ class _TidalPlaylistFlatList extends Component {
       error: null,
       refreshing: false,
       duplicates: new Set(),
-      next: null
+      offset: 0,
+      limit: 50
     };
   }
 
@@ -54,20 +55,21 @@ class _TidalPlaylistFlatList extends Component {
 
   loadFirstPage = async () => {
     console.log('TidalPlaylistFlatList loadFirstPage()');
-    this.setState({ data: [], next: `${this.props.playlistHref}/tracks?offset=0&limit=100`}, async () => {
+    this.setState({ data: [], offset: 0, limit: 50}, async () => {
       await this.loadNextPage();  
     });
   }
 
   loadNextPage = async () => {
-    console.log(`this.state.next = ${this.state.next}`);
+    let next = `${TidalApi.api_url}/playlists/${this.props.playlistHref}/items?offset=${this.state.offset}&limit=${this.state.limit}&order=INDEX&orderDirection=ASC&countryCode=AU`;
+    console.log(`next playlist = ${next}`);
     if(this.state.next) {
       this.setState({loading: false});
-      let page = await api.playlist(this.props.userId, this.props.access_token, this.state.next);
+      let page = await TidalApi.next(this.props.access_token, next);
       const tracks = this.extractTracks(page);
 
       this.setState({
-        next: page.next,
+        offset: this.state.offset + this.state.limit,
         data: [...this.state.data, ...tracks],
         loading: false
       });

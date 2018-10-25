@@ -2,6 +2,7 @@ import Config from 'react-native-config'
 
 export const login_url = 'https://login.tidal.com/authorize';
 export const oauth_url = 'https://auth.tidal.com/v1/oauth2/token';
+export const api_url = 'https://api.tidal.com/v1';
 export const redirect_url = 'bobmusic://callback';
 export const client_id = Config.CLIENT_ID;
 export const client_unique_key=Config.CLIENT_UNIQUE_KEY
