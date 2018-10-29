@@ -108,6 +108,7 @@ export class TidalApi {
 
     static async next(accessToken, next) {
         console.log('next=' + next);
+        console.log('accessToken=' + accessToken);
         let response = await fetch(next, {
             method: 'GET',
             headers: {'Authorization': 'Bearer ' + accessToken}});

@@ -123,7 +123,7 @@ class _TidalPlaylistsFlatList extends Component {
   play = (item) => {
     console.log('item=' + JSON.stringify(item));
     this.props.clearTracks();
-    this.props.navigation.navigate('TidalPlaylist', { href: item.uuid, name: item.name });
+    this.props.navigation.navigate('TidalPlaylist', { href: item.uuid, name: item.name, access_token: this.props.access_token });
   }
 
   render() {
@@ -131,7 +131,7 @@ class _TidalPlaylistsFlatList extends Component {
         <FlatList
           data={this.state.data}
           renderItem={this.renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={item => `${item.id}`}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
           ListFooterComponent={this.renderFooter}
