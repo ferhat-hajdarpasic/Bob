@@ -71,8 +71,7 @@ class _TidalPlaylistFlatList extends Component {
 
       this.setState({
         offset: this.state.offset + this.state.limit,
-        totalNumberOfItems: page.totalNumberOfItems,
-        data: [...this.state.data, ...tracks],
+        totalNumberOfItems: page.totalNumberOfItems,data: [...this.state.data, ...tracks],
         loading: false
       });
 
@@ -135,9 +134,16 @@ class _TidalPlaylistFlatList extends Component {
     );
   }
 
-  play = (index, track, album) => {
-    this.props.playTrack(index, track, album);
-    this.props.navigation.navigate('player', {});
+  play = async (index, track, album) => {
+    console.log(`track to play = ${JSON.stringify(track)}`);
+    console.log(`album to play = ${JSON.stringify(album)}`);
+
+    let sessionId = (await TidalApi.sessions(this.props.access_token)).sessionId;
+    let streamUrl = (await TidalApi.streamUrl(track.id, sessionId)).url;
+    console.log(`streamUrl = ${streamUrl}`);
+    console.log(`album image url = ${SpotifyHelper.tidalAlbumImageLarge(album.cover).uri}`);
+    //this.props.playTrack(index, track, album);
+    //this.props.navigation.navigate('player', {});
   };
 
   render() {

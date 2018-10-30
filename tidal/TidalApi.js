@@ -106,7 +106,34 @@ export class TidalApi {
 
     }
 
-    static async next(accessToken, next) {
+    static sessions = async (accessToken) => {
+        const url = `https://api.tidal.com/v1/sessions`;
+        console.log(`Sessions url = ${url}`);
+        let response = await fetch(url, {method: 'GET', headers: {'Authorization': `Bearer ${accessToken}`}});
+        if(response.ok) {
+            let responseJson = await response.json();
+            console.log(`User session data:${JSON.stringify(responseJson)}`);
+            return responseJson;
+        } else {
+            throw new Error('Get sessions call api failed.' + response.status);
+        }
+    }
+
+    static streamUrl = async (trackId, sessionId) => {
+        const url = `https://api.tidal.com/v1/tracks/${trackId}/streamurl?audioquality=LOSSLESS&urlusagemode=STREAM&sessionid=${sessionId}`;
+        console.log(`streamUrl url = ${url}`);
+        let response = await fetch(url, {method: 'GET', headers: {}});
+        if(response.ok) {
+            let responseJson = await response.json();
+            console.log(`StreamUrl data:${JSON.stringify(responseJson)}`);
+            return responseJson;
+        } else {
+            throw new Error('streamUrl call api failed.' + response.status);
+        }
+    }
+
+
+   static async next(accessToken, next) {
         console.log('next=' + next);
         console.log('accessToken=' + accessToken);
         let response = await fetch(next, {

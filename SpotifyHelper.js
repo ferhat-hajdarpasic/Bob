@@ -32,8 +32,11 @@ export default class SpotifyHelper {
       return {uri: `https://resources.tidal.com/images/${imageId.replace(/-/gi, '/')}/160x107.jpg`};
     }
 
-    static tidalAlbumImageSmall(imageId) {
-      
+    static tidalAlbumImageLarge(imageId) {    
+      return {uri: `https://resources.tidal.com/images/${imageId.replace(/-/gi, '/')}/1280x1280.jpg`};
+    }
+
+    static tidalAlbumImageSmall(imageId) {    
       return {uri: `https://resources.tidal.com/images/${imageId.replace(/-/gi, '/')}/80x80.jpg`};
     }
 }
