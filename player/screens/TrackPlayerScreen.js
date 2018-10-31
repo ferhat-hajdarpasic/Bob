@@ -69,7 +69,7 @@ export default class TrackPlayerScreen extends Component {
 
 		let track = {
 			id: this.state.videoId, 
-			url: this.state.videoUrl || `${this.state.streamUrl}?client_id=z8LRYFPM4UK5MMLaBe9vixfph5kqNA25&oauth_token=1-178930-450627837-740f6f923d451`,
+			url: this.state.videoUrl || this.state.streamUrl,
 			title: this.state.title,
 			artist: this.state.videoId,
 			artwork: this.state.artwork

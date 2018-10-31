@@ -140,10 +140,12 @@ class _TidalPlaylistFlatList extends Component {
 
     let sessionId = (await TidalApi.sessions(this.props.access_token)).sessionId;
     let streamUrl = (await TidalApi.streamUrl(track.id, sessionId)).url;
+    let artwork = SpotifyHelper.tidalAlbumImageLarge(album.cover).uri;
     console.log(`streamUrl = ${streamUrl}`);
     console.log(`album image url = ${SpotifyHelper.tidalAlbumImageLarge(album.cover).uri}`);
     this.props.playTrack(index, track, album);
-    this.props.navigation.navigate('player', {});
+    //this.props.navigation.navigate('player', {});
+    this.props.navigation.navigate('TrackPlayerScreen', { streamUrl: streamUrl, artwork: artwork, title: track.title });
   };
 
   render() {
