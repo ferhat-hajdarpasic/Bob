@@ -7,7 +7,8 @@ import {
 	TouchableHighlight,
 	View,
 	Image,
-	Slider
+	Slider,
+	NativeModules
 } from 'react-native';
 
 import timer from 'react-native-timer';
@@ -15,46 +16,33 @@ import timer from 'react-native-timer';
 import PlayerBackground from '../../screens/PlayerBackground'
 
 import { NavigationActions } from 'react-navigation';
-import TrackPlayer, { ProgressComponent } from 'react-native-track-player';
-import playlistData from '../data/playlist.json';
-import TrackStore from '../stores/Track';
-
-export default class TrackPlayerScreen extends Component {
+import SpotifyHelper from '../../SpotifyHelper';
+import TrackPlayer from 'react-native-track-player';
+import { connect } from "react-redux";
+const ReactNativeVolumeController = NativeModules.ReactNativeVolumeController;
+import { TidalApi, api_url } from '../../tidal/TidalApi'
+class _TrackPlayerScreen extends Component {
 	static navigationOptions = {
 		title: 'Player',
 	};
 
 	constructor(props) {
 		super(props);
-
-		const { params } = this.props.navigation.state;
-		//let track = params.track;
-		//let album = params.album;
-
-
 		this.state = {
-			spotifyUserName: null,
-			duration: 100000 / 1000,
+			playingUri: null,
 			position: 0,
-			//track: track,
-			//album: album,
-			videoId: params.videoId,
-			videoUrl: params.videoUrl,
-			streamUrl: params.streamUrl,
-			title: params.title,
-			artwork: params.artwork,
 			pausedImage: require('../../Resources/ICONS/PAUSE.png')
 		};
-
-		//this.spotifyLogoutButtonWasPressed = this.spotifyLogoutButtonWasPressed.bind(this);
-		//console.log('state=' + JSON.stringify(this.state));
 	}
 
 	componentWillUnmount() {
+		this.mounted = false;
+		console.log('Player will unmount. Clear timeout.');
 		timer.clearTimeout(this);
 	}
 
 	async componentDidMount() {
+		this.mounted = true;
 		TrackPlayer.setupPlayer();
 		TrackPlayer.updateOptions({
 			stopWithApp: true,
@@ -65,28 +53,20 @@ export default class TrackPlayerScreen extends Component {
 			TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
 			]
 		});
-		const currentTrack = await TrackPlayer.getCurrentTrack();
+		await this.playNewSong();
 
-		let track = {
-			id: this.state.videoId, 
-			url: this.state.videoUrl || this.state.streamUrl,
-			title: this.state.title,
-			artist: this.state.videoId,
-			artwork: this.state.artwork
-		  }
-
-		  console.log(`Playing URL=${track.url}`);
-
-		  if (currentTrack == null) {
-			TrackPlayer.reset();
-			await TrackPlayer.add([track]);
-			TrackPlayer.play();
-		}
-
+		this.props.setVolume(this.props.volume);
 
 		TrackPlayer.registerEventHandler(async (data) => {
 			console.log('event='+JSON.stringify(data));
 		});
+	}
+
+	async componentWillReceiveProps(nextProps) {
+		console.log(`componentWillReceiveProps = ${JSON.stringify(nextProps)}`);
+		if(nextProps.track && nextProps.track.uri && (nextProps.track.uri != this.state.playingUri) ) {
+			await this.playNewSong(nextProps.track.uri);
+		}
 	}
 
 	async positionSlidingComplete(value) {
@@ -98,6 +78,23 @@ export default class TrackPlayerScreen extends Component {
 
 	async volumeSlidingComplete(value) {
 		console.log('Value=' + value);
+		this.props.setVolume(value);
+	}
+
+	volumeUp() {
+		let newVolume = this.props.volume + 5;
+		if(newVolume > 100) {
+			newVolume = 100;
+		}
+		this.props.setVolume(newVolume);
+	}
+
+	volumeDown() {
+		let newVolume = this.props.volume - 5;
+		if(newVolume < 0) {
+			newVolume = 0;
+		}
+		this.props.setVolume(newVolume);
 	}
 
 	goToInitialScreen() {
@@ -108,6 +105,32 @@ export default class TrackPlayerScreen extends Component {
 			]
 		});
 		this.props.navigation.dispatch(navAction);
+	}
+
+	logoutButtonWasPressed = () => {
+		//Spotify.logout().finally(() => {
+	//		this.goToInitialScreen();
+	//	});
+	}
+
+	playNewSong = async () => {
+		const currentTrack = await TrackPlayer.getCurrentTrack();
+		let streamUrl = (await TidalApi.streamUrl(this.props.trackId, this.props.sessionId)).url;
+		let track = {
+			id: this.props.trackId, 
+			url: streamUrl,
+			title: this.props.trackName,
+			artist: this.props.artistName,
+			artwork: this.props.albumImageUri
+		  }
+
+		  console.log(`Playing URL=${this.props.trackName}`);
+
+		  if (currentTrack == null) {
+			TrackPlayer.reset();
+			await TrackPlayer.add([track]);
+			TrackPlayer.play();
+		}
 	}
 
 	async pause() {
@@ -133,43 +156,48 @@ export default class TrackPlayerScreen extends Component {
 	}
 
 	render() {
-		//let track = this.state.track;
-		//let album = this.state.album;
-
+		console.log(`albumImageUri = ${this.props.albumImageUri}`);
+		console.log(JSON.stringify(this.props.trackName));
 		return (
-			<PlayerBackground artwork={this.state.artwork}>
+			<PlayerBackground artwork={this.props.albumImageUri}>
 				<View style={{ flex: 1, flexDirection: 'column' }}>
 					<View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
 						<Image source={require('../../Resources/BOB_LOGOS/BOB_LOGO_WHITE.png')} style={styles.homeImage} />
 					</View>
-					<Slider step={1} maximumValue={this.state.duration} onSlidingComplete={this.positionSlidingComplete.bind(this)} value={this.state.position} style={{ width: '100%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
+					<Slider step={1} maximumValue={this.props.duration} onSlidingComplete={this.positionSlidingComplete.bind(this)} value={this.state.position} style={{ width: '100%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
 					<View style={{ flex: 1 }}>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '10%', marginRight: '10%' }}>
 							<Image source={require('../../Resources/3RD_PARTY_LOGOS/YOUTUBE.png')} style={styles.yuotube} />
 							<View style={{ flexDirection: 'column', flex: 1, alignItems: 'center' }}>
-								<Text style={styles.trackName}>{this.state.title}</Text>
-								<Text style={styles.artistName}>{this.state.videoId}</Text>
+								<Text style={styles.trackName}>{this.props.trackName}</Text>
+								<Text style={styles.artistName}>{this.props.artistName}</Text>
 							</View>
 							<Image source={require('../../Resources/ICONS/ACTION_MENU.png')} style={{ width: 20, height: (209 / 783) * 20 }} />
 						</View>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '5%', marginRight: '5%' }}>
 							<Image source={require('../../Resources/ICONS/SHUFFLE_UNSELECTED.png')} style={{ width: 30, height: (565 / 719) * 30 }} />
-							<Image source={require('../../Resources/ICONS/BACK.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							<TouchableHighlight onPress={() => this.props.playPrevious()}>
+								<Image source={require('../../Resources/ICONS/BACK.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							</TouchableHighlight>
 							<TouchableHighlight onPress={() => this.pause()}>
 								<Image source={this.state.pausedImage} style={{ width: 20, height: (643 / 546) * 20 }} />
 							</TouchableHighlight>
-							<Image source={require('../../Resources/ICONS/FORWARD.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							<TouchableHighlight onPress={() => this.props.playNext()}>
+								<Image source={require('../../Resources/ICONS/FORWARD.png')} style={{ width: 40, height: (648 / 1068) * 40 }} />
+							</TouchableHighlight>
 							<Image source={require('../../Resources/ICONS/REPEAT_UNSELECTED.png')} style={{ width: 30, height: (686 / 638) * 30 }} />
 						</View>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '15%', marginRight: '15%' }}>
-							<Image source={require('../../Resources/ICONS/VOLUME_DOWN.png')} style={{ width: 20, height: (1560 / 1058) * 20 }} />
-							<Slider step={1} maximumValue={100} onValueChange={this.volumeSlidingComplete.bind(this)} value={30} style={{ width: '80%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
-							<Image source={require('../../Resources/ICONS/VOLUME_UP.png')} style={{ width: 20, height: (1550 / 1560) * 20 }} />
+							<TouchableHighlight onPress={() => this.volumeDown()}>
+								<Image source={require('../../Resources/ICONS/VOLUME_DOWN.png')} style={{ width: 20, height: (1560 / 1058) * 20 }} />
+							</TouchableHighlight>
+							<Slider step={1} maximumValue={100} onValueChange={this.volumeSlidingComplete.bind(this)} value={this.props.volume} style={{ width: '80%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
+							<TouchableHighlight onPress={() => this.volumeUp()}>
+								<Image source={require('../../Resources/ICONS/VOLUME_UP.png')} style={{ width: 20, height: (1550 / 1560) * 20 }} />
+							</TouchableHighlight>
 						</View>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '25%', marginRight: '25%', height: '10%' }}>
-							<TouchableHighlight onPress={() => this.download()}>
-								<Image source={require('../../Resources/ICONS/DOWNLOAD_AVAILABLE.png')} style={{ width: 30, height: (561 / 842) * 30 }} />
-							</TouchableHighlight>
+							<Image source={require('../../Resources/ICONS/DOWNLOAD_AVAILABLE.png')} style={{ width: 30, height: (561 / 842) * 30 }} />
 							<Image source={require('../../Resources/ICONS/FAVOURITE_UNSELECTED.png')} style={{ width: 30, height: (687 / 649) * 30 }} />
 							<Image source={require('../../Resources/ICONS/QUEUE.png')} style={{ width: 30, height: (652 / 908) * 30 }} />
 						</View>
@@ -179,6 +207,62 @@ export default class TrackPlayerScreen extends Component {
 		);
 	}
 }
+
+figureImageUrl = (state) => {
+	if(state.track.album) {
+		if(state.track.album.images) {
+			if(state.track.album.images.length > 0) {
+				return state.track.album.images[0].url;
+			}
+		}
+		if(state.album.images) {
+			if(state.album.images.length > 0) {
+				return state.album.images[0].url;
+			}
+		}
+	}
+	return SpotifyHelper.tidalAlbumImageLarge(state.album.cover).uri;
+}
+
+figureTrackName = (state) => {
+	return state.track.name || state.track.title;
+}
+
+figureTrackId = (state) => {
+	return state.track.id;
+}
+
+figureArtistName = (state) => {
+	return state.track.artists[0].name;
+}
+
+const mapStateToProps = state => ({
+	volume: state.volume,
+	track: state.track,
+	album: state.album,
+	albumImageUri: figureImageUrl(state),
+	trackId: figureTrackId(state),
+	trackName: figureTrackName(state),
+	artistName: figureArtistName(state),
+	sessionId: state.provider.sessionId,
+	duration: state.track.duration_ms / 1000,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	setVolume: (value) => { 
+		ReactNativeVolumeController.change(value/100);
+		ReactNativeVolumeController.update();
+		dispatch({ type: 'SET_VOLUME', value: value });
+	},
+	playNext: () => {
+		dispatch({ type: 'PLAY_NEXT'});
+	},
+	playPrevious: () => {
+		dispatch({ type: 'PLAY_PREVIOUS'});
+	}
+})
+
+export default TrackPlayerScreen = connect(mapStateToProps, mapDispatchToProps)(_TrackPlayerScreen);
 
 const styles = StyleSheet.create({
 	yuotube: { width: 40, height: 40 * (1084 / 1583) },
