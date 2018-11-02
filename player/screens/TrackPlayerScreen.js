@@ -61,9 +61,9 @@ class _TrackPlayerScreen extends Component {
 
 	async componentWillReceiveProps(nextProps) {
 		console.log(`componentWillReceiveProps = ${JSON.stringify(nextProps)}`);
-		if(nextProps.track && nextProps.track.uri && (nextProps.track.uri != this.state.playingUri) ) {
-			await this.playNewSong(nextProps.track.uri);
-		}
+		//if(nextProps.track && nextProps.track.id) {
+			await this.playNewSong();
+	    //}
 	}
 
 	async positionSlidingComplete(value) {
