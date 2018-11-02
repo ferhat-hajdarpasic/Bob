@@ -43,6 +43,7 @@ class _TrackPlayerScreen extends Component {
 
 	async componentDidMount() {
 		this.mounted = true;
+		console.log('componentDidMount****************');
 		TrackPlayer.setupPlayer();
 		TrackPlayer.updateOptions({
 			stopWithApp: true,
@@ -56,10 +57,6 @@ class _TrackPlayerScreen extends Component {
 		await this.playNewSong();
 
 		this.props.setVolume(this.props.volume);
-
-		TrackPlayer.registerEventHandler(async (data) => {
-			console.log('event='+JSON.stringify(data));
-		});
 	}
 
 	async componentWillReceiveProps(nextProps) {
@@ -131,6 +128,19 @@ class _TrackPlayerScreen extends Component {
 			await TrackPlayer.add([track]);
 			TrackPlayer.play();
 		}
+		timer.setInterval(
+			this, 'updateProgress', async () => {
+				if(this.mounted) {
+					let data = {
+						position: await TrackPlayer.getPosition(),
+						bufferedPosition: await TrackPlayer.getBufferedPosition(),
+						duration: await TrackPlayer.getDuration()			
+					};
+					console.log(`Progress = ${JSON.stringify(data)}`);
+					this.setState({position: data.position});
+				}
+			}, 1000
+		);
 	}
 
 	async pause() {
@@ -236,6 +246,10 @@ figureArtistName = (state) => {
 	return state.track.artists[0].name;
 }
 
+figureDuration = (state) => {
+	return state.track.duration;
+}
+
 const mapStateToProps = state => ({
 	volume: state.volume,
 	track: state.track,
@@ -245,7 +259,7 @@ const mapStateToProps = state => ({
 	trackName: figureTrackName(state),
 	artistName: figureArtistName(state),
 	sessionId: state.provider.sessionId,
-	duration: state.track.duration_ms / 1000,
+	duration: figureDuration(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
