@@ -20,8 +20,7 @@ import SpotifyHelper from '../../SpotifyHelper';
 import TrackPlayer from 'react-native-track-player';
 import { connect } from "react-redux";
 const ReactNativeVolumeController = NativeModules.ReactNativeVolumeController;
-import { TidalApi, api_url } from '../../tidal/TidalApi'
-class _TrackPlayerScreen extends Component {
+class TrackPlayerScreen extends Component {
 	static navigationOptions = {
 		title: 'Player',
 	};
@@ -112,7 +111,7 @@ class _TrackPlayerScreen extends Component {
 
 	playNewSong = async () => {
 		const currentTrack = await TrackPlayer.getCurrentTrack();
-		let streamUrl = (await TidalApi.streamUrl(this.props.trackId, this.props.sessionId)).url;
+		let streamUrl = figureStreamurl(this.props.track, this.props.sessionId);
 		let track = {
 			id: this.props.trackId, 
 			url: streamUrl,
@@ -216,67 +215,38 @@ class _TrackPlayerScreen extends Component {
 			</PlayerBackground>
 		);
 	}
-}
 
-figureImageUrl = (state) => {
-	if(state.track.album) {
-		if(state.track.album.images) {
-			if(state.track.album.images.length > 0) {
-				return state.track.album.images[0].url;
-			}
+	static mapStateToProps = state => ({
+		volume: state.volume,
+		track: state.track,
+		album: state.album,
+		albumImageUri: figureImageUrl(state),
+		trackId: figureTrackId(state),
+		trackName: figureTrackName(state),
+		artistName: figureArtistName(state),
+		sessionId: state.provider.sessionId,
+		duration: figureDuration(state)
+	})
+	
+	static mapDispatchToProps = (dispatch) => ({
+		setVolume: (value) => { 
+			ReactNativeVolumeController.change(value/100);
+			ReactNativeVolumeController.update();
+			dispatch({ type: 'SET_VOLUME', value: value });
+		},
+		playNext: () => {
+			dispatch({ type: 'PLAY_NEXT'});
+		},
+		playPrevious: () => {
+			dispatch({ type: 'PLAY_PREVIOUS'});
 		}
-		if(state.album.images) {
-			if(state.album.images.length > 0) {
-				return state.album.images[0].url;
-			}
-		}
+	})
+
+	static connect = (screen) => {
+		 connect(TrackPlayerScreen.mapStateToProps, TrackPlayerScreen.mapDispatchToProps)(screen);
 	}
-	return SpotifyHelper.tidalAlbumImageLarge(state.album.cover).uri;
+
 }
-
-figureTrackName = (state) => {
-	return state.track.name || state.track.title;
-}
-
-figureTrackId = (state) => {
-	return state.track.id;
-}
-
-figureArtistName = (state) => {
-	return state.track.artists[0].name;
-}
-
-figureDuration = (state) => {
-	return state.track.duration;
-}
-
-const mapStateToProps = state => ({
-	volume: state.volume,
-	track: state.track,
-	album: state.album,
-	albumImageUri: figureImageUrl(state),
-	trackId: figureTrackId(state),
-	trackName: figureTrackName(state),
-	artistName: figureArtistName(state),
-	sessionId: state.provider.sessionId,
-	duration: figureDuration(state)
-})
-
-const mapDispatchToProps = (dispatch) => ({
-	setVolume: (value) => { 
-		ReactNativeVolumeController.change(value/100);
-		ReactNativeVolumeController.update();
-		dispatch({ type: 'SET_VOLUME', value: value });
-	},
-	playNext: () => {
-		dispatch({ type: 'PLAY_NEXT'});
-	},
-	playPrevious: () => {
-		dispatch({ type: 'PLAY_PREVIOUS'});
-	}
-})
-
-export default TrackPlayerScreen = connect(mapStateToProps, mapDispatchToProps)(_TrackPlayerScreen);
 
 const styles = StyleSheet.create({
 	yuotube: { width: 40, height: 40 * (1084 / 1583) },

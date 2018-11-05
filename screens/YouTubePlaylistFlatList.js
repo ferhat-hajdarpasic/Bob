@@ -74,7 +74,7 @@ export default class YouTubePlaylistFlatList extends BobFlatList {
         let port = await ReactNode.getPortAsync();
         let videoUrl = `http://localhost:${port}/${videoId}`;
         console.log(`videoUrl=${videoUrl}`);
-        this.props.navigation.navigate('TrackPlayerScreen', { videoId: videoId, videoUrl: videoUrl, artwork: artwork, title: title });
+        this.props.navigation.navigate('YouTubePlayerScreen', { videoId: videoId, videoUrl: videoUrl, artwork: artwork, title: title });
       //} else {
        // this.props.navigation.navigate('ReactNode', { videoId: videoId });
       //}

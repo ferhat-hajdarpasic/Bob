@@ -27,7 +27,9 @@ import LoginToTidal from "./tidal/LoginToTidal.js"
 import ImportFromTidal from "./tidal/ImportFromTidal.js"
 
 import LandingScreen from './player/screens/LandingScreen';
-import TrackPlayerScreen from './player/screens/TrackPlayerScreen';
+import TidalPlayerScreen from './player/screens/TidalPlayerScreen';
+import YouTubePlayerScreen from './player/screens/YouTubePlayerScreen';
+import SoundCloudPlayerScreen from './player/screens/SoundCloudPlayerScreen';
 import AddFavourites from './screens/AddFavourites';
 import ImportFromYoutube from './screens/ImportFromYoutube';
 import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';
@@ -47,7 +49,9 @@ const store = createStore(reducer);
 const BobNavigator =  StackNavigator(
   {
     Main: { screen: AddFavourites },
-    TrackPlayerScreen: { screen: TrackPlayerScreen },
+    TidalPlayerScreen: { screen: TidalPlayerScreen },
+    YouTubePlayerScreen: { screen: YouTubePlayerScreen },
+    SoundCloudPlayerScreen: { screen: SoundCloudPlayerScreen },
     ReactNode: { screen: ReactNode },
     LoginToYoutube: {screen: LoginToYoutube },
     //LoginToSpotify: {screen: LoginToSpotify },

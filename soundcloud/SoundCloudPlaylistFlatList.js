@@ -68,7 +68,7 @@ export default class SoundCloudPlaylistFlatList extends BobFlatList {
 
     play = async (streamUrl, artwork, title) => {
         console.log(`streamUrl=${streamUrl}`);
-        this.props.navigation.navigate('TrackPlayerScreen', { 
+        this.props.navigation.navigate('SoundCloudPlayerScreen', { 
           streamUrl: `${streamUrl}?client_id=z8LRYFPM4UK5MMLaBe9vixfph5kqNA25&oauth_token=1-178930-450627837-740f6f923d451`, 
           artwork: artwork, 
           title: title
