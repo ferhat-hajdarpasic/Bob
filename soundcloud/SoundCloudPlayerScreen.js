@@ -50,6 +50,7 @@ class _SoundCloudPlayerScreen extends TrackPlayerScreen {
 
 
 const mapStateToProps = state => ({
+	logo: {url:require('../Resources/3RD_PARTY_LOGOS/SOUNDCLOUD.png'),  width: 40, height: 40 * (1039 / 2394)},
 	volume: state.volume,
 	track: state.track,
 	album: state.album,

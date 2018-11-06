@@ -175,7 +175,7 @@ export default class TrackPlayerScreen extends Component {
 					<Slider step={1} maximumValue={this.props.duration} onSlidingComplete={this.positionSlidingComplete.bind(this)} value={this.state.position} style={{ width: '100%' }} thumbTintColor='white' maximumTrackTintColor='white' minimumTrackTintColor='white' />
 					<View style={{ flex: 1 }}>
 						<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between', alignItems: 'center', marginLeft: '10%', marginRight: '10%' }}>
-							<Image source={require('../../Resources/3RD_PARTY_LOGOS/YOUTUBE.png')} style={styles.yuotube} />
+							<Image source={this.props.logo.url} style={{ width: this.props.logo.width, height: this.props.logo.height }} />
 							<View style={{ flexDirection: 'column', flex: 1, alignItems: 'center' }}>
 								<Text style={styles.trackName}>{this.props.trackName}</Text>
 								<Text style={styles.artistName}>{this.props.artistName}</Text>
@@ -217,7 +217,6 @@ export default class TrackPlayerScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-	yuotube: { width: 40, height: 40 * (1084 / 1583) },
 	homeImage: {
 		width: 50,
 		height: (214 / 241) * 50,

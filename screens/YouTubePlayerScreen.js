@@ -36,6 +36,7 @@ class _YouTubePlayerScreen extends TrackPlayerScreen {
 }
 
 const mapStateToProps = state => ({
+	logo: {url:require('../Resources/3RD_PARTY_LOGOS/YOUTUBE.png'),  width: 40, height: 40 * (1084 / 1583)},
 	volume: state.volume,
 	track: state.track,
 	album: state.album,

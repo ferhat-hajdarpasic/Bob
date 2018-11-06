@@ -36,6 +36,7 @@ class _TidalPlayerScreen extends TrackPlayerScreen {
 }
 
 const mapStateToProps = state => ({
+	logo: {url:require('../Resources/3RD_PARTY_LOGOS/TIDAL.png'),  width: 40, height: 40 * (1041 / 2140)},
 	volume: state.volume,
 	track: state.track,
 	album: state.album,
