@@ -27,9 +27,9 @@ import LoginToTidal from "./tidal/LoginToTidal.js"
 import ImportFromTidal from "./tidal/ImportFromTidal.js"
 
 import LandingScreen from './player/screens/LandingScreen';
-import TidalPlayerScreen from './player/screens/TidalPlayerScreen';
-import YouTubePlayerScreen from './player/screens/YouTubePlayerScreen';
-import SoundCloudPlayerScreen from './player/screens/SoundCloudPlayerScreen';
+import TidalPlayerScreen from './tidal/TidalPlayerScreen';
+import YouTubePlayerScreen from './screens/YouTubePlayerScreen';
+import SoundCloudPlayerScreen from './soundcloud/SoundCloudPlayerScreen';
 import AddFavourites from './screens/AddFavourites';
 import ImportFromYoutube from './screens/ImportFromYoutube';
 import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';

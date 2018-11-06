@@ -16,11 +16,9 @@ import timer from 'react-native-timer';
 import PlayerBackground from '../../screens/PlayerBackground'
 
 import { NavigationActions } from 'react-navigation';
-import SpotifyHelper from '../../SpotifyHelper';
 import TrackPlayer from 'react-native-track-player';
-import { connect } from "react-redux";
 const ReactNativeVolumeController = NativeModules.ReactNativeVolumeController;
-class TrackPlayerScreen extends Component {
+export default class TrackPlayerScreen extends Component {
 	static navigationOptions = {
 		title: 'Player',
 	};
@@ -42,7 +40,7 @@ class TrackPlayerScreen extends Component {
 
 	async componentDidMount() {
 		this.mounted = true;
-		console.log('componentDidMount****************');
+		console.log(`componentDidMount, this.props = ${JSON.stringify(this.props)}`);
 		TrackPlayer.setupPlayer();
 		TrackPlayer.updateOptions({
 			stopWithApp: true,
@@ -58,11 +56,11 @@ class TrackPlayerScreen extends Component {
 		this.props.setVolume(this.props.volume);
 	}
 
-	async componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps = async (nextProps) => {
 		console.log(`componentWillReceiveProps = ${JSON.stringify(nextProps)}`);
-		//if(nextProps.track && nextProps.track.id) {
+		if(nextProps.track && nextProps.track.id && (nextProps.track.id != this.props.track.id)) {
 			await this.playNewSong();
-	    //}
+	    }
 	}
 
 	async positionSlidingComplete(value) {
@@ -111,7 +109,8 @@ class TrackPlayerScreen extends Component {
 
 	playNewSong = async () => {
 		const currentTrack = await TrackPlayer.getCurrentTrack();
-		let streamUrl = figureStreamurl(this.props.track, this.props.sessionId);
+		console.log(`this.props.track = ${JSON.stringify(this.props.track)}`);
+		let streamUrl = await this.props.figureStreamUrl(this.props.track, this.props.sessionId);
 		let track = {
 			id: this.props.trackId, 
 			url: streamUrl,
@@ -215,37 +214,6 @@ class TrackPlayerScreen extends Component {
 			</PlayerBackground>
 		);
 	}
-
-	static mapStateToProps = state => ({
-		volume: state.volume,
-		track: state.track,
-		album: state.album,
-		albumImageUri: figureImageUrl(state),
-		trackId: figureTrackId(state),
-		trackName: figureTrackName(state),
-		artistName: figureArtistName(state),
-		sessionId: state.provider.sessionId,
-		duration: figureDuration(state)
-	})
-	
-	static mapDispatchToProps = (dispatch) => ({
-		setVolume: (value) => { 
-			ReactNativeVolumeController.change(value/100);
-			ReactNativeVolumeController.update();
-			dispatch({ type: 'SET_VOLUME', value: value });
-		},
-		playNext: () => {
-			dispatch({ type: 'PLAY_NEXT'});
-		},
-		playPrevious: () => {
-			dispatch({ type: 'PLAY_PREVIOUS'});
-		}
-	})
-
-	static connect = (screen) => {
-		 connect(TrackPlayerScreen.mapStateToProps, TrackPlayerScreen.mapDispatchToProps)(screen);
-	}
-
 }
 
 const styles = StyleSheet.create({

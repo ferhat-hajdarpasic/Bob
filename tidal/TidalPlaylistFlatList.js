@@ -146,7 +146,7 @@ class _TidalPlaylistFlatList extends Component {
     //console.log(`album image url = ${SpotifyHelper.tidalAlbumImageLarge(album.cover).uri}`);
 
     this.props.playTrack(index, track, album);
-    this.props.navigation.navigate('TrackPlayerScreen', { });
+    this.props.navigation.navigate('TidalPlayerScreen', { });
   };
 
   render() {
