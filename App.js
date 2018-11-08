@@ -36,7 +36,7 @@ import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';
 import YouTubePlaylists from './screens/YouTubePlaylists';
 import SoundCloudPlaylists from './soundcloud/SoundCloudPlaylists';
 import YouTubePlaylist from './screens/YouTubePlaylist';
-import SoundCloudPlaylist from './soundcloud/SoundCloudPlaylist';
+import PlaylistScreen from './screens/PlaylistScreen';
 import TidalPlaylists from './tidal/TidalPlaylists';
 import TidalPlaylist from './tidal/TidalPlaylist';
 
@@ -65,7 +65,7 @@ const BobNavigator =  StackNavigator(
     YouTubePlaylists: {screen: YouTubePlaylists},
     SoundCloudPlaylists: {screen: SoundCloudPlaylists},
     YouTubePlaylist: {screen: YouTubePlaylist},
-    SoundCloudPlaylist: {screen: SoundCloudPlaylist},
+    PlaylistScreen: {screen: PlaylistScreen},
     TidalPlaylists: {screen: TidalPlaylists},
     TidalPlaylist: {screen: TidalPlaylist},
     Playlists: {screen: Playlists},

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
-import { List, ListItem, SearchBar } from "react-native-elements";
+import { StyleSheet, Image, View, Text, TouchableHighlight } from "react-native";
 import BobFlatList from '../BobFlatList'
 import SpotifyHelper from "../SpotifyHelper";
+import SoundCloudPlaylistFlatList from './SoundCloudPlaylistFlatList'
+import playlistStyles from "../styles/playlist"
+import styles from "../styles/playlists"
 
-import { GoogleSignin } from 'react-native-google-signin'
 import SoundCloudApi  from '../api/soundcloud/SoundCloudApi';
 
 let api = new SoundCloudApi();
@@ -70,30 +71,13 @@ export default class PlaylistsFlatList extends BobFlatList {
   
       play = (item) => {
         console.log('item=' + JSON.stringify(item));
-        this.props.navigation.navigate('SoundCloudPlaylist', { playlist: item.playlist});
+        function FlatList(props) {
+          return <SoundCloudPlaylistFlatList playlist={props.params.playlist} navigation={props.navigation}/>
+        }
+    
+        let style = playlistStyles.soundcloud;
+        let logoImage = require('../Resources/3RD_PARTY_LOGOS/SOUNDCLOUD.png');
+    
+        this.props.navigation.navigate('PlaylistScreen', { playlist: item.playlist, FlatList: FlatList, style:style, logoImage: logoImage });
       };
   }
-  
-  const styles = StyleSheet.create({
-    titleImage: {
-      width: 50,
-      height: (214 / 241) * 50,
-      marginRight:20
-    },
-    artistText: {
-      color: 'white',
-      fontFamily: 'Myriad Pro Regular',
-      fontSize: 12
-    },
-    albumText: {
-      color: 'white',
-      fontFamily: 'Myriad Pro Bold',
-      fontSize: 12
-    },
-    separatorStyle: {
-      height: 15,
-      width: "86%",
-      backgroundColor: "transparent",
-      marginLeft: "14%"
-    }
-});

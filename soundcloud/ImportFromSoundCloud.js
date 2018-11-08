@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   loginToBob: { color: 'white', fontFamily: 'Bauhaus 93', fontSize: 20, marginBottom: '10%' },
   login: { color: '#FCB415', fontFamily: 'Bauhaus 93', fontSize: 20, marginBottom: '10%' },
   import: { color: '#FCB415', fontFamily: 'Bauhaus 93', fontSize: 20 },
-  soundcloud: { width: 40, height: 40 * ((1084 / 1543)), marginLeft:'17%' },
+  soundcloud: { width: 40, height: 40 * ((1039 / 2394)), marginLeft:'17%' },
   facebook: { width: 40, height: 40 },
   titleImage: {
     width: 50,
