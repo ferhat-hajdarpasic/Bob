@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
 import BobFlatList from '../BobFlatList'
+import SpotifyHelper from "../SpotifyHelper";
 
 import { GoogleSignin } from 'react-native-google-signin'
 import SoundCloudApi  from '../api/soundcloud/SoundCloudApi';
@@ -25,9 +26,14 @@ export default class PlaylistsFlatList extends BobFlatList {
     for(let i = 0; i < this.state.playlists.length; i++) {
       let item = this.state.playlists[i];
 
+      let trackWithImage = item.tracks.find(track => !(track.artwork_url === undefined) && track.artwork_url != null);
+      console.log(`playlist image = ${JSON.stringify(trackWithImage)}`);
+      let image = trackWithImage ? SpotifyHelper.uriImageSource(trackWithImage.artwork_url) : SpotifyHelper.emptyPlaylistImage();
+      
       data.push({
+        key: `${item.id}`,
         name: item.title,
-        imageUrl: (item.tracks[0]) ? item.tracks[0].artwork_url : '',
+        image: image,
         playlist: item
       });
     }
@@ -51,7 +57,7 @@ export default class PlaylistsFlatList extends BobFlatList {
       return (
         <TouchableHighlight onPress={() => this.play(item)}>
         <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
-          <Image source={{uri: item.imageUrl}} style={{width:100, height:100}}/>
+          <Image source={item.image} style={{width:100, height:100}}/>
           <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:20}}>
             <Text style={styles.albumText}>{item.name} </Text>
             <Text style={styles.artistText}>SoundCloud</Text>

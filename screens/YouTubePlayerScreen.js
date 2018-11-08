@@ -1,6 +1,7 @@
 import TrackPlayerScreen from '../player/screens/TrackPlayerScreen';
 import { connect } from "react-redux";
 import { NativeModules } from 'react-native';
+import SpotifyHelper from '../SpotifyHelper';
 
 const ReactNativeVolumeController = NativeModules.ReactNativeVolumeController;
 class _YouTubePlayerScreen extends TrackPlayerScreen {

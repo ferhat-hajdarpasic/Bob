@@ -1,6 +1,5 @@
 import React, { Component, PureComponent } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
-import { List, ListItem, SearchBar } from "react-native-elements";
 
 import { TidalApi, api_url } from './TidalApi'
 import SpotifyHelper from "../SpotifyHelper";

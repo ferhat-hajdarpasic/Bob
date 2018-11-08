@@ -1,6 +1,7 @@
-import TrackPlayerScreen from '../player/screens/TrackPlayerScreen';
-import { connect } from "react-redux";
 import { NativeModules } from 'react-native';
+import { connect } from "react-redux";
+import TrackPlayerScreen from '../player/screens/TrackPlayerScreen';
+import SpotifyHelper from '../SpotifyHelper';
 
 const ReactNativeVolumeController = NativeModules.ReactNativeVolumeController;
 
@@ -16,31 +17,18 @@ class _SoundCloudPlayerScreen extends TrackPlayerScreen {
 	}
 
 	static figureImageUrl = (state) => {
-		if(state.track.album) {
-			if(state.track.album.images) {
-				if(state.track.album.images.length > 0) {
-					return state.track.album.images[0].url;
-				}
-			}
-			if(state.album.images) {
-				if(state.album.images.length > 0) {
-					return state.album.images[0].url;
-				}
-			}
-		}
-		return SpotifyHelper.tidalAlbumImageLarge(state.album.cover).uri;
+		return state.track.artwork_url;
 	}
 	
 	static figureTrackName = (state) => {
-		return state.track.name || state.track.title;
+		return state.track.title;
 	}
 	
 	static figureTrackId = (state) => {
 		return state.track.id;
 	}
-	
 	static figureArtistName = (state) => {
-		return state.track.artists[0].name;
+		return state.track.label_name;
 	}
 	
 	static figureDuration = (state) => {
