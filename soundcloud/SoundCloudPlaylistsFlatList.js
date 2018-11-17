@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
-import { List, ListItem, SearchBar } from "react-native-elements";
+import { StyleSheet, Image, View, Text, TouchableHighlight } from "react-native";
 import BobFlatList from '../BobFlatList'
+import SpotifyHelper from "../SpotifyHelper";
+import SoundCloudPlaylistFlatList from './SoundCloudPlaylistFlatList'
+import playlistStyles from "../styles/playlist"
+import styles from "../styles/playlists"
 
-import { GoogleSignin } from 'react-native-google-signin'
 import SoundCloudApi  from '../api/soundcloud/SoundCloudApi';
 
 let api = new SoundCloudApi();
@@ -25,9 +27,14 @@ export default class PlaylistsFlatList extends BobFlatList {
     for(let i = 0; i < this.state.playlists.length; i++) {
       let item = this.state.playlists[i];
 
+      let trackWithImage = item.tracks.find(track => !(track.artwork_url === undefined) && track.artwork_url != null);
+      console.log(`playlist image = ${JSON.stringify(trackWithImage)}`);
+      let image = trackWithImage ? SpotifyHelper.uriImageSource(trackWithImage.artwork_url) : SpotifyHelper.emptyPlaylistImage();
+      
       data.push({
+        key: `${item.id}`,
         name: item.title,
-        imageUrl: (item.tracks[0]) ? item.tracks[0].artwork_url : '',
+        image: image,
         playlist: item
       });
     }
@@ -51,7 +58,7 @@ export default class PlaylistsFlatList extends BobFlatList {
       return (
         <TouchableHighlight onPress={() => this.play(item)}>
         <View style={{flex:1, width :'100%', flexDirection: 'row', alignContent:'space-between'}}>
-          <Image source={{uri: item.imageUrl}} style={{width:100, height:100}}/>
+          <Image source={item.image} style={{width:100, height:100}}/>
           <View style={{flex:1, width :'100%', flexDirection: 'column', justifyContent:'space-around', paddingLeft:20}}>
             <Text style={styles.albumText}>{item.name} </Text>
             <Text style={styles.artistText}>SoundCloud</Text>
@@ -64,30 +71,13 @@ export default class PlaylistsFlatList extends BobFlatList {
   
       play = (item) => {
         console.log('item=' + JSON.stringify(item));
-        this.props.navigation.navigate('SoundCloudPlaylist', { playlist: item.playlist});
+        function FlatList(props) {
+          return <SoundCloudPlaylistFlatList playlist={props.params.playlist} navigation={props.navigation}/>
+        }
+    
+        let style = playlistStyles.soundcloud;
+        let logoImage = require('../Resources/3RD_PARTY_LOGOS/SOUNDCLOUD.png');
+    
+        this.props.navigation.navigate('PlaylistScreen', { playlist: item.playlist, FlatList: FlatList, style:style, logoImage: logoImage });
       };
   }
-  
-  const styles = StyleSheet.create({
-    titleImage: {
-      width: 50,
-      height: (214 / 241) * 50,
-      marginRight:20
-    },
-    artistText: {
-      color: 'white',
-      fontFamily: 'Myriad Pro Regular',
-      fontSize: 12
-    },
-    albumText: {
-      color: 'white',
-      fontFamily: 'Myriad Pro Bold',
-      fontSize: 12
-    },
-    separatorStyle: {
-      height: 15,
-      width: "86%",
-      backgroundColor: "transparent",
-      marginLeft: "14%"
-    }
-});

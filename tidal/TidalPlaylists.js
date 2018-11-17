@@ -4,27 +4,24 @@ import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
 
 import { StyleSheet, WebView, Platform } from 'react-native';
 import BKD from '../screens/BobBackground'
-import SoundCloudPlaylistFlatList from './SoundCloudPlaylistFlatList'
+import TidalPlaylistsFlatList from './TidalPlaylistsFlatList'
 
-export default class SoundCloudPlaylist extends Component {
+export default class TidalPlaylists extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
   render() {
     const { params } = this.props.navigation.state;
-    let playlist = params.playlist;
     return (
-        <BKD title={playlist.title}>
+        <BKD title='tidal playlists'>
         <View style={{
           flex: 1,
           flexDirection: 'column',
         }}>
-          <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5,  justifyContent: 'flex-end', alignItems: 'center'}}>
-            <Image source={require('../Resources/3RD_PARTY_LOGOS/SOUNDCLOUD.png')} style={styles.soundcloud} />
+          <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1.5 }}>
           </View>
-          <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 7, marginLeft:'10%' }}>
-            <SoundCloudPlaylistFlatList playlist={playlist} navigation={this.props.navigation}/>
+          <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
+            <TidalPlaylistsFlatList access_token={params.access_token} userId={params.userId} playlists={params.playlists} navigation={this.props.navigation}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />
@@ -34,27 +31,21 @@ export default class SoundCloudPlaylist extends Component {
       </BKD>
     );
   }
-  async componentDidMount() {
+  componentDidMount() {
   }
 }
 
+
+
 const styles = StyleSheet.create({
-  soundcloud: { width: 40, height: 40 * (1084 / 1543), right: '10%'},
+  loginToBob: { color: 'white', fontFamily: 'Bauhaus 93', fontSize: 20, marginBottom: '10%' },
+  login: { color: '#FCB415', fontFamily: 'Bauhaus 93', fontSize: 20, marginBottom: '10%' },
+  import: { color: '#FCB415', fontFamily: 'Bauhaus 93', fontSize: 20 },
+  spotify: { width: 40, height: 40 * (1065 / 1045), marginLeft:'17%' },
+  facebook: { width: 40, height: 40 },
   titleImage: {
     width: 50,
     height: (214 / 241) * 50
-  },
-  albumName: {
-    color: 'white',
-    fontFamily: 'Myriad Pro Bold',
-    fontSize: 20,
-    padding:5
-  },
-  artistName: {
-    color: 'white',
-    fontFamily: 'Myriad Pro Regular',
-    fontSize: 20,
-    padding:5
   },
   titleText: {
     color: '#FCB415',

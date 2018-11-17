@@ -4,11 +4,15 @@ const initialState = {
     tracks: [],
     playIndex: null,
     track: null,
-    album: null
+    album: null,
+    provider: {}
 }
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+        case 'SET_PROVIDER_SESSION':
+            console.log("REDUX: SET_PROVIDER_SESSION=" + JSON.stringify(action.provider));
+            return { ...state, provider: action.provider };
         case 'SET_VOLUME':
             console.log("REDUX: setVolume=" + action.value)
             return { ...state, volume: action.value };
@@ -20,7 +24,9 @@ export default function reducer(state = initialState, action) {
             return { ...state, tracks: action.tracks };
         case 'PLAY_TRACK':
             console.log("REDUX: PLAY_TRACK at index = " + action.index );
-            return { ...state, playIndex: 1*action.index, track: action.track, album: action.album };
+            let newState = { ...state, playIndex: 1*action.index, track: action.track, album: action.album };
+            console.log(`action.track=${JSON.stringify(action.track)}`);
+            return newState;
         case 'PLAY_NEXT':
             console.log("REDUX: PLAY_NEXT" );
             if(state.tracks.length == 0) return state;

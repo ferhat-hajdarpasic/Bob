@@ -26,5 +26,21 @@ export default class SpotifyHelper {
   
     static emptyPlaylistImage = () => {
       return require('./Resources/ICONS/PAUSE.png');
-    }    
+    }
+
+    static tidalImage(imageId) {
+      return {uri: `https://resources.tidal.com/images/${imageId.replace(/-/gi, '/')}/160x107.jpg`};
+    }
+
+    static tidalAlbumImageHuge(imageId) {    
+      return {uri: `https://resources.tidal.com/images/${imageId.replace(/-/gi, '/')}/1280x1280.jpg`};
+    }
+
+    static tidalAlbumImageLarge(imageId) {    
+      return {uri: `https://resources.tidal.com/images/${imageId.replace(/-/gi, '/')}/750x750.jpg`};
+    }
+
+    static tidalAlbumImageSmall(imageId) {    
+      return {uri: `https://resources.tidal.com/images/${imageId.replace(/-/gi, '/')}/80x80.jpg`};
+    }
 }

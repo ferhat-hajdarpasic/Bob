@@ -17,8 +17,6 @@ export default class ImportFromSoundCloudFlatList extends BobFlatList {
     this.setState({ loading: true });
     this.state.playlists = await api.playlists(this.props.accessToken);
 
-    console.log(`URL = ${this.state.playlists[0].tracks[0].artwork_url}`);
-
     this.setState({
       data: [
         {

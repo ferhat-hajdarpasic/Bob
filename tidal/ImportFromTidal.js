@@ -31,7 +31,7 @@ export default class ImportFromTidal extends Component {
             <Image source={require('../Resources/3RD_PARTY_LOGOS/SPOTIFY.png')} style={styles.spotify} />
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 6, marginLeft:'10%' }}>
-            <ImportFromTidalFlatList access_token={access_token} userId={userId}/>
+            <ImportFromTidalFlatList access_token={access_token} userId={userId} navigation={this.props.navigation}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />

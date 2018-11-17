@@ -18,6 +18,7 @@ import PlayerBackground from './screens/PlayerBackground'
 import { NavigationActions } from 'react-navigation';
 import Spotify from 'rn-spotify-sdk';
 import SpotifyApi from './SpotifyApi';
+import SpotifyHelper from './SpotifyHelper';
 
 import { connect } from "react-redux";
 
@@ -188,11 +189,27 @@ class _PlayerScreen extends Component {
 	}
 }
 
+figureImageUrl = (state) => {
+	if(state.track.album) {
+		if(state.track.album.images) {
+			if(state.track.album.images.length > 0) {
+				return state.track.album.images[0].url;
+			}
+		}
+		if(state.album.images) {
+			if(state.album.images.length > 0) {
+				return state.album.images[0].url;
+			}
+		}
+	}
+	return SpotifyHelper.tidalAlbumImageLarge(state.album.cover).uri;
+}
+
 const mapStateToProps = state => ({
 	volume: state.volume,
 	track: state.track,
 	album: state.album,
-	albumImageUri: (state.track.album) ? state.track.album.images[0].url : state.album.images[0].url,
+	albumImageUri: figureImageUrl(state),
 	duration: state.track.duration_ms / 1000,
 })
 

@@ -1,8 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
+import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
+
+import { TidalApi, api_url } from './TidalApi'
 import SpotifyHelper from "../SpotifyHelper";
-import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native"
 import { connect } from "react-redux";
+
 import styles from "../styles/styles"
+
 let playIcon = require('../Resources/ICONS/PLAY.png');
 
 class PlaylistItem extends Component {
@@ -16,13 +20,13 @@ class PlaylistItem extends Component {
 
   render() {
     let item = this.props.item;
-    console.log(`item = ${JSON.stringify(item)}`);
+    console.log(`item.album = ${JSON.stringify(item.album)}`);
     return (
       <View style={{ flex: 1, width: '100%', flexDirection: 'row', alignContent: 'space-between' }}>
-        <Image source={SpotifyHelper.uriImageSource(item.track.artwork_url)} style={{ width: 50, height: 50 }} />
+        <Image source={SpotifyHelper.tidalAlbumImageSmall(item.album.cover)} style={{ width: 50, height: 50 }} />
         <View style={{ flex: 1, width: '100%', flexDirection: 'column', justifyContent: 'space-around', paddingLeft: 5 }}>
-          <Text style={styles.albumText}>{item.track.label_name} </Text>
-          <Text style={styles.artistText}>{item.title} </Text>
+          <Text style={styles.albumText}>{item.track.title} </Text>
+          <Text style={styles.artistText}>{item.artist} </Text>
         </View>
         <Image source={playIcon} style={styles.titleImage} />
       </View>
@@ -30,10 +34,10 @@ class PlaylistItem extends Component {
   }
 }
 
-class _SoundCloudPlaylistFlatList extends Component {
+class _TidalPlaylistFlatList extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       loading: false,
       data: [],
@@ -46,27 +50,29 @@ class _SoundCloudPlaylistFlatList extends Component {
   }
 
   async componentDidMount() {
-    //let sessionId = (await TidalApi.sessions(this.props.access_token)).sessionId;
-    this.props.setProviderSession({name: 'soundcloud', access_token :this.props.access_token });
+    let sessionId = (await TidalApi.sessions(this.props.access_token)).sessionId;
+    this.props.setProviderSession({name: 'tidal', access_token :this.props.access_token, sessionId: sessionId });
     await this.loadFirstPage();
   }
 
   loadFirstPage = async () => {
-    console.log('SoundCloudPlaylistFlatList loadFirstPage()');
+    console.log('TidalPlaylistFlatList loadFirstPage()');
     this.setState({ data: [], offset: 0, limit: 50, totalNumberOfItems: 1000 }, async () => {
       await this.loadNextPage();
     });
   }
 
   loadNextPage = async () => {
+    let next = `${api_url}/playlists/${this.props.playlistHref}/items?offset=${this.state.offset}&limit=${this.state.limit}&order=INDEX&orderDirection=ASC&countryCode=AU`;
+    console.log(`next playlist = ${next}`);
     if (this.state.offset == 0 || this.state.offset < this.state.totalNumberOfItems) {
       this.setState({ loading: false });
-      let playlist = this.props.playlist;
-      const tracks = this.extractTracks(playlist);
+      let page = await TidalApi.next(this.props.access_token, next);
+      const tracks = this.extractTracks(page);
 
       this.setState({
         offset: this.state.offset + this.state.limit,
-        totalNumberOfItems: playlist.totalNumberOfItems,data: [...this.state.data, ...tracks],
+        totalNumberOfItems: page.totalNumberOfItems,data: [...this.state.data, ...tracks],
         loading: false
       });
 
@@ -74,25 +80,34 @@ class _SoundCloudPlaylistFlatList extends Component {
     }
   }
 
-  extractTracks = (playlist) => {
+  extractTracks = (page) => {
     let tracks = [];
-    for(let i = 0; i < playlist.tracks.length; i++) {
-      let track = playlist.tracks[i];
-      if (this.state.duplicates.has(track.id)) {
-        continue;
-      }
-      this.state.duplicates.add(track.id);
-      //console.log('FRED track='+JSON.stringify(track));
-      tracks.push({
-        artist: track.label_name,
-        track: track,
-        title: track.title,
-        streamUrl: track.stream_url,
-        artwork: track.artwork_url,
-        key: `A${track.id}`
-      });
-    }
 
+    const index = this.state.data.length;
+    for (let i = 0; i < page.items.length; i++) {
+      if (page.items[i].type == 'track') {
+        let track = page.items[i].item;
+        if (this.state.duplicates.has(track.id)) {
+          //console.log(`Ignoring duplicate track.album.id=${track.album.id}`);
+          continue;
+        }
+        //console.log(`Adding track.album.id=${track.album.id}`);
+        this.state.duplicates.add(track.id);
+        let artists = [];
+
+        for (let j = 0; j < track.artists.length; j++) {
+          artists.push(track.artists[j].name);
+        }
+        let artistName = artists.join(' and ');
+
+        tracks.push({
+          artist: `${index + i}` + artistName,
+          track: track,
+          album: track.album,
+          key: `A${track.id}`
+        });
+      }
+    }
     return tracks;
   }
 
@@ -122,8 +137,15 @@ class _SoundCloudPlaylistFlatList extends Component {
 
   play = async (index, track, album) => {
     console.log(`track to play = ${JSON.stringify(track)}`);
+    console.log(`album to play = ${JSON.stringify(album)}`);
+
+    //let streamUrl = (await TidalApi.streamUrl(track.id, this.props.sessionId)).url;
+    //let artwork = SpotifyHelper.tidalAlbumImageLarge(album.cover).uri;
+    //console.log(`streamUrl = ${streamUrl}`);
+    //console.log(`album image url = ${SpotifyHelper.tidalAlbumImageLarge(album.cover).uri}`);
+
     this.props.playTrack(index, track, album);
-    this.props.navigation.navigate('SoundCloudPlayerScreen', { });  
+    this.props.navigation.navigate('TidalPlayerScreen', { });
   };
 
   render() {
@@ -161,4 +183,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default SoundCloudPlaylistFlatList = connect(mapStateToProps, mapDispatchToProps)(_SoundCloudPlaylistFlatList);
+export default TidalPlaylistFlatList = connect(mapStateToProps, mapDispatchToProps)(_TidalPlaylistFlatList);

@@ -27,14 +27,18 @@ import LoginToTidal from "./tidal/LoginToTidal.js"
 import ImportFromTidal from "./tidal/ImportFromTidal.js"
 
 import LandingScreen from './player/screens/LandingScreen';
-import TrackPlayerScreen from './player/screens/TrackPlayerScreen';
+import TidalPlayerScreen from './tidal/TidalPlayerScreen';
+import YouTubePlayerScreen from './screens/YouTubePlayerScreen';
+import SoundCloudPlayerScreen from './soundcloud/SoundCloudPlayerScreen';
 import AddFavourites from './screens/AddFavourites';
 import ImportFromYoutube from './screens/ImportFromYoutube';
 import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';
 import YouTubePlaylists from './screens/YouTubePlaylists';
 import SoundCloudPlaylists from './soundcloud/SoundCloudPlaylists';
 import YouTubePlaylist from './screens/YouTubePlaylist';
-import SoundCloudPlaylist from './soundcloud/SoundCloudPlaylist';
+import PlaylistScreen from './screens/PlaylistScreen';
+import TidalPlaylists from './tidal/TidalPlaylists';
+import TidalPlaylist from './tidal/TidalPlaylist';
 
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux'
@@ -45,7 +49,9 @@ const store = createStore(reducer);
 const BobNavigator =  StackNavigator(
   {
     Main: { screen: AddFavourites },
-    TrackPlayerScreen: { screen: TrackPlayerScreen },
+    TidalPlayerScreen: { screen: TidalPlayerScreen },
+    YouTubePlayerScreen: { screen: YouTubePlayerScreen },
+    SoundCloudPlayerScreen: { screen: SoundCloudPlayerScreen },
     ReactNode: { screen: ReactNode },
     LoginToYoutube: {screen: LoginToYoutube },
     //LoginToSpotify: {screen: LoginToSpotify },
@@ -59,7 +65,9 @@ const BobNavigator =  StackNavigator(
     YouTubePlaylists: {screen: YouTubePlaylists},
     SoundCloudPlaylists: {screen: SoundCloudPlaylists},
     YouTubePlaylist: {screen: YouTubePlaylist},
-    SoundCloudPlaylist: {screen: SoundCloudPlaylist},
+    PlaylistScreen: {screen: PlaylistScreen},
+    TidalPlaylists: {screen: TidalPlaylists},
+    TidalPlaylist: {screen: TidalPlaylist},
     Playlists: {screen: Playlists},
     Playlist: {screen: Playlist},
     RecentlyPlayed: {screen: RecentlyPlayed},
