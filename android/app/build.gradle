@@ -98,7 +98,7 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-        applicationId "com.bob"
+        applicationId "com.cocreators.hass.bob"
         minSdkVersion 23
         targetSdkVersion 26
         versionCode 1

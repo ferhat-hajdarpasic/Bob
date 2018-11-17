@@ -1,4 +1,4 @@
-package com.bob;
+package com.cocreators.hass.bob;
 
 import com.facebook.react.ReactActivity;
 

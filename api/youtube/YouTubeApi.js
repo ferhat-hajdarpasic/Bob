@@ -11,7 +11,7 @@ async function handleResponse(response) {
 export default class YouTubeApi {
     async playlists(access_token) {
         console.log('playlists:'+ access_token);
-        let key = 'AIzaSyBtnAcka845n2BMkL7mrXWKcS2FTXPi6I0';
+        let key = 'AIzaSyBpujtNa5iCA5hy2aP4CUNojRlKNxaEeNw';
         let url = `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&mine=true&key=${key}&access_token=${access_token}`;
         console.log(`url=${url}`);
         let meResponse = await fetch(url, {
@@ -22,7 +22,7 @@ export default class YouTubeApi {
 
     async playlist(access_token, playlist_id) {
        console.log(playlist_id);
-       let key = 'AIzaSyBtnAcka845n2BMkL7mrXWKcS2FTXPi6I0';
+       let key = 'AIzaSyBpujtNa5iCA5hy2aP4CUNojRlKNxaEeNw';
        let url =`https://www.googleapis.com/youtube/v3/playlistItems?playlistId=${playlist_id}&part=snippet,contentDetails&key=${key}&access_token=${access_token}`;
         let playlistResponse = await fetch(url, {
             method: 'GET'
