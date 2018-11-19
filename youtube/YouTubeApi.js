@@ -15,21 +15,21 @@ async function handleResponse(response) {
 }
 
 export default class YouTubeApi {
-    async playlists(access_token) {
-        console.log('playlists:'+ access_token);
-        let url = `${api_url}/playlists?part=snippet,contentDetails&mine=true&key=${api_key}&access_token=${access_token}`;
+    async playlists(accessToken) {
+        console.log('playlists:'+ accessToken);
+        let url = `${api_url}/playlists?part=snippet,contentDetails&mine=true`;
         console.log(`url=${url}`);
         let meResponse = await fetch(url, {
-            method: 'GET'
+            method: 'GET', headers: {'Authorization': `Bearer ${accessToken}`}
         });
         return await handleResponse(meResponse);
     }
 
-    async playlist(access_token, playlist_id) {
+    async playlist(accessToken, playlist_id) {
        console.log(playlist_id);
-       let url =`${api_url}/playlistItems?playlistId=${playlist_id}&part=snippet,contentDetails&key=${api_key}&access_token=${access_token}`;
+       let url =`${api_url}/playlistItems?playlistId=${playlist_id}&part=snippet,contentDetails`;
         let playlistResponse = await fetch(url, {
-            method: 'GET'
+            method: 'GET', headers: {'Authorization': `Bearer ${accessToken}`}
         });
         console.log(`url=${url}`);
         return await handleResponse(playlistResponse);
