@@ -2,6 +2,7 @@ import TrackPlayerScreen from '../player/screens/TrackPlayerScreen';
 import { connect } from "react-redux";
 import { NativeModules } from 'react-native';
 import SpotifyHelper from '../SpotifyHelper';
+import ReactNode from '../ReactNode';
 
 const ReactNativeVolumeController = NativeModules.ReactNativeVolumeController;
 class _YouTubePlayerScreen extends TrackPlayerScreen {
@@ -10,17 +11,18 @@ class _YouTubePlayerScreen extends TrackPlayerScreen {
 	} 
 
 	static figureStreamUrl = async (track) => {
-		let streamUrl = `${track.stream_url}?client_id=z8LRYFPM4UK5MMLaBe9vixfph5kqNA25&oauth_token=1-178930-450627837-740f6f923d451`;
+		let port = await ReactNode.getPortAsync();
+		let streamUrl = `http://localhost:${port}/${track.snippet.resourceId.videoId}`;
         console.log(`streamUrl=${streamUrl}`);
 		return streamUrl;
 	}
 
 	static figureImageUrl = (state) => {
-		return SpotifyHelper.tidalAlbumImageLarge(state.album.cover).uri;
+		return SpotifyHelper.uriImageSource(state.track.snippet.thumbnails.high.url).uri;
 	}
 	
 	static figureTrackName = (state) => {
-		return state.track.name || state.track.title;
+		return state.track.snippet.title;
 	}
 	
 	static figureTrackId = (state) => {
@@ -28,7 +30,7 @@ class _YouTubePlayerScreen extends TrackPlayerScreen {
 	}
 	
 	static figureArtistName = (state) => {
-		return state.track.artists[0].name;
+		return state.track.snippet.channelTitle;
 	}
 	
 	static figureDuration = (state) => {

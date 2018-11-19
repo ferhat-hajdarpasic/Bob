@@ -10,7 +10,6 @@ let playIcon = require('../Resources/ICONS/PLAY.png');
 import rnfetchblob from 'react-native-fetch-blob';
 import { GoogleSignin } from 'react-native-google-signin'
 import YouTubeApi from './YouTubeApi';
-import ReactNode from '../ReactNode';
 
 let api = new YouTubeApi();
 class PlaylistItem extends Component {
@@ -137,20 +136,13 @@ class _YouTubePlaylistFlatList extends Component {
     console.log(`track to play = ${JSON.stringify(track)}`);
     //console.log(`album to play = ${JSON.stringify(album)}`);
 
-    const videoFile = `${rnfetchblob.fs.dirs.MusicDir}/${vitrack.snippet.resourceId.videoIddeoId}.flac`;
+    const videoFile = `${rnfetchblob.fs.dirs.MusicDir}/${track.snippet.resourceId.videoId}.flac`;
     console.log(`Checkig if file '${videoFile} exists`);
     //let exists = await rnfetchblob.fs.exists(videoFile);
     //if(exists) {
     //let videoUrl = `file:///${videoFile}`;
-    let port = await ReactNode.getPortAsync();
-    let videoUrl = `http://localhost:${port}/${vitrack.snippet.resourceId.videoIddeoId}`;
-    console.log(`videoUrl=${videoUrl}`);
-    this.props.navigation.navigate('YouTubePlayerScreen', {
-      videoId: track.snippet.resourceId.videoId,
-      videoUrl: videoUrl,
-      artwork: track.snippet.thumbnails.high.url,
-      title: track.snippet.title
-    });
+    this.props.playTrack(index, track, album);
+    this.props.navigation.navigate('YouTubePlayerScreen', { });
     //} else {
     // this.props.navigation.navigate('ReactNode', { videoId: videoId });
     //}
