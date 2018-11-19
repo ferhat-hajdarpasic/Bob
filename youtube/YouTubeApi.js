@@ -1,3 +1,9 @@
+import Config from 'react-native-config'
+
+export const api_url = 'https://www.googleapis.com/youtube/v3';
+export const client_id = Config.YOUTUBE_CLIENT_ID;
+export const api_key=Config.YOUTUBE_API_KEY
+
 async function handleResponse(response) {
     if(response.ok) {
         let responseJson = await response.json();
@@ -11,8 +17,7 @@ async function handleResponse(response) {
 export default class YouTubeApi {
     async playlists(access_token) {
         console.log('playlists:'+ access_token);
-        let key = 'AIzaSyBpujtNa5iCA5hy2aP4CUNojRlKNxaEeNw';
-        let url = `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&mine=true&key=${key}&access_token=${access_token}`;
+        let url = `${api_url}/playlists?part=snippet,contentDetails&mine=true&key=${api_key}&access_token=${access_token}`;
         console.log(`url=${url}`);
         let meResponse = await fetch(url, {
             method: 'GET'
@@ -22,8 +27,7 @@ export default class YouTubeApi {
 
     async playlist(access_token, playlist_id) {
        console.log(playlist_id);
-       let key = 'AIzaSyBpujtNa5iCA5hy2aP4CUNojRlKNxaEeNw';
-       let url =`https://www.googleapis.com/youtube/v3/playlistItems?playlistId=${playlist_id}&part=snippet,contentDetails&key=${key}&access_token=${access_token}`;
+       let url =`${api_url}/playlistItems?playlistId=${playlist_id}&part=snippet,contentDetails&key=${api_key}&access_token=${access_token}`;
         let playlistResponse = await fetch(url, {
             method: 'GET'
         });

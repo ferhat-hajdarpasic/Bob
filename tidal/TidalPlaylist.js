@@ -10,7 +10,7 @@ export default class TidalPlaylist extends Component {
   }
   render() {
     const { params } = this.props.navigation.state;
-    let playlistHref = params.href;
+    let playlistRef = params.href;
     let playlistName = params.name
     let access_token = params.access_token;
 
@@ -24,7 +24,7 @@ export default class TidalPlaylist extends Component {
             <Image source={require('../Resources/3RD_PARTY_LOGOS/TIDAL.png')} style={styles.tidal} />
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 7, marginLeft:'10%' }}>
-            <PlaylistFlatList playlistHref={playlistHref} navigation={this.props.navigation} access_token = {access_token}/>
+            <PlaylistFlatList playlistRef={playlistRef} navigation={this.props.navigation} access_token = {access_token}/>
           </View>
           <View style={{ flexDirection: 'row', backgroundColor: 'transparent', flex: 1, marginLeft:'10%', alignItems: 'center' }}>
             <Image source={require('../Resources/BOB_LOGOS/BOB_LOGO_ORANGE.png')} style={styles.titleImage} />

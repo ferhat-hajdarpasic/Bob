@@ -1,14 +1,18 @@
-import React, { Component, PureComponent } from "react";
+import React, { Component } from "react";
 import { StyleSheet, Image, View, Text, FlatList, ActivityIndicator, TouchableHighlight } from "react-native";
 
-import { TidalApi, api_url } from './TidalApi'
-import SpotifyHelper from "../SpotifyHelper";
 import { connect } from "react-redux";
 
 import styles from "../styles/styles"
 
 let playIcon = require('../Resources/ICONS/PLAY.png');
 
+import rnfetchblob from 'react-native-fetch-blob';
+import { GoogleSignin } from 'react-native-google-signin'
+import YouTubeApi from './YouTubeApi';
+import ReactNode from '../ReactNode';
+
+let api = new YouTubeApi();
 class PlaylistItem extends Component {
 
   constructor(props) {
@@ -20,12 +24,12 @@ class PlaylistItem extends Component {
 
   render() {
     let item = this.props.item;
-    console.log(`item.album = ${JSON.stringify(item)}`);
+    console.log(`item.track = ${JSON.stringify(item)}`);
     return (
       <View style={{ flex: 1, width: '100%', flexDirection: 'row', alignContent: 'space-between' }}>
-        <Image source={SpotifyHelper.tidalAlbumImageSmall(item.album.cover)} style={{ width: 50, height: 50 }} />
+        <Image source={{ uri: item.track.snippet.thumbnails.high.url }} style={{ width: 50, height: 50 }} />
         <View style={{ flex: 1, width: '100%', flexDirection: 'column', justifyContent: 'space-around', paddingLeft: 5 }}>
-          <Text style={styles.albumText}>{item.track.title} </Text>
+          <Text style={styles.albumText}>{item.track.snippet.title} </Text>
           <Text style={styles.artistText}>{item.artist} </Text>
         </View>
         <Image source={playIcon} style={styles.titleImage} />
@@ -34,7 +38,8 @@ class PlaylistItem extends Component {
   }
 }
 
-class _TidalPlaylistFlatList extends Component {
+
+class _YouTubePlaylistFlatList extends Component {
   constructor(props) {
     super(props);
 
@@ -50,29 +55,28 @@ class _TidalPlaylistFlatList extends Component {
   }
 
   async componentDidMount() {
-    let sessionId = (await TidalApi.sessions(this.props.access_token)).sessionId;
-    this.props.setProviderSession({name: 'tidal', access_token :this.props.access_token, sessionId: sessionId });
+    const user = await GoogleSignin.currentUserAsync()
+    this.props.setProviderSession({ name: 'youtube', access_token: user.accessToken, sessionId: '' });
     await this.loadFirstPage();
   }
 
   loadFirstPage = async () => {
-    console.log('TidalPlaylistFlatList loadFirstPage()');
+    console.log('YouTubePlaylistFlatList loadFirstPage()');
     this.setState({ data: [], offset: 0, limit: 50, totalNumberOfItems: 1000 }, async () => {
       await this.loadNextPage();
     });
   }
 
   loadNextPage = async () => {
-    let next = `${api_url}/playlists/${this.props.playlistRef}/items?offset=${this.state.offset}&limit=${this.state.limit}&order=INDEX&orderDirection=ASC&countryCode=AU`;
-    console.log(`next playlist = ${next}`);
+    const user = await GoogleSignin.currentUserAsync()
     if (this.state.offset == 0 || this.state.offset < this.state.totalNumberOfItems) {
       this.setState({ loading: false });
-      let page = await TidalApi.next(this.props.access_token, next);
+      let page = await api.playlist(user.accessToken, this.props.playlistRef);
       const tracks = this.extractTracks(page);
 
       this.setState({
         offset: this.state.offset + this.state.limit,
-        totalNumberOfItems: page.totalNumberOfItems,data: [...this.state.data, ...tracks],
+        totalNumberOfItems: page.totalNumberOfItems, data: [...this.state.data, ...tracks],
         loading: false
       });
 
@@ -85,28 +89,22 @@ class _TidalPlaylistFlatList extends Component {
 
     const index = this.state.data.length;
     for (let i = 0; i < page.items.length; i++) {
-      if (page.items[i].type == 'track') {
-        let track = page.items[i].item;
-        if (this.state.duplicates.has(track.id)) {
-          //console.log(`Ignoring duplicate track.album.id=${track.album.id}`);
-          continue;
-        }
-        //console.log(`Adding track.album.id=${track.album.id}`);
-        this.state.duplicates.add(track.id);
-        let artists = [];
-
-        for (let j = 0; j < track.artists.length; j++) {
-          artists.push(track.artists[j].name);
-        }
-        let artistName = artists.join(' and ');
-
-        tracks.push({
-          artist: `${index + i}` + artistName,
-          track: track,
-          album: track.album,
-          key: `A${track.id}`
-        });
+      let track = page.items[i];
+      console.log('FRED track=' + JSON.stringify(track));
+      if (this.state.duplicates.has(track.id)) {
+        //console.log(`Ignoring duplicate track.album.id=${track.album.id}`);
+        continue;
       }
+      //console.log(`Adding track.album.id=${track.album.id}`);
+      this.state.duplicates.add(track.id);
+
+      let artistName = `${track.snippet.channelTitle}`;
+      tracks.push({
+        artist: artistName,
+        track: track,
+        key: `A${track.id}`
+      });
+      //console.log(`Adding track.album.id=${track.album.id}`);
     }
     return tracks;
   }
@@ -137,15 +135,25 @@ class _TidalPlaylistFlatList extends Component {
 
   play = async (index, track, album) => {
     console.log(`track to play = ${JSON.stringify(track)}`);
-    console.log(`album to play = ${JSON.stringify(album)}`);
+    //console.log(`album to play = ${JSON.stringify(album)}`);
 
-    //let streamUrl = (await TidalApi.streamUrl(track.id, this.props.sessionId)).url;
-    //let artwork = SpotifyHelper.tidalAlbumImageLarge(album.cover).uri;
-    //console.log(`streamUrl = ${streamUrl}`);
-    //console.log(`album image url = ${SpotifyHelper.tidalAlbumImageLarge(album.cover).uri}`);
-
-    this.props.playTrack(index, track, album);
-    this.props.navigation.navigate('TidalPlayerScreen', { });
+    const videoFile = `${rnfetchblob.fs.dirs.MusicDir}/${vitrack.snippet.resourceId.videoIddeoId}.flac`;
+    console.log(`Checkig if file '${videoFile} exists`);
+    //let exists = await rnfetchblob.fs.exists(videoFile);
+    //if(exists) {
+    //let videoUrl = `file:///${videoFile}`;
+    let port = await ReactNode.getPortAsync();
+    let videoUrl = `http://localhost:${port}/${vitrack.snippet.resourceId.videoIddeoId}`;
+    console.log(`videoUrl=${videoUrl}`);
+    this.props.navigation.navigate('YouTubePlayerScreen', {
+      videoId: track.snippet.resourceId.videoId,
+      videoUrl: videoUrl,
+      artwork: track.snippet.thumbnails.high.url,
+      title: track.snippet.title
+    });
+    //} else {
+    // this.props.navigation.navigate('ReactNode', { videoId: videoId });
+    //}
   };
 
   render() {
@@ -183,4 +191,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default TidalPlaylistFlatList = connect(mapStateToProps, mapDispatchToProps)(_TidalPlaylistFlatList);
+export default YouTubePlaylistFlatList = connect(mapStateToProps, mapDispatchToProps)(_YouTubePlaylistFlatList);

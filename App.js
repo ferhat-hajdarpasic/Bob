@@ -28,14 +28,14 @@ import ImportFromTidal from "./tidal/ImportFromTidal.js"
 
 import LandingScreen from './player/screens/LandingScreen';
 import TidalPlayerScreen from './tidal/TidalPlayerScreen';
-import YouTubePlayerScreen from './screens/YouTubePlayerScreen';
+import YouTubePlayerScreen from './youtube/YouTubePlayerScreen';
 import SoundCloudPlayerScreen from './soundcloud/SoundCloudPlayerScreen';
 import AddFavourites from './screens/AddFavourites';
-import ImportFromYoutube from './screens/ImportFromYoutube';
+import ImportFromYoutube from './youtube/ImportFromYoutube';
 import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';
-import YouTubePlaylists from './screens/YouTubePlaylists';
+import YouTubePlaylists from './youtube/YouTubePlaylists';
 import SoundCloudPlaylists from './soundcloud/SoundCloudPlaylists';
-import YouTubePlaylist from './screens/YouTubePlaylist';
+import YouTubePlaylist from './youtube/YouTubePlaylist';
 import PlaylistScreen from './screens/PlaylistScreen';
 import TidalPlaylists from './tidal/TidalPlaylists';
 import TidalPlaylist from './tidal/TidalPlaylist';

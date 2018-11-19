@@ -4,7 +4,7 @@ import { List, ListItem, SearchBar } from "react-native-elements";
 import BobFlatList from '../BobFlatList'
 
 import { GoogleSignin } from 'react-native-google-signin'
-import YouTubeApi  from '../api/youtube/YouTubeApi';
+import YouTubeApi  from './YouTubeApi';
 
 let api = new YouTubeApi();
 
