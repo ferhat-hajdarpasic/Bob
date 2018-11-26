@@ -15,6 +15,7 @@ export default class ReactNode extends Component {
         nodejs.channel.addListener(
           'message',
           (msg) => {
+            console.log('Message from nodejs:' + msg);
             const message = JSON.parse(msg);
             if(message.port) {
               console.log(`Got port ${message.port}`);
@@ -45,10 +46,10 @@ export default class ReactNode extends Component {
     };
   }
   download() {
+    console.log(`videoId=${this.state.videoId}`);
     if(this.state.downloading) {
       return;
     }
-    console.log(`videoId=${this.state.videoId}`);
     this.setState({percentage: 0, downloading: true});
     nodejs.channel.send(JSON.stringify({folder: rnfetchblob.fs.dirs.MusicDir, video: this.state.videoId}));
     nodejs.channel.addListener(

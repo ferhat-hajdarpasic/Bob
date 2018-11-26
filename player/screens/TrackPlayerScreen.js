@@ -41,14 +41,14 @@ export default class TrackPlayerScreen extends Component {
 	async componentDidMount() {
 		this.mounted = true;
 		console.log(`componentDidMount, this.props = ${JSON.stringify(this.props)}`);
-		TrackPlayer.setupPlayer();
+		await TrackPlayer.setupPlayer();
 		TrackPlayer.updateOptions({
 			stopWithApp: true,
 			capabilities: [
-			TrackPlayer.CAPABILITY_PLAY,
-			TrackPlayer.CAPABILITY_PAUSE,
-			TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-			TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+				TrackPlayer.CAPABILITY_PLAY,
+				TrackPlayer.CAPABILITY_PAUSE,
+				TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+				TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
 			]
 		});
 		await this.playNewSong();
@@ -58,15 +58,15 @@ export default class TrackPlayerScreen extends Component {
 
 	componentWillReceiveProps = async (nextProps) => {
 		console.log(`componentWillReceiveProps = ${JSON.stringify(nextProps)}`);
-		if(nextProps.track && nextProps.track.id && (nextProps.track.id != this.props.track.id)) {
+		if (nextProps.track && nextProps.track.id && (nextProps.track.id != this.props.track.id)) {
 			await this.playNewSong();
-	    }
+		}
 	}
 
 	async positionSlidingComplete(value) {
 		console.log('Value=' + value);
 		console.log('Duration=' + JSON.stringify(await TrackPlayer.getDuration()));
-		
+
 		TrackPlayer.seekTo(value);
 	}
 
@@ -77,7 +77,7 @@ export default class TrackPlayerScreen extends Component {
 
 	volumeUp() {
 		let newVolume = this.props.volume + 5;
-		if(newVolume > 100) {
+		if (newVolume > 100) {
 			newVolume = 100;
 		}
 		this.props.setVolume(newVolume);
@@ -85,7 +85,7 @@ export default class TrackPlayerScreen extends Component {
 
 	volumeDown() {
 		let newVolume = this.props.volume - 5;
-		if(newVolume < 0) {
+		if (newVolume < 0) {
 			newVolume = 0;
 		}
 		this.props.setVolume(newVolume);
@@ -103,8 +103,8 @@ export default class TrackPlayerScreen extends Component {
 
 	logoutButtonWasPressed = () => {
 		//Spotify.logout().finally(() => {
-	//		this.goToInitialScreen();
-	//	});
+		//		this.goToInitialScreen();
+		//	});
 	}
 
 	playNewSong = async () => {
@@ -112,30 +112,39 @@ export default class TrackPlayerScreen extends Component {
 		console.log(`this.props.track = ${JSON.stringify(this.props.track)}`);
 		let streamUrl = await this.props.figureStreamUrl(this.props.track, this.props.sessionId);
 		let track = {
-			id: this.props.trackId, 
+			id: this.props.trackId,
 			url: streamUrl,
 			title: this.props.trackName,
 			artist: this.props.artistName,
 			artwork: this.props.albumImageUri
-		  }
+		}
 
-		  console.log(`Playing URL=${this.props.trackName}`);
+		console.log(`Playing URL=${this.props.trackName}`);
 
-		  if (currentTrack == null) {
+		if (currentTrack == null) {
 			TrackPlayer.reset();
 			await TrackPlayer.add([track]);
 			TrackPlayer.play();
+		} else {
+			let position = await TrackPlayer.getPosition();
+			let duration = await TrackPlayer.getDuration();
+			if(position >= duration) {
+				await TrackPlayer.reset();
+				TrackPlayer.stop();
+			}
 		}
 		timer.setInterval(
 			this, 'updateProgress', async () => {
-				if(this.mounted) {
+				if (this.mounted) {
 					let data = {
 						position: await TrackPlayer.getPosition(),
 						bufferedPosition: await TrackPlayer.getBufferedPosition(),
-						duration: await TrackPlayer.getDuration()			
+						duration: await TrackPlayer.getDuration()
 					};
 					console.log(`Progress = ${JSON.stringify(data)}`);
-					this.setState({position: data.position});
+					this.setState({ position: data.position });
+
+
 				}
 			}, 1000
 		);
@@ -160,7 +169,7 @@ export default class TrackPlayerScreen extends Component {
 	}
 
 	async download() {
-       this.props.navigation.navigate('ReactNode', { videoId: this.state.videoId, title: this.state.title});
+		this.props.navigation.navigate('ReactNode', { videoId: this.state.videoId, title: this.state.title });
 	}
 
 	render() {
