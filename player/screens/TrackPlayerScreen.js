@@ -121,19 +121,12 @@ export default class TrackPlayerScreen extends Component {
 
 		console.log(`Playing URL=${this.props.trackName}`);
 
-		if (currentTrack == null) {
-			TrackPlayer.reset();
-			await TrackPlayer.add([track]);
-			TrackPlayer.play();
-		} else {
-			let position = await TrackPlayer.getPosition();
-			let duration = await TrackPlayer.getDuration();
-			if(position >= duration) {
-				await TrackPlayer.reset();
-				TrackPlayer.stop();
-			}
-		}
-		timer.setInterval(
+        TrackPlayer.stop();
+        TrackPlayer.reset();
+        await TrackPlayer.add([track]);
+        TrackPlayer.play();
+
+        timer.setInterval(
 			this, 'updateProgress', async () => {
 				if (this.mounted) {
 					let data = {
@@ -143,8 +136,6 @@ export default class TrackPlayerScreen extends Component {
 					};
 					console.log(`Progress = ${JSON.stringify(data)}`);
 					this.setState({ position: data.position });
-
-
 				}
 			}, 1000
 		);
