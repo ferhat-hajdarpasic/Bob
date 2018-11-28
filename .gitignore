@@ -61,3 +61,4 @@ nodejs-assets/build-native-modules-MacOS-helper-script-node.sh
 nodejs-assets/build-native-modules-MacOS-helper-script-npm.sh
 youtube/android/.project
 .env
+android/app/google-services.json

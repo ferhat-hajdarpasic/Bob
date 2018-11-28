@@ -156,6 +156,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-firebase')
     compile project(':react-native-config')
     compile project(':react-native-volume-controller')
     compile project(':react-native-google-signin')
@@ -173,6 +174,11 @@ dependencies {
     compile(name: 'spotify-android-auth-1.0.0', ext: 'aar')
     compile(name: 'spotify-player-24-noconnect-2.20b', ext: 'aar')
     compile project(':react-native-track-player')
+
+    // Firebase dependencies
+    implementation "com.google.android.gms:play-services-base:16.0.1"
+    implementation "com.google.firebase:firebase-core:16.0.4"
+
 }
 
 // Run this once to be able to run the application with BUCK
@@ -181,3 +187,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'

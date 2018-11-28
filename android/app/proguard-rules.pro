@@ -47,12 +47,14 @@
 -keepclassmembers class *  { @com.facebook.react.uimanager.UIProp <fields>; }
 -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactProp <methods>; }
 -keepclassmembers class *  { @com.facebook.react.uimanager.annotations.ReactPropGroup <methods>; }
+-keep class io.invertase.firebase.** { *; }
 
 -dontwarn com.facebook.react.**
 
 # TextLayoutBuilder uses a non-public Android constructor within StaticLayout.
 # See libs/proxy/src/main/java/com/facebook/fbui/textlayoutbuilder/proxy for details.
 -dontwarn android.text.StaticLayout
+-dontwarn io.invertase.firebase.**
 
 # okhttp
 
