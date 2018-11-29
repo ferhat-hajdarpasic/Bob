@@ -30,7 +30,7 @@ import LandingScreen from './player/screens/LandingScreen';
 import TidalPlayerScreen from './tidal/TidalPlayerScreen';
 import YouTubePlayerScreen from './youtube/YouTubePlayerScreen';
 import SoundCloudPlayerScreen from './soundcloud/SoundCloudPlayerScreen';
-import AddFavourites from './screens/AddFavourites';
+import AddFavourites from './screens/FacebookLogin';
 import ImportFromYoutube from './youtube/ImportFromYoutube';
 import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';
 import YouTubePlaylists from './youtube/YouTubePlaylists';
