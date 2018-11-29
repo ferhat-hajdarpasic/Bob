@@ -3,6 +3,7 @@ package com.cocreators.hass.bob;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.tavernari.volumecontroller.ReactNativeVolumeControllerPackage;
@@ -16,15 +17,23 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.reactlibrary.imagecolorpicker.RNImageColorPickerPackage;
-import guichaguri.trackplayer.TrackPlayer;
-
+import com.guichaguri.trackplayer.TrackPlayer;
 import java.util.Arrays;
 import java.util.List;
 
 //import com.reactlibrary.RNSdkSpotifyPackage;
 
 public class MainApplication extends Application implements ReactApplication {
+
+  private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
+
+  protected static CallbackManager getCallbackManager() {
+    return mCallbackManager;
+  }
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -36,6 +45,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new FBSDKPackage(mCallbackManager),
             new RNFirebasePackage(),
             new ReactNativeConfigPackage(),
             new ReactNativeVolumeControllerPackage(),
@@ -65,5 +75,8 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    FacebookSdk.setApplicationId("321591545340752");
+    FacebookSdk.sdkInitialize(getApplicationContext());
+    AppEventsLogger.activateApp(this);
   }
 }

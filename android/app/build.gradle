@@ -94,13 +94,13 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.cocreators.hass.bob"
-        minSdkVersion 23
-        targetSdkVersion 26
+        minSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         ndk {
@@ -108,6 +108,10 @@ android {
         }
         renderscriptTargetApi 23
         renderscriptSupportModeEnabled true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     signingConfigs {
         release {
@@ -156,24 +160,26 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-firebase')
-    compile project(':react-native-config')
-    compile project(':react-native-volume-controller')
-    compile project(':react-native-google-signin')
-    compile project(':nodejs-mobile-react-native')
-    compile project(':rn-spotify-sdk')
+    implementation 'com.facebook.android:facebook-android-sdk:4.34.0'
+    implementation project(':react-native-fbsdk')
+    implementation project(':react-native-firebase')
+    implementation project(':react-native-config')
+    implementation project(':react-native-volume-controller')
+    implementation project(':react-native-google-signin')
+    implementation project(':nodejs-mobile-react-native')
+    implementation project(':rn-spotify-sdk')
     //compile project(':react-native-vector-icons')
-    compile project(':react-native-linear-gradient')
-    compile project(':react-native-fetch-blob')
-	compile project(':react-native-events')
-    compile project(':image-color-picker')
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:support-v4:26.1.0'
-    compile ("com.facebook.react:react-native:0.55.4") { force = true }  // From node_modules
-    compile(name: 'spotify-android-auth-1.0.0', ext: 'aar')
-    compile(name: 'spotify-player-24-noconnect-2.20b', ext: 'aar')
-    compile project(':react-native-track-player')
+    implementation project(':react-native-linear-gradient')
+    implementation project(':react-native-fetch-blob')
+	implementation project(':react-native-events')
+    implementation project(':image-color-picker')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation ("com.facebook.react:react-native:0.55.4") { force = true }  // From node_modules
+    implementation(name: 'spotify-android-auth-1.0.0', ext: 'aar')
+    implementation(name: 'spotify-player-24-noconnect-2.20b', ext: 'aar')
+    implementation project(':react-native-track-player')
 
     // Firebase dependencies
     implementation "com.google.android.gms:play-services-base:16.0.1"
