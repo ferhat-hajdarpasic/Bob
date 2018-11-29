@@ -34,7 +34,7 @@ let streamVideo = (videoId, response) => {
 
     str.on('progress', function (progress) {
         if (progress.percentage >= 100) {
-            res.end();
+            response.end();
             rn_bridge.channel.send(JSON.stringify({ message: `Streaming of videoId ${videoId} finished.` }));
         }
     });
