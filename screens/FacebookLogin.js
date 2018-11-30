@@ -17,7 +17,7 @@ export default class Login extends Component {
               } else {
                 AccessToken.getCurrentAccessToken().then(
                   (data) => {
-                    console.log(data.accessToken.toString());
+                    console.log(`data=${JSON.stringify(data)}`);
                     AccessToken.getCurrentAccessToken()
                     .then((data) => {
                       const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
