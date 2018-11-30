@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import firebase from 'react-native-firebase';
 
 export default class Login extends Component {
   render() {
@@ -16,7 +17,18 @@ export default class Login extends Component {
               } else {
                 AccessToken.getCurrentAccessToken().then(
                   (data) => {
-                    console.log(data.accessToken.toString())
+                    console.log(data.accessToken.toString());
+                    AccessToken.getCurrentAccessToken()
+                    .then((data) => {
+                      const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+                      firebase.auth().signInWithCredential(credential)
+                        .then(() => {
+                            console.log('Firebase login success, proceed to import music screen');
+                        })
+                        .catch((error) => {
+                            console.log(`Firebase login failed, erro =${error.message}`);
+                        });
+                    });
                   }
                 )
               }

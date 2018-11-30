@@ -5,6 +5,7 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.tavernari.volumecontroller.ReactNativeVolumeControllerPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
@@ -47,6 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new FBSDKPackage(mCallbackManager),
             new RNFirebasePackage(),
+            new RNFirebaseAuthPackage(),
             new ReactNativeConfigPackage(),
             new ReactNativeVolumeControllerPackage(),
             new RNGoogleSigninPackage(),
