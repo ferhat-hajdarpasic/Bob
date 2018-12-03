@@ -9,7 +9,6 @@ import {
   ScrollView
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import BobLogin from './BobLogin'
 //import LoginToSpotify from './LoginToSpotify'
 import InitialScreen from './InitialScreen'
 
@@ -31,7 +30,7 @@ import TidalPlayerScreen from './tidal/TidalPlayerScreen';
 import YouTubePlayerScreen from './youtube/YouTubePlayerScreen';
 import SoundCloudPlayerScreen from './soundcloud/SoundCloudPlayerScreen';
 import AddFavourites from './screens/AddFavourites';
-import AppLoginScreen from './screens/AppLoginScreen';
+import BobLogin from './screens/BobLogin';
 import ImportFromYoutube from './youtube/ImportFromYoutube';
 import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';
 import YouTubePlaylists from './youtube/YouTubePlaylists';
@@ -49,7 +48,7 @@ const store = createStore(reducer);
 
 const BobNavigator =  StackNavigator(
   {
-    Main: { screen: AppLoginScreen },
+    Main: { screen: BobLogin },
     TidalPlayerScreen: { screen: TidalPlayerScreen },
     AddFavourites: { screen: AddFavourites },
     YouTubePlayerScreen: { screen: YouTubePlayerScreen },
