@@ -30,7 +30,8 @@ import LandingScreen from './player/screens/LandingScreen';
 import TidalPlayerScreen from './tidal/TidalPlayerScreen';
 import YouTubePlayerScreen from './youtube/YouTubePlayerScreen';
 import SoundCloudPlayerScreen from './soundcloud/SoundCloudPlayerScreen';
-import AddFavourites from './screens/FacebookLogin';
+import AddFavourites from './screens/AddFavourites';
+import AppLoginScreen from './screens/AppLoginScreen';
 import ImportFromYoutube from './youtube/ImportFromYoutube';
 import ImportFromSoundCloud from './soundcloud/ImportFromSoundCloud';
 import YouTubePlaylists from './youtube/YouTubePlaylists';
@@ -48,8 +49,9 @@ const store = createStore(reducer);
 
 const BobNavigator =  StackNavigator(
   {
-    Main: { screen: AddFavourites },
+    Main: { screen: AppLoginScreen },
     TidalPlayerScreen: { screen: TidalPlayerScreen },
+    AddFavourites: { screen: AddFavourites },
     YouTubePlayerScreen: { screen: YouTubePlayerScreen },
     SoundCloudPlayerScreen: { screen: SoundCloudPlayerScreen },
     ReactNode: { screen: ReactNode },
