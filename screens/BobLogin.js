@@ -53,7 +53,20 @@ export default class BobLogin extends Component {
     joinBobPressed = () => {
         console.log('Going to JoinBob screen');
         this.props.navigation.navigate('JoinBob', {});
-    };
+    }
+
+    loginPressed = async () => {
+        console.log('Starting login...');
+        try {
+            const { username, password } = this.state;
+            await firebase.auth().signInWithEmailAndPassword(username, password);
+            console.log('Login firebase successful, navigate to the main screen...');
+            this.props.navigation.navigate('AddFavourites');
+        } catch (error) {
+            console.log(`Firebase login error ${JSON.stringify(error)}`);
+            this.setState({ errorMessage: error.message });
+        }
+    }
 
     render() {
         console.log('FRED=' + accounting.formatMoney(455678.678));
@@ -109,7 +122,7 @@ export default class BobLogin extends Component {
                             }
                             onLogoutFinished={() => console.log("logout.")} />
                     </View>
-                    <TouchableHighlight>
+                    <TouchableHighlight onPress={this.loginPressed}>
                         <Text style={styles.login}>login</Text>
                     </TouchableHighlight>
                     <TouchableHighlight onPress={this.joinBobPressed}>
