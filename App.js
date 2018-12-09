@@ -37,6 +37,7 @@ import YouTubePlaylists from './youtube/YouTubePlaylists';
 import SoundCloudPlaylists from './soundcloud/SoundCloudPlaylists';
 import YouTubePlaylist from './youtube/YouTubePlaylist';
 import PlaylistScreen from './screens/PlaylistScreen';
+import JoinBob from './screens/JoinBob';
 import TidalPlaylists from './tidal/TidalPlaylists';
 import TidalPlaylist from './tidal/TidalPlaylist';
 
@@ -54,6 +55,7 @@ const BobNavigator =  StackNavigator(
     YouTubePlayerScreen: { screen: YouTubePlayerScreen },
     SoundCloudPlayerScreen: { screen: SoundCloudPlayerScreen },
     ReactNode: { screen: ReactNode },
+    JoinBob: {screen: JoinBob },
     LoginToYoutube: {screen: LoginToYoutube },
     //LoginToSpotify: {screen: LoginToSpotify },
     LoginToSoundCloud: {screen: LoginToSoundCloud },

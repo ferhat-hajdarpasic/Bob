@@ -50,6 +50,11 @@ export default class BobLogin extends Component {
         }
     };
 
+    joinBobPressed = () => {
+        console.log('Going to JoinBob screen');
+        this.props.navigation.navigate('JoinBob', {});
+    };
+
     render() {
         console.log('FRED=' + accounting.formatMoney(455678.678));
         return (
@@ -107,7 +112,7 @@ export default class BobLogin extends Component {
                     <TouchableHighlight>
                         <Text style={styles.login}>login</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight>
+                    <TouchableHighlight onPress={this.joinBobPressed}>
                         <Text style={styles.joinBob}>join bob</Text>
                     </TouchableHighlight>
                 </View>
