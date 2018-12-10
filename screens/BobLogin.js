@@ -123,7 +123,7 @@ export default class BobLogin extends Component {
                             }
                             onLogoutFinished={() => console.log("logout.")} />
                     </View>
-                    <TouchableHighlight onPress={this.loginPressed}>
+                    <TouchableHighlight onPress={this.loginPressed} disabled={!(this.state.username && this.state.password)}>
                         <Text style={styles.login}>login</Text>
                     </TouchableHighlight>
                     <TouchableHighlight onPress={this.joinBobPressed}>
