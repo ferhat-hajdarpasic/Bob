@@ -11,7 +11,7 @@ import accounting from 'accounting';
 export default class BobLogin extends Component {
     constructor(props) {
         super(props);
-        this.state = { username: '', password: ''};
+        this.state = { username: '', password: '', errorMessage: '' };
     }
 
     signIn = async () => {
@@ -57,6 +57,7 @@ export default class BobLogin extends Component {
 
     loginPressed = async () => {
         console.log('Starting login...');
+        this.setState({ errorMessage: '' });
         try {
             const { username, password } = this.state;
             await firebase.auth().signInWithEmailAndPassword(username, password);
@@ -128,6 +129,13 @@ export default class BobLogin extends Component {
                     <TouchableHighlight onPress={this.joinBobPressed}>
                         <Text style={styles.joinBob}>join bob</Text>
                     </TouchableHighlight>
+                    {
+                        this.state.errorMessage ? (
+                            <Text style={styles.error}>
+                                {this.state.errorMessage}
+                            </Text>)
+                            : (<Text/>)
+                    }
                 </View>
             </BKD>
         );
@@ -140,6 +148,7 @@ const styles = StyleSheet.create({
     loginToBob: { color: 'white', fontFamily: 'Bauhaus 93', fontSize: 20, marginBottom: '10%' },
     login: { color: '#FCB415', fontFamily: 'Bauhaus 93', fontSize: 20, marginBottom: '10%' },
     joinBob: { color: '#FCB415', fontFamily: 'Bauhaus 93', fontSize: 20 },
+    error: { color: 'red', fontFamily: 'Bauhaus 93', fontSize: 20 },
     google: { width: 40, height: 40 * (1065 / 1045), marginRight: '10%' },
     facebook: { width: 40, height: 40 }
 });
