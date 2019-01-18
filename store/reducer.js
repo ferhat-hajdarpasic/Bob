@@ -13,6 +13,9 @@ export default function reducer(state = initialState, action) {
         case 'SET_PROVIDER_SESSION':
             console.log("REDUX: SET_PROVIDER_SESSION=" + JSON.stringify(action.provider));
             return { ...state, provider: action.provider };
+        case 'SET_TIDAL_OAUTH':
+            console.log("REDUX: SET_TIDAL_OAUTH=" + JSON.stringify(action.oauth));
+            return { ...state, tidalOauth: action.oauth };
         case 'SET_VOLUME':
             console.log("REDUX: setVolume=" + action.value)
             return { ...state, volume: action.value };

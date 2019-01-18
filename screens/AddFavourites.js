@@ -7,8 +7,9 @@ import BKD from './BobBackground'
 import { NavigationActions } from 'react-navigation';
 import Spotify from 'rn-spotify-sdk';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin'
+import { connect } from "react-redux";
 
-export default class BobLogin extends Component {
+class _BobLogin extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { username: '', password: '', spotifyInitialized: false };
@@ -61,7 +62,11 @@ export default class BobLogin extends Component {
 	}
 
 	tidalButtonPressed = () => {
-		this.props.navigation.navigate('LoginToTidal', {});
+        if(this.props.tidalOauth) {
+            this.props.navigation.navigate('ImportFromTidal', {});
+        } else {
+            this.props.navigation.navigate('LoginToTidal', {});
+        }
 	}
 
 	async youtubeButtonPressed() {
@@ -142,3 +147,9 @@ const styles = StyleSheet.create({
 	youtube: { width: 80, height: 80 * (1084 / 1543) },
 	deezer: { width: 80, height: 80 * (1063 / 1750) }
 });
+
+const mapStateToProps = state => ({
+    tidalOauth: state.tidalOauth,
+});
+
+export default BobLogin = connect(mapStateToProps, null)(_BobLogin);
