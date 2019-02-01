@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
-  Easing,
-  Animated,
-  // Button,
-  ScrollView
+    StyleSheet,
+    Text,
+    View,
+    Easing,
+    Animated,
+    // Button,
+    ScrollView
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 //import LoginToSpotify from './LoginToSpotify'
@@ -45,77 +45,84 @@ import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux'
 import reducer from './store/reducer';
 
-const store = createStore(reducer);
+import { AccessToken } from 'react-native-fbsdk';
 
-const BobNavigator =  StackNavigator(
-  {
+const store = createStore(reducer);
+const routeConfigMap = {
     Main: { screen: BobLogin },
     TidalPlayerScreen: { screen: TidalPlayerScreen },
     AddFavourites: { screen: AddFavourites },
     YouTubePlayerScreen: { screen: YouTubePlayerScreen },
     SoundCloudPlayerScreen: { screen: SoundCloudPlayerScreen },
     ReactNode: { screen: ReactNode },
-    JoinBob: {screen: JoinBob },
-    LoginToYoutube: {screen: LoginToYoutube },
+    JoinBob: { screen: JoinBob },
+    LoginToYoutube: { screen: LoginToYoutube },
     //LoginToSpotify: {screen: LoginToSpotify },
-    LoginToSoundCloud: {screen: LoginToSoundCloud },
-    LoginToTidal: {screen: LoginToTidal },
-    InitialScreen: {screen: InitialScreen},        
-    ImportFromSpotify: {screen: ImportFromSpotify},
-    ImportFromTidal: {screen: ImportFromTidal},
-    ImportFromYoutube: {screen: ImportFromYoutube},
-    ImportFromSoundCloud: {screen: ImportFromSoundCloud},
-    YouTubePlaylists: {screen: YouTubePlaylists},
-    SoundCloudPlaylists: {screen: SoundCloudPlaylists},
-    YouTubePlaylist: {screen: YouTubePlaylist},
-    PlaylistScreen: {screen: PlaylistScreen},
-    TidalPlaylists: {screen: TidalPlaylists},
-    TidalPlaylist: {screen: TidalPlaylist},
-    Playlists: {screen: Playlists},
-    Playlist: {screen: Playlist},
-    RecentlyPlayed: {screen: RecentlyPlayed},
-    Albums: {screen: Albums},
-    Album: {screen: Album},
-  	player: { screen:PlayerScreen }
-},
-  {
+    LoginToSoundCloud: { screen: LoginToSoundCloud },
+    LoginToTidal: { screen: LoginToTidal },
+    InitialScreen: { screen: InitialScreen },
+    ImportFromSpotify: { screen: ImportFromSpotify },
+    ImportFromTidal: { screen: ImportFromTidal },
+    ImportFromYoutube: { screen: ImportFromYoutube },
+    ImportFromSoundCloud: { screen: ImportFromSoundCloud },
+    YouTubePlaylists: { screen: YouTubePlaylists },
+    SoundCloudPlaylists: { screen: SoundCloudPlaylists },
+    YouTubePlaylist: { screen: YouTubePlaylist },
+    PlaylistScreen: { screen: PlaylistScreen },
+    TidalPlaylists: { screen: TidalPlaylists },
+    TidalPlaylist: { screen: TidalPlaylist },
+    Playlists: { screen: Playlists },
+    Playlist: { screen: Playlist },
+    RecentlyPlayed: { screen: RecentlyPlayed },
+    Albums: { screen: Albums },
+    Album: { screen: Album },
+    player: { screen: PlayerScreen }
+};
+
+const stackConfig = {
     headerMode: 'none',
     mode: 'modal',
     navigationOptions: {
-      gesturesEnabled: false,
+        gesturesEnabled: false,
     },
     transitionConfig: () => ({
-      transitionSpec: {
-        duration: 300,
-        easing: Easing.out(Easing.poly(4)),
-        timing: Animated.timing,
-      },
-      screenInterpolator: sceneProps => {
-        const { layout, position, scene } = sceneProps;
-        const { index } = scene;
+        transitionSpec: {
+            duration: 300,
+            easing: Easing.out(Easing.poly(4)),
+            timing: Animated.timing,
+        },
+        screenInterpolator: sceneProps => {
+            const { layout, position, scene } = sceneProps;
+            const { index } = scene;
 
-        const height = layout.initHeight;
-        const translateY = position.interpolate({
-          inputRange: [index - 1, index, index + 1],
-          outputRange: [height, 0, 0],
-        });
+            const height = layout.initHeight;
+            const translateY = position.interpolate({
+                inputRange: [index - 1, index, index + 1],
+                outputRange: [height, 0, 0],
+            });
 
-        const opacity = position.interpolate({
-          inputRange: [index - 1, index - 0.99, index],
-          outputRange: [0, 1, 1],
-        });
+            const opacity = position.interpolate({
+                inputRange: [index - 1, index - 0.99, index],
+                outputRange: [0, 1, 1],
+            });
 
-        return { opacity, transform: [{ translateY }] };
-      },
+            return { opacity, transform: [{ translateY }] };
+        },
     }),
-  }
-);
+};
 
+(async () => {
+    let facebook = await AccessToken.getCurrentAccessToken();
+    console.log('facebook=' + JSON.stringify(facebook));
+    routeConfigMap.Main.screen = AddFavourites;
+})();
+
+const BobNavigator = StackNavigator(routeConfigMap, stackConfig);
 export default class App extends React.Component {
-  render() {
-    return (
-    <Provider store={store}>
-      <BobNavigator />
-    </Provider>)
-  }
+    render() {
+        return (
+            <Provider store={store}>
+                <BobNavigator />
+            </Provider>)
+    }
 }
